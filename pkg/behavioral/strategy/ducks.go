@@ -45,7 +45,7 @@ func (d *baseDuck) SetFlyBehavior(flyBehavior FlyBehavior) {
 	d.flyBehavior = flyBehavior
 }
 
-// mallardDuck Кряква
+// Кряква
 type mallardDuck struct {
 	baseDuck
 }
@@ -64,7 +64,7 @@ func NewMallardDuck() *mallardDuck {
 	return duck
 }
 
-// redheadDuck Красноголовый нырок
+// Красноголовый нырок
 type redheadDuck struct {
 	baseDuck
 }
@@ -121,7 +121,7 @@ func NewDecoyDuck() *decoyDuck {
 	return duck
 }
 
-// modelDuck Утка-приманка
+// Утка-приманка
 type modelDuck struct {
 	baseDuck
 }
