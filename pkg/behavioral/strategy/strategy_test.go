@@ -9,7 +9,7 @@ type testDuck struct {
 	performFly   string
 }
 
-var errString = "%s - пришел некорректный ответ (ожидалось %q, получено %q)"
+var errString = "%s - некорректный ответ (ожидалось %q, получено %q)"
 
 func TestNewMallardDuck(t *testing.T) {
 	duck := NewMallardDuck()
