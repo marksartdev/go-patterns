@@ -18,6 +18,7 @@ type WeatherDater interface {
 	SetHumidity(io.Reader)
 	GetPressure() float64
 	SetPressure(io.Reader)
+	MeasurementsChanged()
 }
 
 // Субъект данных
@@ -56,6 +57,11 @@ func (w *weatherData) GetPressure() float64 {
 // SetPressure Установить давление
 func (w *weatherData) SetPressure(reader io.Reader) {
 	w.pressure = read("Введите давление", reader, w.logger)
+}
+
+// MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
+func (w *weatherData) MeasurementsChanged() {
+	// Здесь будет реализация
 }
 
 // NewWeatherData Создать weatherData
