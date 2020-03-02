@@ -56,7 +56,7 @@ func (d *mallardDuck) Display() string {
 }
 
 // NewMallardDuck Создать крякву
-func NewMallardDuck() *mallardDuck {
+func NewMallardDuck() Duck {
 	duck := new(mallardDuck)
 	duck.quackBehavior = new(Quack)
 	duck.flyBehavior = new(FlyWithWings)
@@ -75,7 +75,7 @@ func (d *redheadDuck) Display() string {
 }
 
 // NewRedheadDuck Создать красноголового нырка
-func NewRedheadDuck() *redheadDuck {
+func NewRedheadDuck() Duck {
 	duck := new(redheadDuck)
 	duck.quackBehavior = new(Quack)
 	duck.flyBehavior = new(FlyWithWings)
@@ -94,7 +94,7 @@ func (d *rubberDuck) Display() string {
 }
 
 // NewRubberDuck Создать резиновую уточку
-func NewRubberDuck() *rubberDuck {
+func NewRubberDuck() Duck {
 	duck := new(rubberDuck)
 	duck.quackBehavior = new(Squeak)
 	duck.flyBehavior = new(FlyNoWay)
@@ -113,7 +113,7 @@ func (d *decoyDuck) Display() string {
 }
 
 // NewDecoyDuck Создать деревянную утку
-func NewDecoyDuck() *decoyDuck {
+func NewDecoyDuck() Duck {
 	duck := new(decoyDuck)
 	duck.quackBehavior = new(MuteQuack)
 	duck.flyBehavior = new(FlyNoWay)
@@ -132,7 +132,7 @@ func (d *modelDuck) Display() string {
 }
 
 // NewModelDuck Создать утку-приманку
-func NewModelDuck() *modelDuck {
+func NewModelDuck() Duck {
 	duck := new(modelDuck)
 	duck.quackBehavior = new(Quack)
 	duck.flyBehavior = new(FlyNoWay)
