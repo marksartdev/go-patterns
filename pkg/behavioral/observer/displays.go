@@ -11,15 +11,15 @@ type Displayer interface {
 }
 
 // Дисплей "Текущее состояние"
-type currentConditionDisplay struct {
+type currentConditionsDisplay struct {
 	temperature float64
 	humidity    float64
 	pressure    float64
 }
 
 // Display Отобразить дисплей
-func (d *currentConditionDisplay) Display(writer io.Writer) error {
-	text := "Current condition:\n"
+func (d *currentConditionsDisplay) Display(writer io.Writer) error {
+	text := "Current conditions:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
 	text += fmt.Sprintf("\tHumidity: %.1f\n", d.humidity)
 	text += fmt.Sprintf("\tPressure: %.1f\n", d.pressure)
@@ -28,7 +28,7 @@ func (d *currentConditionDisplay) Display(writer io.Writer) error {
 	return err
 }
 
-// NewCurrentConditionDisplay Создать дисплей "Текущее состояние"
-func NewCurrentConditionDisplay() Displayer {
-	return &currentConditionDisplay{}
+// NewCurrentConditionsDisplay Создать дисплей "Текущее состояние"
+func NewCurrentConditionsDisplay() Displayer {
+	return &currentConditionsDisplay{}
 }
