@@ -12,16 +12,16 @@ import (
 
 // WeatherDater Интерфейс метеостанции
 type WeatherDater interface {
-	GetTemperature() float64
+	getTemperature() float64
 	SetTemperature(io.Reader)
-	GetHumidity() float64
+	getHumidity() float64
 	SetHumidity(io.Reader)
-	GetPressure() float64
+	getPressure() float64
 	SetPressure(io.Reader)
 	MeasurementsChanged()
 }
 
-// Субъект данных
+// Метеостанция
 type weatherData struct {
 	logger      *logrus.Logger
 	temperature float64
@@ -30,7 +30,7 @@ type weatherData struct {
 }
 
 // GetTemperature Вернуть текущую температуру
-func (w *weatherData) GetTemperature() float64 {
+func (w *weatherData) getTemperature() float64 {
 	return w.temperature
 }
 
@@ -40,7 +40,7 @@ func (w *weatherData) SetTemperature(reader io.Reader) {
 }
 
 // GetHumidity Вернуть текущую влажность
-func (w *weatherData) GetHumidity() float64 {
+func (w *weatherData) getHumidity() float64 {
 	return w.humidity
 }
 
@@ -50,7 +50,7 @@ func (w *weatherData) SetHumidity(reader io.Reader) {
 }
 
 // GetPressure Вернуть текущее давление
-func (w *weatherData) GetPressure() float64 {
+func (w *weatherData) getPressure() float64 {
 	return w.pressure
 }
 
