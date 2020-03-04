@@ -58,3 +58,21 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 		t.Errorf(errStringS, expected, buffer.String())
 	}
 }
+
+func TestNewStatisticsDisplay(t *testing.T) {
+	buffer := bytes.NewBuffer(make([]byte, 0))
+	expected := "Statistics:\n" +
+		"\tTemperature (max/min/avg): 0.0/0.0/0.0\n" +
+		"\tHumidity (max/min/avg): 0.0/0.0/0.0\n" +
+		"\tPressure (max/min/avg): 0.0/0.0/0.0\n\n"
+
+	display := NewStatisticsDisplay()
+	err := display.Display(buffer)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if buffer.String() != expected {
+		t.Errorf(errStringS, expected, buffer.String())
+	}
+}
