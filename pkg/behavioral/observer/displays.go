@@ -103,6 +103,8 @@ func (d *forecastDisplay) Display(writer io.Writer) error {
 func (d *forecastDisplay) makeForecast() {
 	var k float64
 
+	rand.Seed(512)
+
 	k = 0.7 + rand.Float64()*(1.3-0.7)
 	d.temperature = k * d.temperature
 	k = 0.7 + rand.Float64()*(1.3-0.7)
