@@ -3,6 +3,7 @@ package observer
 import (
 	"fmt"
 	"io"
+	"math/rand"
 
 	"github.com/gonum/floats"
 )
@@ -78,4 +79,39 @@ func (d *statisticsDisplay) Display(writer io.Writer) error {
 // NewStatisticsDisplay Создать дисплей "Статистика"
 func NewStatisticsDisplay() Displayer {
 	return &statisticsDisplay{}
+}
+
+// Дисплей "Прогноз"
+type forecastDisplay struct {
+	temperature float64
+	humidity    float64
+	pressure    float64
+}
+
+// Display Отобразить дисплей
+func (d *forecastDisplay) Display(writer io.Writer) error {
+	text := "Forecast:\n"
+	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
+	text += fmt.Sprintf("\tHumidity: %.1f\n", d.humidity)
+	text += fmt.Sprintf("\tPressure: %.1f\n", d.pressure)
+
+	_, err := fmt.Fprintln(writer, text)
+	return err
+}
+
+// Сделать прогноз
+func (d *forecastDisplay) makeForecast() {
+	var k float64
+
+	k = 0.7 + rand.Float64()*(1.3-0.7)
+	d.temperature = k * d.temperature
+	k = 0.7 + rand.Float64()*(1.3-0.7)
+	d.humidity = k * d.humidity
+	k = 0.7 + rand.Float64()*(1.3-0.7)
+	d.pressure = k * d.pressure
+}
+
+// NewForecastDisplay Создать дисплей "Прогноз"
+func NewForecastDisplay() Displayer {
+	return &forecastDisplay{}
 }
