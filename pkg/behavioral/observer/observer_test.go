@@ -62,10 +62,10 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 
 func TestNewStatisticsDisplay(t *testing.T) {
 	buffer := bytes.NewBuffer(make([]byte, 0))
-	expected := "Statistics:\n" +
-		"\tTemperature (max/min/avg): 0.0/0.0/0.0\n" +
-		"\tHumidity (max/min/avg): 0.0/0.0/0.0\n" +
-		"\tPressure (max/min/avg): 0.0/0.0/0.0\n\n"
+	expected := "Statistics:\n"
+	expected += fmt.Sprintf("\tTemperature (max/min/avg): %.1f/%.1f/%.1f\n", 0.0, 0.0, 0.0)
+	expected += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", 0.0, 0.0, 0.0)
+	expected += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n\n", 0.0, 0.0, 0.0)
 
 	display := NewStatisticsDisplay()
 	err := display.Display(buffer)
