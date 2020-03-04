@@ -44,10 +44,10 @@ func TestWeatherData_SetPressure(t *testing.T) {
 
 func TestNewCurrentConditionsDisplay(t *testing.T) {
 	buffer := bytes.NewBuffer(make([]byte, 0))
-	expected := "Current conditions:\n" +
-		"\tTemperature: 0.0\n" +
-		"\tHumidity: 0.0\n" +
-		"\tPressure: 0.0\n\n"
+	expected := "Current conditions:\n"
+	expected += fmt.Sprintf("\tTemperature: %.1f\n", 0.0)
+	expected += fmt.Sprintf("\tHumidity: %.1f\n", 0.0)
+	expected += fmt.Sprintf("\tPressure: %.1f\n\n", 0.0)
 
 	display := NewCurrentConditionsDisplay()
 	err := display.Display(buffer)
