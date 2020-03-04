@@ -2,6 +2,22 @@
 
 
 [[projects]]
+  branch = "master"
+  digest = "1:d1176d30bd3703900e4c6c64d0fb2acdcfa2a880b6cca404fe2a78972bdd5a7b"
+  name = "github.com/gonum/floats"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "c233463c7e827fd71a8cdb62dfda0e98f7c39ad5"
+
+[[projects]]
+  branch = "master"
+  digest = "1:0289676768aacc56c17b09c0b7d5ad89470e3fcba3d342f8bce1381bf0e84c47"
+  name = "github.com/gonum/internal"
+  packages = ["asm/f64"]
+  pruneopts = "UT"
+  revision = "f884aa71402950fb2796dbea0d5aa9ef9cfad8ca"
+
+[[projects]]
   digest = "1:31e761d97c76151dde79e9d28964a812c46efc5baee4085b86f68f0c654450de"
   name = "github.com/konsorten/go-windows-terminal-sequences"
   packages = ["."]
@@ -28,6 +44,9 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  input-imports = ["github.com/sirupsen/logrus"]
+  input-imports = [
+    "github.com/gonum/floats",
+    "github.com/sirupsen/logrus",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
