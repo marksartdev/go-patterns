@@ -2,6 +2,7 @@ package observer
 
 import (
 	"bytes"
+	"fmt"
 	"testing"
 )
 
@@ -67,6 +68,25 @@ func TestNewStatisticsDisplay(t *testing.T) {
 		"\tPressure (max/min/avg): 0.0/0.0/0.0\n\n"
 
 	display := NewStatisticsDisplay()
+	err := display.Display(buffer)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if buffer.String() != expected {
+		t.Errorf(errStringS, expected, buffer.String())
+	}
+}
+
+func TestNewForecastDisplay(t *testing.T) {
+	buffer := bytes.NewBuffer(make([]byte, 0))
+
+	expected := "Forecast:\n"
+	expected += fmt.Sprintf("\tTemperature: %.1f\n", 0.0)
+	expected += fmt.Sprintf("\tHumidity: %.1f\n", 0.0)
+	expected += fmt.Sprintf("\tPressure: %.1f\n\n", 0.0)
+
+	display := NewForecastDisplay()
 	err := display.Display(buffer)
 	if err != nil {
 		t.Error(err)
