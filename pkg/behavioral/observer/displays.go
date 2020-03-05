@@ -8,19 +8,19 @@ import (
 	"github.com/gonum/floats"
 )
 
-// Displayer Интерфейс дисплея
+// Displayer Интерфейс экрана
 type Displayer interface {
 	Display(io.Writer) error
 }
 
-// Дисплей "Текущее состояние"
+// Экран текущего состояния
 type currentConditionsDisplay struct {
 	temperature float64
 	humidity    float64
 	pressure    float64
 }
 
-// Display Отобразить дисплей
+// Display Отобразить экран
 func (d *currentConditionsDisplay) Display(writer io.Writer) error {
 	text := "Current conditions:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
@@ -31,19 +31,19 @@ func (d *currentConditionsDisplay) Display(writer io.Writer) error {
 	return err
 }
 
-// NewCurrentConditionsDisplay Создать дисплей "Текущее состояние"
+// NewCurrentConditionsDisplay Создать экран текущего состояния
 func NewCurrentConditionsDisplay() Displayer {
 	return &currentConditionsDisplay{}
 }
 
-// Дисплей "Статистика"
+// Экран статистики
 type statisticsDisplay struct {
 	temperature []float64
 	humidity    []float64
 	pressure    []float64
 }
 
-// Display Отобразить дисплей
+// Display Отобразить экран
 func (d *statisticsDisplay) Display(writer io.Writer) error {
 	var temperatureMax, temperatureMin, temperatureAvg float64
 	var humidityMax, humidityMin, humidityAvg float64
@@ -76,19 +76,19 @@ func (d *statisticsDisplay) Display(writer io.Writer) error {
 	return err
 }
 
-// NewStatisticsDisplay Создать дисплей "Статистика"
+// NewStatisticsDisplay Создать экран статистики
 func NewStatisticsDisplay() Displayer {
 	return &statisticsDisplay{}
 }
 
-// Дисплей "Прогноз"
+// Экран прогноза
 type forecastDisplay struct {
 	temperature float64
 	humidity    float64
 	pressure    float64
 }
 
-// Display Отобразить дисплей
+// Display Отобразить экран
 func (d *forecastDisplay) Display(writer io.Writer) error {
 	text := "Forecast:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
@@ -113,7 +113,7 @@ func (d *forecastDisplay) makeForecast() {
 	d.pressure = k * d.pressure
 }
 
-// NewForecastDisplay Создать дисплей "Прогноз"
+// NewForecastDisplay Создать экран прогноза
 func NewForecastDisplay() Displayer {
 	return &forecastDisplay{}
 }
