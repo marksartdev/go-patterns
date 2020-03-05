@@ -36,7 +36,7 @@ func (w *weatherData) getTemperature() float64 {
 
 // SetTemperature Установить температуру
 func (w *weatherData) SetTemperature(reader io.Reader) {
-	w.temperature = read("Введите температуру", reader, w.logger)
+	w.temperature = w.input("Введите температуру", reader)
 }
 
 // GetHumidity Вернуть текущую влажность
@@ -46,7 +46,7 @@ func (w *weatherData) getHumidity() float64 {
 
 // SetHumidity Установить влажность
 func (w *weatherData) SetHumidity(reader io.Reader) {
-	w.humidity = read("Введите влажность", reader, w.logger)
+	w.humidity = w.input("Введите влажность", reader)
 }
 
 // GetPressure Вернуть текущее давление
@@ -56,7 +56,7 @@ func (w *weatherData) getPressure() float64 {
 
 // SetPressure Установить давление
 func (w *weatherData) SetPressure(reader io.Reader) {
-	w.pressure = read("Введите давление", reader, w.logger)
+	w.pressure = w.input("Введите давление", reader)
 }
 
 // MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
@@ -64,17 +64,8 @@ func (w *weatherData) MeasurementsChanged() {
 	// Здесь будет реализация
 }
 
-// NewWeatherData Создать weatherData
-func NewWeatherData() WeatherDater {
-	logger := log.NewLogger()
-	wd := new(weatherData)
-	wd.logger = logger
-
-	return wd
-}
-
 // Получить данные
-func read(label string, reader io.Reader, logger *logrus.Logger) float64 {
+func (w *weatherData) input(label string, reader io.Reader) float64 {
 	var numberStr string
 	var number float64
 
@@ -85,14 +76,26 @@ input:
 
 	_, err := fmt.Fscanln(reader, &numberStr)
 	if err != nil {
-		logger.Fatalln(err)
+		w.logger.Errorln(err)
+
+		return number
 	}
 
 	number, err = strconv.ParseFloat(numberStr, 64)
 	if err != nil {
-		logger.Warnln("Введено некорректное значение")
+		w.logger.Warnln("Введено некорректное значение")
+
 		goto input
 	}
 
 	return number
+}
+
+// NewWeatherData Создать weatherData
+func NewWeatherData() WeatherDater {
+	logger := log.NewLogger()
+	wd := new(weatherData)
+	wd.logger = logger
+
+	return wd
 }

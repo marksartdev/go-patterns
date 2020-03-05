@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"math/rand"
+	"regexp"
 	"testing"
 )
 
@@ -40,6 +41,33 @@ func TestWeatherData_SetPressure(t *testing.T) {
 
 	if wd.getPressure() != 3.3 {
 		t.Errorf(errStringF, 3.3, wd.getPressure())
+	}
+}
+
+func TestWeatherData_InputNaN(t *testing.T) {
+	buffer := bytes.NewBuffer(make([]byte, 0))
+	reader := bytes.NewReader([]byte("NotNumber"))
+	var wd *weatherData
+	var ok bool
+
+	regErr, err := regexp.Compile(`msg=[A-z]+|msg="[А-я ]+"`)
+	if err != nil {
+		t.Errorf(err.Error())
+
+		return
+	}
+
+	if wd, ok = NewWeatherData().(*weatherData); !ok {
+		t.Errorf("Полученная структура не имплементирует интерфейс WeatherDater")
+
+		return
+	}
+
+	wd.logger.SetOutput(buffer)
+	wd.SetTemperature(reader)
+	matches := regErr.FindAllString(buffer.String(), -1)
+	if matches[0] != "msg=\"Введено некорректное значение\"" || matches[1] != "msg=EOF" {
+		t.Errorf("Получена неправильная последовательность ошибок")
 	}
 }
 
