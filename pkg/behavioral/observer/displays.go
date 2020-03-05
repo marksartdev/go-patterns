@@ -11,6 +11,7 @@ import (
 // Displayer Интерфейс экрана
 type Displayer interface {
 	Display(io.Writer) error
+	observer
 }
 
 // Экран текущего состояния
@@ -29,6 +30,13 @@ func (d *currentConditionsDisplay) Display(writer io.Writer) error {
 
 	_, err := fmt.Fprintln(writer, text)
 	return err
+}
+
+// Update Обновить данные
+func (d *currentConditionsDisplay) Update(data measurements) {
+	d.temperature = data.temperature
+	d.humidity = data.humidity
+	d.pressure = data.pressure
 }
 
 // NewCurrentConditionsDisplay Создать экран текущего состояния
@@ -76,6 +84,13 @@ func (d *statisticsDisplay) Display(writer io.Writer) error {
 	return err
 }
 
+// Update Обновить данные
+func (d *statisticsDisplay) Update(data measurements) {
+	d.temperature = append(d.temperature, data.temperature)
+	d.humidity = append(d.humidity, data.humidity)
+	d.pressure = append(d.pressure, data.pressure)
+}
+
 // NewStatisticsDisplay Создать экран статистики
 func NewStatisticsDisplay() Displayer {
 	return &statisticsDisplay{}
@@ -97,6 +112,15 @@ func (d *forecastDisplay) Display(writer io.Writer) error {
 
 	_, err := fmt.Fprintln(writer, text)
 	return err
+}
+
+// Update Обновить данные
+func (d *forecastDisplay) Update(data measurements) {
+	d.temperature = data.temperature
+	d.humidity = data.humidity
+	d.pressure = data.pressure
+
+	d.makeForecast()
 }
 
 // Сделать прогноз
