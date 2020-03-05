@@ -4,31 +4,39 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"os"
 
 	"github.com/gonum/floats"
 )
 
 // Displayer Интерфейс экрана
 type Displayer interface {
-	Display(io.Writer) error
+	SetOutput(io.Writer)
+	Display() error
 	observer
 }
 
 // Экран текущего состояния
 type currentConditionsDisplay struct {
+	writer      io.Writer
 	temperature float64
 	humidity    float64
 	pressure    float64
 }
 
+// SetOutput Установить writer
+func (d *currentConditionsDisplay) SetOutput(writer io.Writer) {
+	d.writer = writer
+}
+
 // Display Отобразить экран
-func (d *currentConditionsDisplay) Display(writer io.Writer) error {
+func (d *currentConditionsDisplay) Display() error {
 	text := "Current conditions:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
 	text += fmt.Sprintf("\tHumidity: %.1f\n", d.humidity)
 	text += fmt.Sprintf("\tPressure: %.1f\n", d.pressure)
 
-	_, err := fmt.Fprintln(writer, text)
+	_, err := fmt.Fprintln(d.writer, text)
 	return err
 }
 
@@ -41,18 +49,27 @@ func (d *currentConditionsDisplay) Update(data *measurements) {
 
 // NewCurrentConditionsDisplay Создать экран текущего состояния
 func NewCurrentConditionsDisplay() Displayer {
-	return &currentConditionsDisplay{}
+	display := new(currentConditionsDisplay)
+	display.writer = os.Stdout
+
+	return display
 }
 
 // Экран статистики
 type statisticsDisplay struct {
+	writer      io.Writer
 	temperature []float64
 	humidity    []float64
 	pressure    []float64
 }
 
+// SetOutput Установить writer
+func (d *statisticsDisplay) SetOutput(writer io.Writer) {
+	d.writer = writer
+}
+
 // Display Отобразить экран
-func (d *statisticsDisplay) Display(writer io.Writer) error {
+func (d *statisticsDisplay) Display() error {
 	var temperatureMax, temperatureMin, temperatureAvg float64
 	var humidityMax, humidityMin, humidityAvg float64
 	var pressureMax, pressureMin, pressureAvg float64
@@ -80,7 +97,7 @@ func (d *statisticsDisplay) Display(writer io.Writer) error {
 	text += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", humidityMax, humidityMin, humidityAvg)
 	text += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", pressureMax, pressureMin, pressureAvg)
 
-	_, err := fmt.Fprintln(writer, text)
+	_, err := fmt.Fprintln(d.writer, text)
 	return err
 }
 
@@ -93,24 +110,33 @@ func (d *statisticsDisplay) Update(data *measurements) {
 
 // NewStatisticsDisplay Создать экран статистики
 func NewStatisticsDisplay() Displayer {
-	return &statisticsDisplay{}
+	display := new(statisticsDisplay)
+	display.writer = os.Stdout
+
+	return display
 }
 
 // Экран прогноза
 type forecastDisplay struct {
+	writer      io.Writer
 	temperature float64
 	humidity    float64
 	pressure    float64
 }
 
+// SetOutput Установить writer
+func (d *forecastDisplay) SetOutput(writer io.Writer) {
+	d.writer = writer
+}
+
 // Display Отобразить экран
-func (d *forecastDisplay) Display(writer io.Writer) error {
+func (d *forecastDisplay) Display() error {
 	text := "Forecast:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
 	text += fmt.Sprintf("\tHumidity: %.1f\n", d.humidity)
 	text += fmt.Sprintf("\tPressure: %.1f\n", d.pressure)
 
-	_, err := fmt.Fprintln(writer, text)
+	_, err := fmt.Fprintln(d.writer, text)
 	return err
 }
 
@@ -139,5 +165,8 @@ func (d *forecastDisplay) getCoefficient() float64 {
 
 // NewForecastDisplay Создать экран прогноза
 func NewForecastDisplay() Displayer {
-	return &forecastDisplay{}
+	display := new(forecastDisplay)
+	display.writer = os.Stdout
+
+	return display
 }
