@@ -9,7 +9,7 @@ type subject interface {
 
 // Интерфейс наблюдателя
 type observer interface {
-	Update(measurements)
+	Update(*measurements)
 }
 
 // Измерения

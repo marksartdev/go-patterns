@@ -33,7 +33,7 @@ func (d *currentConditionsDisplay) Display(writer io.Writer) error {
 }
 
 // Update Обновить данные
-func (d *currentConditionsDisplay) Update(data measurements) {
+func (d *currentConditionsDisplay) Update(data *measurements) {
 	d.temperature = data.temperature
 	d.humidity = data.humidity
 	d.pressure = data.pressure
@@ -85,7 +85,7 @@ func (d *statisticsDisplay) Display(writer io.Writer) error {
 }
 
 // Update Обновить данные
-func (d *statisticsDisplay) Update(data measurements) {
+func (d *statisticsDisplay) Update(data *measurements) {
 	d.temperature = append(d.temperature, data.temperature)
 	d.humidity = append(d.humidity, data.humidity)
 	d.pressure = append(d.pressure, data.pressure)
@@ -115,7 +115,7 @@ func (d *forecastDisplay) Display(writer io.Writer) error {
 }
 
 // Update Обновить данные
-func (d *forecastDisplay) Update(data measurements) {
+func (d *forecastDisplay) Update(data *measurements) {
 	d.temperature = data.temperature
 	d.humidity = data.humidity
 	d.pressure = data.pressure
@@ -125,16 +125,16 @@ func (d *forecastDisplay) Update(data measurements) {
 
 // Сделать прогноз
 func (d *forecastDisplay) makeForecast() {
-	var k float64
-
 	rand.Seed(512)
 
-	k = 0.7 + rand.Float64()*(1.3-0.7)
-	d.temperature = k * d.temperature
-	k = 0.7 + rand.Float64()*(1.3-0.7)
-	d.humidity = k * d.humidity
-	k = 0.7 + rand.Float64()*(1.3-0.7)
-	d.pressure = k * d.pressure
+	d.temperature = d.getCoefficient() * d.temperature
+	d.humidity = d.getCoefficient() * d.humidity
+	d.pressure = d.getCoefficient() * d.pressure
+}
+
+// Получить коэффициент для прогноза
+func (d *forecastDisplay) getCoefficient() float64 {
+	return 0.7 + rand.Float64()*(1.3-0.7)
 }
 
 // NewForecastDisplay Создать экран прогноза
