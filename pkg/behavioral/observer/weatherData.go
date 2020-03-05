@@ -13,17 +13,19 @@ import (
 // WeatherDater Интерфейс метеостанции
 type WeatherDater interface {
 	getTemperature() float64
-	SetTemperature(io.Reader)
+	SetTemperature()
 	getHumidity() float64
-	SetHumidity(io.Reader)
+	SetHumidity()
 	getPressure() float64
-	SetPressure(io.Reader)
+	SetPressure()
+	SetReader(io.Reader)
 	MeasurementsChanged()
 }
 
 // Метеостанция
 type weatherData struct {
 	logger      *logrus.Logger
+	reader      io.Reader
 	temperature float64
 	humidity    float64
 	pressure    float64
@@ -35,8 +37,8 @@ func (w *weatherData) getTemperature() float64 {
 }
 
 // SetTemperature Установить температуру
-func (w *weatherData) SetTemperature(reader io.Reader) {
-	w.temperature = w.input("Введите температуру", reader)
+func (w *weatherData) SetTemperature() {
+	w.temperature = w.input("Введите температуру")
 }
 
 // GetHumidity Вернуть текущую влажность
@@ -45,8 +47,8 @@ func (w *weatherData) getHumidity() float64 {
 }
 
 // SetHumidity Установить влажность
-func (w *weatherData) SetHumidity(reader io.Reader) {
-	w.humidity = w.input("Введите влажность", reader)
+func (w *weatherData) SetHumidity() {
+	w.humidity = w.input("Введите влажность")
 }
 
 // GetPressure Вернуть текущее давление
@@ -55,8 +57,8 @@ func (w *weatherData) getPressure() float64 {
 }
 
 // SetPressure Установить давление
-func (w *weatherData) SetPressure(reader io.Reader) {
-	w.pressure = w.input("Введите давление", reader)
+func (w *weatherData) SetPressure() {
+	w.pressure = w.input("Введите давление")
 }
 
 // MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
@@ -65,16 +67,16 @@ func (w *weatherData) MeasurementsChanged() {
 }
 
 // Получить данные
-func (w *weatherData) input(label string, reader io.Reader) float64 {
+func (w *weatherData) input(label string) float64 {
 	var numberStr string
 	var number float64
 
 input:
-	if reader == os.Stdin {
+	if w.reader == os.Stdin {
 		fmt.Println(label)
 	}
 
-	_, err := fmt.Fscanln(reader, &numberStr)
+	_, err := fmt.Fscanln(w.reader, &numberStr)
 	if err != nil {
 		w.logger.Errorln(err)
 
@@ -91,11 +93,17 @@ input:
 	return number
 }
 
+// SetReader Установить reader
+func (w *weatherData) SetReader(reader io.Reader) {
+	w.reader = reader
+}
+
 // NewWeatherData Создать weatherData
 func NewWeatherData() WeatherDater {
 	logger := log.NewLogger()
 	wd := new(weatherData)
 	wd.logger = logger
+	wd.reader = os.Stdin
 
 	return wd
 }

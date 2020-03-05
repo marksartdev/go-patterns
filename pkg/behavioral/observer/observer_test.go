@@ -15,7 +15,8 @@ func TestWeatherData_SetTemperature(t *testing.T) {
 	reader := bytes.NewReader([]byte("1.1"))
 
 	wd := NewWeatherData()
-	wd.SetTemperature(reader)
+	wd.SetReader(reader)
+	wd.SetTemperature()
 
 	if wd.getTemperature() != 1.1 {
 		t.Errorf(errStringF, 1.1, wd.getTemperature())
@@ -26,7 +27,8 @@ func TestWeatherData_SetHumidity(t *testing.T) {
 	reader := bytes.NewReader([]byte("2.2"))
 
 	wd := NewWeatherData()
-	wd.SetHumidity(reader)
+	wd.SetReader(reader)
+	wd.SetHumidity()
 
 	if wd.getHumidity() != 2.2 {
 		t.Errorf(errStringF, 2.2, wd.getHumidity())
@@ -37,7 +39,8 @@ func TestWeatherData_SetPressure(t *testing.T) {
 	reader := bytes.NewReader([]byte("3.3"))
 
 	wd := NewWeatherData()
-	wd.SetPressure(reader)
+	wd.SetReader(reader)
+	wd.SetPressure()
 
 	if wd.getPressure() != 3.3 {
 		t.Errorf(errStringF, 3.3, wd.getPressure())
@@ -64,7 +67,8 @@ func TestWeatherData_InputNaN(t *testing.T) {
 	}
 
 	wd.logger.SetOutput(buffer)
-	wd.SetTemperature(reader)
+	wd.SetReader(reader)
+	wd.SetTemperature()
 	matches := regErr.FindAllString(buffer.String(), -1)
 	if matches[0] != "msg=\"Введено некорректное значение\"" || matches[1] != "msg=EOF" {
 		t.Errorf("Получена неправильная последовательность ошибок")
