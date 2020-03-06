@@ -4,19 +4,46 @@ import (
 	"bytes"
 	"fmt"
 	"math/rand"
-	"regexp"
+	"os"
 	"testing"
 )
 
 var errStringF = "Некорректный ответ (ожидалось %f, получено %f)"
 var errStringS = "Некорректный ответ (ожидалось %s, получено %s)"
 
+// Битый reader
+type badReader struct {
+}
+
+func (r *badReader) Read(_ []byte) (n int, err error) {
+	return 0, os.ErrInvalid
+}
+
+// Битый writer
+type badWriter struct {
+}
+
+// Write Записать в writer
+func (w *badWriter) Write(_ []byte) (n int, err error) {
+	return 0, os.ErrInvalid
+}
+
 func TestWeatherData_SetTemperature(t *testing.T) {
 	reader := bytes.NewReader([]byte("1.1"))
+	buffer := bytes.NewBuffer(make([]byte, 0))
+	expected := "Введите температуру\n"
 
 	wd := NewWeatherData()
-	wd.SetReader(reader)
-	wd.SetTemperature()
+	wd.SetInput(reader)
+	wd.SetOutput(buffer)
+
+	if err := wd.SetTemperature(); err != nil {
+		t.Error(err)
+	}
+
+	if buffer.String() != expected {
+		t.Errorf(errStringS, expected, buffer)
+	}
 
 	if wd.getTemperature() != 1.1 {
 		t.Errorf(errStringF, 1.1, wd.getTemperature())
@@ -25,10 +52,20 @@ func TestWeatherData_SetTemperature(t *testing.T) {
 
 func TestWeatherData_SetHumidity(t *testing.T) {
 	reader := bytes.NewReader([]byte("2.2"))
+	buffer := bytes.NewBuffer(make([]byte, 0))
+	expected := "Введите влажность\n"
 
 	wd := NewWeatherData()
-	wd.SetReader(reader)
-	wd.SetHumidity()
+	wd.SetInput(reader)
+	wd.SetOutput(buffer)
+
+	if err := wd.SetHumidity(); err != nil {
+		t.Error(err)
+	}
+
+	if buffer.String() != expected {
+		t.Errorf(errStringS, expected, buffer)
+	}
 
 	if wd.getHumidity() != 2.2 {
 		t.Errorf(errStringF, 2.2, wd.getHumidity())
@@ -37,10 +74,20 @@ func TestWeatherData_SetHumidity(t *testing.T) {
 
 func TestWeatherData_SetPressure(t *testing.T) {
 	reader := bytes.NewReader([]byte("3.3"))
+	buffer := bytes.NewBuffer(make([]byte, 0))
+	expected := "Введите давление\n"
 
 	wd := NewWeatherData()
-	wd.SetReader(reader)
-	wd.SetPressure()
+	wd.SetInput(reader)
+	wd.SetOutput(buffer)
+
+	if err := wd.SetPressure(); err != nil {
+		t.Error(err)
+	}
+
+	if buffer.String() != expected {
+		t.Errorf(errStringS, expected, buffer)
+	}
 
 	if wd.getPressure() != 3.3 {
 		t.Errorf(errStringF, 3.3, wd.getPressure())
@@ -48,30 +95,45 @@ func TestWeatherData_SetPressure(t *testing.T) {
 }
 
 func TestWeatherData_InputNaN(t *testing.T) {
-	buffer := bytes.NewBuffer(make([]byte, 0))
 	reader := bytes.NewReader([]byte("NotNumber"))
-	var wd *weatherData
-	var ok bool
+	buffer := bytes.NewBuffer(make([]byte, 0))
 
-	regErr, err := regexp.Compile(`msg=[A-z]+|msg="[А-я ]+"`)
-	if err != nil {
-		t.Errorf(err.Error())
+	wd := NewWeatherData()
+	wd.SetInput(reader)
+	wd.SetOutput(buffer)
 
-		return
+	err := wd.SetTemperature()
+	if err == nil {
+		t.Error("Не получена ошибка")
+	} else if err.Error() != "strconv.ParseFloat: parsing \"NotNumber\": invalid syntax" {
+		t.Error(err)
 	}
+}
 
-	if wd, ok = NewWeatherData().(*weatherData); !ok {
-		t.Errorf("Полученная структура не имплементирует интерфейс WeatherDater")
+func TestWeatherData_ReadErr(t *testing.T) {
+	buffer := bytes.NewBuffer(make([]byte, 0))
 
-		return
+	wd := NewWeatherData()
+	wd.SetInput(new(badReader))
+	wd.SetOutput(buffer)
+
+	err := wd.SetHumidity()
+	if err == nil {
+		t.Error("Не получена ошибка")
+	} else if err != os.ErrInvalid {
+		t.Error(err)
 	}
+}
 
-	wd.logger.SetOutput(buffer)
-	wd.SetReader(reader)
-	wd.SetTemperature()
-	matches := regErr.FindAllString(buffer.String(), -1)
-	if matches[0] != "msg=\"Введено некорректное значение\"" || matches[1] != "msg=EOF" {
-		t.Errorf("Получена неправильная последовательность ошибок")
+func TestWeatherData_WriteErr(t *testing.T) {
+	wd := NewWeatherData()
+	wd.SetOutput(new(badWriter))
+
+	err := wd.SetPressure()
+	if err == nil {
+		t.Error("Не получена ошибка")
+	} else if err != os.ErrInvalid {
+		t.Error(err)
 	}
 }
 
@@ -88,9 +150,11 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 	expected += fmt.Sprintf("\tPressure: %.1f\n\n", data.pressure)
 
 	display := NewCurrentConditionsDisplay()
+	display.SetOutput(buffer)
+
 	display.Update(data)
 
-	err := display.Display(buffer)
+	err := display.Display()
 	if err != nil {
 		t.Error(err)
 	}
@@ -108,6 +172,7 @@ func TestNewStatisticsDisplay(t *testing.T) {
 	expected += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n\n", 700.0, 600.0, 650.0)
 
 	display := NewStatisticsDisplay()
+	display.SetOutput(buffer)
 
 	data := new(measurements)
 	data.temperature = 20.0
@@ -120,7 +185,7 @@ func TestNewStatisticsDisplay(t *testing.T) {
 	data.pressure = 700.0
 	display.Update(data)
 
-	err := display.Display(buffer)
+	err := display.Display()
 	if err != nil {
 		t.Error(err)
 	}
@@ -145,9 +210,11 @@ func TestNewForecastDisplay(t *testing.T) {
 	expected += fmt.Sprintf("\tPressure: %.1f\n\n", getCoefficient()*data.pressure)
 
 	display := NewForecastDisplay()
+	display.SetOutput(buffer)
+
 	display.Update(data)
 
-	err := display.Display(buffer)
+	err := display.Display()
 	if err != nil {
 		t.Error(err)
 	}
