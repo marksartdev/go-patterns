@@ -104,7 +104,7 @@ func TestWeatherData_InputNaN(t *testing.T) {
 
 	err := wd.SetTemperature()
 	if err == nil {
-		t.Error("Не получена ошибка")
+		t.Error("Ожидалась ошибка при вводе строки вместо числа")
 	} else if err.Error() != "strconv.ParseFloat: parsing \"NotNumber\": invalid syntax" {
 		t.Error(err)
 	}
@@ -119,7 +119,7 @@ func TestWeatherData_ReadErr(t *testing.T) {
 
 	err := wd.SetHumidity()
 	if err == nil {
-		t.Error("Не получена ошибка")
+		t.Error("Ожидалась ошибка при использовании битого Reader")
 	} else if err != os.ErrInvalid {
 		t.Error(err)
 	}
@@ -131,7 +131,7 @@ func TestWeatherData_WriteErr(t *testing.T) {
 
 	err := wd.SetPressure()
 	if err == nil {
-		t.Error("Не получена ошибка")
+		t.Error("Ожидалась ошибка при использовании битого Writer")
 	} else if err != os.ErrInvalid {
 		t.Error(err)
 	}
