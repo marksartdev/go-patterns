@@ -146,6 +146,22 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 	}
 }
 
+func TestNewCurrentConditionsDisplay_BadWriter(t *testing.T) {
+	testWriter := new(badWriter)
+	wd := NewWeatherData()
+	data := new(measurements)
+
+	display := NewCurrentConditionsDisplay(wd)
+	display.SetWriter(testWriter)
+
+	err := display.Update(data)
+	if err == nil {
+		t.Error("Ожидалась ошибка при использовании битого Writer")
+	} else if err != os.ErrInvalid {
+		t.Error(err)
+	}
+}
+
 //
 //func TestNewStatisticsDisplay(t *testing.T) {
 //	buffer := bytes.NewBuffer(make([]byte, 0))
