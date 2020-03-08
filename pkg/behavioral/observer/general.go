@@ -6,7 +6,7 @@ import "io"
 type subject interface {
 	RegisterObserver(observer)
 	RemoveObserver(observer)
-	NotifyObservers()
+	NotifyObservers() []error
 	GetTemperature() float64
 	GetHumidity() float64
 	GetPressure() float64
@@ -14,7 +14,7 @@ type subject interface {
 
 // Интерфейс наблюдателя
 type observer interface {
-	Update(*measurements)
+	Update(*measurements) error
 }
 
 // Измерения

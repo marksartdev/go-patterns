@@ -89,15 +89,22 @@ func (w *weatherData) RemoveObserver(removedObserver observer) {
 }
 
 // NotifyObservers Оповестить наблюдателей
-func (w *weatherData) NotifyObservers() {
+func (w *weatherData) NotifyObservers() []error {
+	errs := make([]error, 0)
+
 	newMeasurements := new(measurements)
 	newMeasurements.temperature = w.temperature
 	newMeasurements.humidity = w.humidity
 	newMeasurements.pressure = w.pressure
 
 	for currentObserver := range w.observers {
-		currentObserver.Update(newMeasurements)
+		err := currentObserver.Update(newMeasurements)
+		if err != nil {
+			errs = append(errs, err)
+		}
 	}
+
+	return errs
 }
 
 // Получить данные
