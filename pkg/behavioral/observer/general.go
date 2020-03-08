@@ -7,6 +7,9 @@ type subject interface {
 	RegisterObserver(observer)
 	RemoveObserver(observer)
 	NotifyObservers()
+	GetTemperature() float64
+	GetHumidity() float64
+	GetPressure() float64
 }
 
 // Интерфейс наблюдателя

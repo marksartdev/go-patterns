@@ -8,21 +8,6 @@ import (
 	"strings"
 )
 
-// Интерфейс получения температуры
-type temperatureGetter interface {
-	GetTemperature() float64
-}
-
-// Интерфейс получения влажности
-type humidityGetter interface {
-	GetHumidity() float64
-}
-
-// Интерфейс получения давления
-type pressureGetter interface {
-	GetPressure() float64
-}
-
 // Интерфейс работы с измерениями
 type measurementsHandler interface {
 	SetMeasurements() error
@@ -33,9 +18,6 @@ type measurementsHandler interface {
 type WeatherDater interface {
 	reader
 	writer
-	temperatureGetter
-	humidityGetter
-	pressureGetter
 	measurementsHandler
 	subject
 }
