@@ -2,6 +2,7 @@ package observer
 
 import (
 	"bytes"
+	"fmt"
 	"io"
 	"os"
 	"testing"
@@ -119,105 +120,32 @@ func TestNewWeatherDataNaN(t *testing.T) {
 	}
 }
 
-//func TestWeatherData_SetHumidity(t *testing.T) {
-//	reader := bytes.NewReader([]byte("2.2"))
-//	buffer := bytes.NewBuffer(make([]byte, 0))
-//	expected := "Введите влажность\n"
-//
-//	wd := NewWeatherData()
-//	wd.SetInput(reader)
-//	wd.SetOutput(buffer)
-//
-//	if err := wd.SetHumidity(); err != nil {
-//		t.Error(err)
-//	}
-//
-//	if buffer.String() != expected {
-//		t.Errorf(errStringS, expected, buffer)
-//	}
-//
-//	if wd.getHumidity() != 2.2 {
-//		t.Errorf(errStringF, 2.2, wd.getHumidity())
-//	}
-//}
-//
-//func TestWeatherData_SetPressure(t *testing.T) {
-//	reader := bytes.NewReader([]byte("3.3"))
-//	buffer := bytes.NewBuffer(make([]byte, 0))
-//	expected := "Введите давление\n"
-//
-//	wd := NewWeatherData()
-//	wd.SetInput(reader)
-//	wd.SetOutput(buffer)
-//
-//	if err := wd.SetPressure(); err != nil {
-//		t.Error(err)
-//	}
-//
-//	if buffer.String() != expected {
-//		t.Errorf(errStringS, expected, buffer)
-//	}
-//
-//	if wd.getPressure() != 3.3 {
-//		t.Errorf(errStringF, 3.3, wd.getPressure())
-//	}
-//}
-//
-//func TestWeatherData_InputNaN(t *testing.T) {
-//	reader := bytes.NewReader([]byte("NotNumber"))
-//	buffer := bytes.NewBuffer(make([]byte, 0))
-//
-//	wd := NewWeatherData()
-//	wd.SetInput(reader)
-//	wd.SetOutput(buffer)
-//
-//	err := wd.SetTemperature()
-//	if err == nil {
-//		t.Error("Ожидалась ошибка при вводе строки вместо числа")
-//	} else if err.Error() != "strconv.ParseFloat: parsing \"NotNumber\": invalid syntax" {
-//		t.Error(err)
-//	}
-//}
-//
-//
-//func TestWeatherData_WriteErr(t *testing.T) {
-//	wd := NewWeatherData()
-//	wd.SetOutput(new(badWriter))
-//
-//	err := wd.SetPressure()
-//	if err == nil {
-//		t.Error("Ожидалась ошибка при использовании битого Writer")
-//	} else if err != os.ErrInvalid {
-//		t.Error(err)
-//	}
-//}
-//
-//func TestNewCurrentConditionsDisplay(t *testing.T) {
-//	data := new(measurements)
-//	data.temperature = 18.5
-//	data.humidity = 90.0
-//	data.pressure = 650.0
-//
-//	buffer := bytes.NewBuffer(make([]byte, 0))
-//	expected := "Current conditions:\n"
-//	expected += fmt.Sprintf("\tTemperature: %.1f\n", data.temperature)
-//	expected += fmt.Sprintf("\tHumidity: %.1f\n", data.humidity)
-//	expected += fmt.Sprintf("\tPressure: %.1f\n\n", data.pressure)
-//
-//	display := NewCurrentConditionsDisplay()
-//	display.SetOutput(buffer)
-//
-//	display.Update(data)
-//
-//	err := display.Display()
-//	if err != nil {
-//		t.Error(err)
-//	}
-//
-//	if buffer.String() != expected {
-//		t.Errorf(errStringS, expected, buffer.String())
-//	}
-//}
+func TestNewCurrentConditionsDisplay(t *testing.T) {
+	testWriter := bytes.NewBuffer(make([]byte, 0))
+	wd := NewWeatherData()
+
+	data := new(measurements)
+	data.temperature = 20.5
+	data.humidity = 91.0
+	data.pressure = 650.0
+
+	expected := "Current conditions:\n"
+	expected += fmt.Sprintf("\tTemperature: %.1f\n", data.temperature)
+	expected += fmt.Sprintf("\tHumidity: %.1f\n\n", data.humidity)
+
+	display := NewCurrentConditionsDisplay(wd)
+	display.SetWriter(testWriter)
+
+	err := display.Update(data)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if testWriter.String() != expected {
+		t.Errorf(errStringS, expected, testWriter.String())
+	}
+}
+
 //
 //func TestNewStatisticsDisplay(t *testing.T) {
 //	buffer := bytes.NewBuffer(make([]byte, 0))
