@@ -46,37 +46,32 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 	}
 }
 
-//
-//func TestNewStatisticsDisplay(t *testing.T) {
-//	buffer := bytes.NewBuffer(make([]byte, 0))
-//	expected := "Statistics:\n"
-//	expected += fmt.Sprintf("\tTemperature (max/min/avg): %.1f/%.1f/%.1f\n", 30.0, 20.0, 25.0)
-//	expected += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", 70.0, 50.0, 60.0)
-//	expected += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n\n", 700.0, 600.0, 650.0)
-//
-//	display := NewStatisticsDisplay()
-//	display.SetOutput(buffer)
-//
-//	data := new(measurements)
-//	data.temperature = 20.0
-//	data.humidity = 50.0
-//	data.pressure = 600.0
-//	display.Update(data)
-//
-//	data.temperature = 30.0
-//	data.humidity = 70.0
-//	data.pressure = 700.0
-//	display.Update(data)
-//
-//	err := display.Display()
-//	if err != nil {
-//		t.Error(err)
-//	}
-//
-//	if buffer.String() != expected {
-//		t.Errorf(errStringS, expected, buffer.String())
-//	}
-//}
+func TestNewStatisticsDisplay(t *testing.T) {
+	wd := NewWeatherData()
+
+	expected := "Statistics:\n"
+	expected += fmt.Sprintf("\tTemperature (max/min/avg): %.1f/%.1f/%.1f\n", 30.0, 20.0, 25.0)
+	expected += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", 70.0, 50.0, 60.0)
+	expected += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", 700.0, 600.0, 650.0)
+
+	display := NewStatisticsDisplay(wd)
+
+	data := new(measurements)
+	data.temperature = 20.0
+	data.humidity = 50.0
+	data.pressure = 600.0
+	result := display.Update(data)
+
+	data.temperature = 30.0
+	data.humidity = 70.0
+	data.pressure = 700.0
+	result = display.Update(data)
+
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
+	}
+}
+
 //
 //func TestNewForecastDisplay(t *testing.T) {
 //	data := new(measurements)
