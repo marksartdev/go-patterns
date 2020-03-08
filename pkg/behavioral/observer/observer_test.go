@@ -103,6 +103,22 @@ func TestNewWeatherDataLessMeasurements(t *testing.T) {
 	}
 }
 
+func TestNewWeatherDataNaN(t *testing.T) {
+	testReader := bytes.NewReader([]byte("1.1 1.2 NotNumber"))
+	testWriter := bytes.NewBuffer(make([]byte, 0))
+
+	wd := NewWeatherData()
+	wd.SetReader(testReader)
+	wd.SetWriter(testWriter)
+
+	err := wd.SetMeasurements()
+	if err == nil {
+		t.Error("Ожидалась ошибка при вводе не числового значения")
+	} else if err.Error() != "strconv.ParseFloat: parsing \"NotNumber\": invalid syntax" {
+		t.Error(err)
+	}
+}
+
 //func TestWeatherData_SetHumidity(t *testing.T) {
 //	reader := bytes.NewReader([]byte("2.2"))
 //	buffer := bytes.NewBuffer(make([]byte, 0))
