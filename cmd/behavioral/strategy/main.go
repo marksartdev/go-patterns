@@ -7,15 +7,15 @@ import (
 )
 
 func main() {
-	var quackBehavior []strategy.QuackBehavior
-	quackBehavior = append(quackBehavior, new(strategy.MuteQuack))
-	quackBehavior = append(quackBehavior, new(strategy.Quack))
-	quackBehavior = append(quackBehavior, new(strategy.Squeak))
+	var quackers []strategy.Quacker
+	quackers = append(quackers, new(strategy.MuteQuack))
+	quackers = append(quackers, new(strategy.Quack))
+	quackers = append(quackers, new(strategy.Squeak))
 
-	var flyBehavior []strategy.FlyBehavior
-	flyBehavior = append(flyBehavior, new(strategy.FlyNoWay))
-	flyBehavior = append(flyBehavior, new(strategy.FlyWithWings))
-	flyBehavior = append(flyBehavior, new(strategy.FlyRocketPowered))
+	var flyers []strategy.Flyer
+	flyers = append(flyers, new(strategy.FlyNoWay))
+	flyers = append(flyers, new(strategy.FlyWithWings))
+	flyers = append(flyers, new(strategy.FlyRocketPowered))
 
 	var ducks []strategy.Duck
 	ducks = append(ducks, strategy.NewMallardDuck())
@@ -33,8 +33,8 @@ func main() {
 		fmt.Printf("Quack: %s\n", duck.PerformQuack(quackCount))
 		fmt.Printf("Fly: %s\n", duck.PerformFly())
 
-		duck.SetQuackBehavior(quackBehavior[rand.Intn(len(quackBehavior))])
-		duck.SetFlyBehavior(flyBehavior[rand.Intn(len(flyBehavior))])
+		duck.SetQuacker(quackers[rand.Intn(len(quackers))])
+		duck.SetFlyer(flyers[rand.Intn(len(flyers))])
 
 		fmt.Printf("New quack:  %s\n", duck.PerformQuack(quackCount))
 		fmt.Printf("New fly:  %s\n", duck.PerformFly())

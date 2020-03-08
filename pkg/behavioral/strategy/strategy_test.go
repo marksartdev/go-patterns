@@ -80,7 +80,7 @@ func TestSetQuackBehavior_MuteQuack(t *testing.T) {
 	duck := NewMallardDuck()
 	compareQuackBehaviorResult("Quack-quack-quack", duck.PerformQuack(3), t)
 
-	duck.SetQuackBehavior(new(MuteQuack))
+	duck.SetQuacker(new(MuteQuack))
 	compareQuackBehaviorResult("<< Silence >>", duck.PerformQuack(3), t)
 }
 
@@ -88,7 +88,7 @@ func TestSetQuackBehavior_Quack(t *testing.T) {
 	duck := NewDecoyDuck()
 	compareQuackBehaviorResult("<< Silence >>", duck.PerformQuack(3), t)
 
-	duck.SetQuackBehavior(new(Quack))
+	duck.SetQuacker(new(Quack))
 	compareQuackBehaviorResult("Quack-quack", duck.PerformQuack(2), t)
 }
 
@@ -96,7 +96,7 @@ func TestSetQuackBehavior_Squeak(t *testing.T) {
 	duck := NewModelDuck()
 	compareQuackBehaviorResult("Quack-quack-quack", duck.PerformQuack(3), t)
 
-	duck.SetQuackBehavior(new(Squeak))
+	duck.SetQuacker(new(Squeak))
 	compareQuackBehaviorResult("Squeak-squeak", duck.PerformQuack(2), t)
 }
 
@@ -104,7 +104,7 @@ func TestSetFlyBehavior_FlyNoWay(t *testing.T) {
 	duck := NewMallardDuck()
 	compareFlyBehaviorResult("I'm flying!!", duck.PerformFly(), t)
 
-	duck.SetFlyBehavior(new(FlyNoWay))
+	duck.SetFlyer(new(FlyNoWay))
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 }
 
@@ -112,7 +112,7 @@ func TestSetFlyBehavior_FlyWithWings(t *testing.T) {
 	duck := NewModelDuck()
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 
-	duck.SetFlyBehavior(new(FlyWithWings))
+	duck.SetFlyer(new(FlyWithWings))
 	compareFlyBehaviorResult("I'm flying!!", duck.PerformFly(), t)
 }
 
@@ -120,7 +120,7 @@ func TestSetFlyBehavior_FlyRocketPowered(t *testing.T) {
 	duck := NewModelDuck()
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 
-	duck.SetFlyBehavior(new(FlyRocketPowered))
+	duck.SetFlyer(new(FlyRocketPowered))
 	compareFlyBehaviorResult("I'm flying with a rocket!!", duck.PerformFly(), t)
 }
 

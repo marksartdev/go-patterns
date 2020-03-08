@@ -1,23 +1,43 @@
 package strategy
 
+// Интерфейс отображения
+type displayer interface {
+	Display() string
+}
+
+// Интерфейс плавания
+type swimmer interface {
+	Swim() string
+}
+
+// Интерфейс кряканья
+type quackPerformer interface {
+	PerformQuack(int) string
+	SetQuacker(Quacker)
+}
+
+// Интерфейс полетов
+type flyPerformer interface {
+	PerformFly() string
+	SetFlyer(Flyer)
+}
+
 // Duck Интерфейс утки
 type Duck interface {
-	Display() string
-	Swim() string
-	PerformQuack(count int) string
-	PerformFly() string
-	SetQuackBehavior(quackBehavior QuackBehavior)
-	SetFlyBehavior(flyBehavior FlyBehavior)
+	displayer
+	swimmer
+	quackPerformer
+	flyPerformer
 }
 
 /*
 Базовая структура утки
-quackBehavior - Алгоритм кряканья
-flyBehavior - Алгоритм полетов
+quacker - Алгоритм кряканья
+flyer - Алгоритм полетов
 */
 type baseDuck struct {
-	quackBehavior QuackBehavior
-	flyBehavior   FlyBehavior
+	quacker Quacker
+	flyer   Flyer
 }
 
 // Swim Плыть
@@ -27,22 +47,22 @@ func (d *baseDuck) Swim() string {
 
 // PerformQuack Крякнуть
 func (d *baseDuck) PerformQuack(count int) string {
-	return d.quackBehavior.Quack(count)
+	return d.quacker.quack(count)
 }
 
 // PerformFly Полететь
 func (d *baseDuck) PerformFly() string {
-	return d.flyBehavior.Fly()
+	return d.flyer.fly()
 }
 
-// SetQuackBehavior Установить алгоритм кряканья
-func (d *baseDuck) SetQuackBehavior(quackBehavior QuackBehavior) {
-	d.quackBehavior = quackBehavior
+// SetQuacker Установить алгоритм кряканья
+func (d *baseDuck) SetQuacker(quacker Quacker) {
+	d.quacker = quacker
 }
 
-// SetFlyBehavior Установить алгоритм полетов
-func (d *baseDuck) SetFlyBehavior(flyBehavior FlyBehavior) {
-	d.flyBehavior = flyBehavior
+// SetFlyer Установить алгоритм полетов
+func (d *baseDuck) SetFlyer(flyer Flyer) {
+	d.flyer = flyer
 }
 
 // Кряква
@@ -58,8 +78,8 @@ func (d *mallardDuck) Display() string {
 // NewMallardDuck Создать крякву
 func NewMallardDuck() Duck {
 	duck := new(mallardDuck)
-	duck.quackBehavior = new(Quack)
-	duck.flyBehavior = new(FlyWithWings)
+	duck.quacker = new(Quack)
+	duck.flyer = new(FlyWithWings)
 
 	return duck
 }
@@ -77,8 +97,8 @@ func (d *redheadDuck) Display() string {
 // NewRedheadDuck Создать красноголового нырка
 func NewRedheadDuck() Duck {
 	duck := new(redheadDuck)
-	duck.quackBehavior = new(Quack)
-	duck.flyBehavior = new(FlyWithWings)
+	duck.quacker = new(Quack)
+	duck.flyer = new(FlyWithWings)
 
 	return duck
 }
@@ -96,8 +116,8 @@ func (d *rubberDuck) Display() string {
 // NewRubberDuck Создать резиновую уточку
 func NewRubberDuck() Duck {
 	duck := new(rubberDuck)
-	duck.quackBehavior = new(Squeak)
-	duck.flyBehavior = new(FlyNoWay)
+	duck.quacker = new(Squeak)
+	duck.flyer = new(FlyNoWay)
 
 	return duck
 }
@@ -115,8 +135,8 @@ func (d *decoyDuck) Display() string {
 // NewDecoyDuck Создать деревянную утку
 func NewDecoyDuck() Duck {
 	duck := new(decoyDuck)
-	duck.quackBehavior = new(MuteQuack)
-	duck.flyBehavior = new(FlyNoWay)
+	duck.quacker = new(MuteQuack)
+	duck.flyer = new(FlyNoWay)
 
 	return duck
 }
@@ -134,8 +154,8 @@ func (d *modelDuck) Display() string {
 // NewModelDuck Создать утку-приманку
 func NewModelDuck() Duck {
 	duck := new(modelDuck)
-	duck.quackBehavior = new(Quack)
-	duck.flyBehavior = new(FlyNoWay)
+	duck.quacker = new(Quack)
+	duck.flyer = new(FlyNoWay)
 
 	return duck
 }
