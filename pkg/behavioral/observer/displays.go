@@ -21,7 +21,7 @@ type DisplayElement interface {
 	observer
 }
 
-// Экран текущего состояния
+// Визуальный элемент текущего состояния
 type currentConditionsDisplay struct {
 	writer      io.Writer
 	temperature float64
@@ -55,7 +55,7 @@ func (c *currentConditionsDisplay) Display() error {
 	return err
 }
 
-// NewCurrentConditionsDisplay Создать экран текущего состояния
+// NewCurrentConditionsDisplay Создать визуальный элемент текущего состояния
 func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 	display := new(currentConditionsDisplay)
 	display.writer = os.Stdout
