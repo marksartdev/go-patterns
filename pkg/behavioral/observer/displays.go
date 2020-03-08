@@ -66,7 +66,7 @@ func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 	return display
 }
 
-// Экран статистики
+// Визуальный элемент статистики
 type statisticsDisplay struct {
 	writer      io.Writer
 	temperature []float64
@@ -125,7 +125,7 @@ func (s *statisticsDisplay) Display() error {
 	return err
 }
 
-// NewStatisticsDisplay Создать экран статистики
+// NewStatisticsDisplay Создать визуальный элемент статистики
 func NewStatisticsDisplay(weatherData subject) DisplayElement {
 	display := new(statisticsDisplay)
 	display.writer = os.Stdout
