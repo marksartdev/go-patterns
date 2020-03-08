@@ -136,57 +136,65 @@ func NewStatisticsDisplay(weatherData subject) DisplayElement {
 	return display
 }
 
-// Экран прогноза
+// Визуальный элемент прогноза
 type forecastDisplay struct {
 	writer      io.Writer
 	temperature float64
 	humidity    float64
 	pressure    float64
+	weatherData subject
 }
 
-// SetOutput Установить writer
-func (d *forecastDisplay) SetOutput(writer io.Writer) {
-	d.writer = writer
-}
-
-// Display Отобразить экран
-func (d *forecastDisplay) Display() error {
-	text := "Forecast:\n"
-	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
-	text += fmt.Sprintf("\tHumidity: %.1f\n", d.humidity)
-	text += fmt.Sprintf("\tPressure: %.1f\n", d.pressure)
-
-	_, err := fmt.Fprintln(d.writer, text)
-	return err
+// SetWriter Установить writer
+func (f *forecastDisplay) SetWriter(writer io.Writer) {
+	f.writer = writer
 }
 
 // Update Обновить данные
-func (d *forecastDisplay) Update(data *measurements) {
-	d.temperature = data.temperature
-	d.humidity = data.humidity
-	d.pressure = data.pressure
+func (f *forecastDisplay) Update(data *measurements) error {
+	f.temperature = data.temperature
+	f.humidity = data.humidity
+	f.pressure = data.pressure
 
-	d.makeForecast()
+	f.makeForecast()
+	err := f.Display()
+
+	return err
+}
+
+// Display Вывести информацию
+func (f *forecastDisplay) Display() error {
+	text := "Forecast:\n"
+	text += fmt.Sprintf("\tTemperature: %.1f\n", f.temperature)
+	text += fmt.Sprintf("\tHumidity: %.1f\n", f.humidity)
+	text += fmt.Sprintf("\tPressure: %.1f\n", f.pressure)
+
+	_, err := fmt.Fprintln(f.writer, text)
+
+	return err
 }
 
 // Сделать прогноз
-func (d *forecastDisplay) makeForecast() {
+func (f *forecastDisplay) makeForecast() {
 	rand.Seed(512)
 
-	d.temperature = d.getCoefficient() * d.temperature
-	d.humidity = d.getCoefficient() * d.humidity
-	d.pressure = d.getCoefficient() * d.pressure
+	f.temperature = f.getCoefficient() * f.temperature
+	f.humidity = f.getCoefficient() * f.humidity
+	f.pressure = f.getCoefficient() * f.pressure
 }
 
 // Получить коэффициент для прогноза
-func (d *forecastDisplay) getCoefficient() float64 {
+func (f *forecastDisplay) getCoefficient() float64 {
 	return 0.7 + rand.Float64()*(1.3-0.7)
 }
 
-// NewForecastDisplay Создать экран прогноза
-func NewForecastDisplay() Displayer {
+// NewForecastDisplay Создать визуальный элемент прогноза
+func NewForecastDisplay(weatherData subject) DisplayElement {
 	display := new(forecastDisplay)
 	display.writer = os.Stdout
+	display.weatherData = weatherData
+
+	display.weatherData.RegisterObserver(display)
 
 	return display
 }
