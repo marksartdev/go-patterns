@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-var errStringF = "Некорректный результат (ожидалось %f, получено %f)"
+var errStringF = "Некорректный результат (ожидалось %.1f, получено %.1f)"
 var errStringS = "Некорректный результат (ожидалось %s, получено %s)"
 
 // Битый reader
@@ -51,6 +51,22 @@ func TestNewWeatherData(t *testing.T) {
 
 	if wd.GetPressure() != 1.3 {
 		t.Errorf(errStringF, 1.3, wd.GetPressure())
+	}
+}
+
+func TestNewWeatherDataBadReader(t *testing.T) {
+	testReader := new(badReader)
+	testWriter := bytes.NewBuffer(make([]byte, 0))
+
+	wd := NewWeatherData()
+	wd.SetReader(testReader)
+	wd.SetWriter(testWriter)
+
+	err := wd.SetMeasurements()
+	if err == nil {
+		t.Error("Ожидалась ошибка при использовании битого Reader")
+	} else if err != os.ErrInvalid {
+		t.Error(err)
 	}
 }
 
@@ -114,20 +130,6 @@ func TestNewWeatherData(t *testing.T) {
 //	}
 //}
 //
-//func TestWeatherData_ReadErr(t *testing.T) {
-//	buffer := bytes.NewBuffer(make([]byte, 0))
-//
-//	wd := NewWeatherData()
-//	wd.SetInput(new(badReader))
-//	wd.SetOutput(buffer)
-//
-//	err := wd.SetHumidity()
-//	if err == nil {
-//		t.Error("Ожидалась ошибка при использовании битого Reader")
-//	} else if err != os.ErrInvalid {
-//		t.Error(err)
-//	}
-//}
 //
 //func TestWeatherData_WriteErr(t *testing.T) {
 //	wd := NewWeatherData()
