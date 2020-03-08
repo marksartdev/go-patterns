@@ -70,6 +70,22 @@ func TestNewWeatherDataBadReader(t *testing.T) {
 	}
 }
 
+func TestNewWeatherDataBadWriter(t *testing.T) {
+	testReader := bytes.NewReader([]byte("1.1 1.2 1.3"))
+	testWriter := new(badWriter)
+
+	wd := NewWeatherData()
+	wd.SetReader(testReader)
+	wd.SetWriter(testWriter)
+
+	err := wd.SetMeasurements()
+	if err == nil {
+		t.Error("Ожидалась ошибка при использовании битого Writer")
+	} else if err != os.ErrInvalid {
+		t.Error(err)
+	}
+}
+
 //func TestWeatherData_SetHumidity(t *testing.T) {
 //	reader := bytes.NewReader([]byte("2.2"))
 //	buffer := bytes.NewBuffer(make([]byte, 0))
