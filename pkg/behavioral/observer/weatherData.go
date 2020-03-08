@@ -4,8 +4,8 @@ import "fmt"
 
 // Интерфейс работы с измерениями
 type measurementsHandler interface {
-	SetMeasurements(float64, float64, float64)
 	MeasurementsChanged()
+	SetMeasurements(float64, float64, float64)
 }
 
 // WeatherDater Интерфейс источника метеоданных, способного быть субъектом
@@ -37,6 +37,11 @@ func (w *weatherData) GetPressure() float64 {
 	return w.pressure
 }
 
+// MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
+func (w *weatherData) MeasurementsChanged() {
+	w.NotifyObservers()
+}
+
 // SetMeasurements Задать измерения
 func (w *weatherData) SetMeasurements(temperature, humidity, pressure float64) {
 	w.temperature = temperature
@@ -44,11 +49,6 @@ func (w *weatherData) SetMeasurements(temperature, humidity, pressure float64) {
 	w.pressure = pressure
 
 	w.MeasurementsChanged()
-}
-
-// MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
-func (w *weatherData) MeasurementsChanged() {
-	w.NotifyObservers()
 }
 
 // RegisterObserver Регистрация нового наблюдателя
