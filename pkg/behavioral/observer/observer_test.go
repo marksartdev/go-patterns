@@ -9,19 +9,21 @@ var errStringF = "Некорректный результат (ожидалос�
 var errStringS = "Некорректный результат (ожидалось %s, получено %s)"
 
 func TestNewWeatherData(t *testing.T) {
+	temperature, humidity, pressure := 1.1, 1.2, 1.3
+
 	wd := NewWeatherData()
-	wd.SetMeasurements(1.1, 1.2, 1.3)
+	wd.SetMeasurements(temperature, humidity, pressure)
 
-	if wd.GetTemperature() != 1.1 {
-		t.Errorf(errStringF, 1.1, wd.GetTemperature())
+	if wd.GetTemperature() != temperature {
+		t.Errorf(errStringF, temperature, wd.GetTemperature())
 	}
 
-	if wd.GetHumidity() != 1.2 {
-		t.Errorf(errStringF, 1.2, wd.GetHumidity())
+	if wd.GetHumidity() != humidity {
+		t.Errorf(errStringF, humidity, wd.GetHumidity())
 	}
 
-	if wd.GetPressure() != 1.3 {
-		t.Errorf(errStringF, 1.3, wd.GetPressure())
+	if wd.GetPressure() != pressure {
+		t.Errorf(errStringF, pressure, wd.GetPressure())
 	}
 }
 
@@ -31,7 +33,6 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 	data := new(measurements)
 	data.temperature = 20.5
 	data.humidity = 91.0
-	data.pressure = 650.0
 
 	expected := "Current conditions:\n"
 	expected += fmt.Sprintf("\tTemperature: %.1f\n", data.temperature)
