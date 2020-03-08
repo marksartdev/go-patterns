@@ -2,6 +2,7 @@ package observer
 
 import (
 	"bytes"
+	"io"
 	"os"
 	"testing"
 )
@@ -82,6 +83,22 @@ func TestNewWeatherDataBadWriter(t *testing.T) {
 	if err == nil {
 		t.Error("Ожидалась ошибка при использовании битого Writer")
 	} else if err != os.ErrInvalid {
+		t.Error(err)
+	}
+}
+
+func TestNewWeatherDataLessMeasurements(t *testing.T) {
+	testReader := bytes.NewReader([]byte("1.1 1.2"))
+	testWriter := bytes.NewBuffer(make([]byte, 0))
+
+	wd := NewWeatherData()
+	wd.SetReader(testReader)
+	wd.SetWriter(testWriter)
+
+	err := wd.SetMeasurements()
+	if err == nil {
+		t.Error("Ожидалась ошибка при вводе меньшего количества показателей")
+	} else if err != io.EOF {
 		t.Error(err)
 	}
 }
