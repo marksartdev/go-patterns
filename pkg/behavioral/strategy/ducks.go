@@ -41,28 +41,28 @@ type baseDuck struct {
 }
 
 // Swim Плыть
-func (d *baseDuck) Swim() string {
+func (b *baseDuck) Swim() string {
 	return "All ducks float, even decoys!"
 }
 
 // PerformQuack Крякнуть
-func (d *baseDuck) PerformQuack(count int) string {
-	return d.quacker.quack(count)
+func (b *baseDuck) PerformQuack(count int) string {
+	return b.quacker.quack(count)
 }
 
 // PerformFly Полететь
-func (d *baseDuck) PerformFly() string {
-	return d.flyer.fly()
+func (b *baseDuck) PerformFly() string {
+	return b.flyer.fly()
 }
 
 // SetQuacker Установить алгоритм кряканья
-func (d *baseDuck) SetQuacker(quacker Quacker) {
-	d.quacker = quacker
+func (b *baseDuck) SetQuacker(quacker Quacker) {
+	b.quacker = quacker
 }
 
 // SetFlyer Установить алгоритм полетов
-func (d *baseDuck) SetFlyer(flyer Flyer) {
-	d.flyer = flyer
+func (b *baseDuck) SetFlyer(flyer Flyer) {
+	b.flyer = flyer
 }
 
 // Кряква
@@ -71,7 +71,7 @@ type mallardDuck struct {
 }
 
 // Display Внешний вид кряквы
-func (d *mallardDuck) Display() string {
+func (m *mallardDuck) Display() string {
 	return "I'm a mallard duck"
 }
 
@@ -90,7 +90,7 @@ type redheadDuck struct {
 }
 
 // Display Внешний вид красноголового нырка
-func (d *redheadDuck) Display() string {
+func (r *redheadDuck) Display() string {
 	return "I'm a redhead duck"
 }
 
@@ -109,7 +109,7 @@ type rubberDuck struct {
 }
 
 // Display Внешний вид резиновой уточки
-func (d *rubberDuck) Display() string {
+func (r *rubberDuck) Display() string {
 	return "I'm a rubber duck"
 }
 
@@ -147,7 +147,7 @@ type modelDuck struct {
 }
 
 // Display Внешний вид утки приманки
-func (d *modelDuck) Display() string {
+func (m *modelDuck) Display() string {
 	return "I'm a model duck"
 }
 

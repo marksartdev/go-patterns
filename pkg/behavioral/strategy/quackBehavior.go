@@ -14,7 +14,7 @@ type Quacker interface {
 type MuteQuack struct{}
 
 // Крякнуть
-func (q *MuteQuack) quack(_ int) string {
+func (m *MuteQuack) quack(_ int) string {
 	return "<< Silence >>"
 }
 
@@ -38,7 +38,7 @@ func (q *Quack) quack(count int) string {
 type Squeak struct{}
 
 // Крякнуть
-func (q *Squeak) quack(count int) string {
+func (s *Squeak) quack(count int) string {
 	speech := make([]string, count)
 	for i := 0; i < count; i++ {
 		speech[i] = "squeak"
