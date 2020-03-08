@@ -26,36 +26,42 @@ type currentConditionsDisplay struct {
 	writer      io.Writer
 	temperature float64
 	humidity    float64
-	pressure    float64
+	weatherData subject
 }
 
-// SetOutput Установить writer
-func (d *currentConditionsDisplay) SetOutput(writer io.Writer) {
-	d.writer = writer
-}
-
-// Display Отобразить экран
-func (d *currentConditionsDisplay) Display() error {
-	text := "Current conditions:\n"
-	text += fmt.Sprintf("\tTemperature: %.1f\n", d.temperature)
-	text += fmt.Sprintf("\tHumidity: %.1f\n", d.humidity)
-	text += fmt.Sprintf("\tPressure: %.1f\n", d.pressure)
-
-	_, err := fmt.Fprintln(d.writer, text)
-	return err
+// SetWriter Установить writer
+func (c *currentConditionsDisplay) SetWriter(writer io.Writer) {
+	c.writer = writer
 }
 
 // Update Обновить данные
-func (d *currentConditionsDisplay) Update(data *measurements) {
-	d.temperature = data.temperature
-	d.humidity = data.humidity
-	d.pressure = data.pressure
+func (c *currentConditionsDisplay) Update(data *measurements) error {
+	c.temperature = data.temperature
+	c.humidity = data.humidity
+
+	err := c.Display()
+
+	return err
+}
+
+// Display Вывести информацию
+func (c *currentConditionsDisplay) Display() error {
+	text := "Current conditions:\n"
+	text += fmt.Sprintf("\tTemperature: %.1f\n", c.temperature)
+	text += fmt.Sprintf("\tHumidity: %.1f\n", c.humidity)
+
+	_, err := fmt.Fprintln(c.writer, text)
+
+	return err
 }
 
 // NewCurrentConditionsDisplay Создать экран текущего состояния
-func NewCurrentConditionsDisplay() Displayer {
+func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 	display := new(currentConditionsDisplay)
 	display.writer = os.Stdout
+	display.weatherData = weatherData
+
+	display.weatherData.RegisterObserver(display)
 
 	return display
 }
