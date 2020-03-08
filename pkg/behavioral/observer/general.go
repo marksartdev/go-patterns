@@ -4,7 +4,7 @@ package observer
 type subject interface {
 	RegisterObserver(observer)
 	RemoveObserver(observer)
-	NotifyObservers()
+	NotifyObservers() string
 	GetTemperature() float64
 	GetHumidity() float64
 	GetPressure() float64

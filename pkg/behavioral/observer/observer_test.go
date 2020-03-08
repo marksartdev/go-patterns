@@ -99,3 +99,34 @@ func TestNewForecastDisplay(t *testing.T) {
 func getCoefficient() float64 {
 	return 0.7 + rand.Float64()*(1.3-0.7)
 }
+
+func TestWeatherData_NotifyObservers(t *testing.T) {
+	temperature, humidity, pressure := 2.1, 2.2, 2.3
+
+	expected := "Current conditions:\n"
+	expected += fmt.Sprintf("\tTemperature: %.1f\n", temperature)
+	expected += fmt.Sprintf("\tHumidity: %.1f\n", humidity)
+
+	wd := NewWeatherData()
+	_ = NewCurrentConditionsDisplay(wd)
+
+	result := wd.SetMeasurements(temperature, humidity, pressure)
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
+	}
+}
+
+func TestWeatherData_RemoveObserver(t *testing.T) {
+	temperature, humidity, pressure := 2.1, 2.2, 2.3
+	expected := ""
+
+	wd := NewWeatherData()
+	display := NewCurrentConditionsDisplay(wd)
+
+	wd.RemoveObserver(display)
+
+	result := wd.SetMeasurements(temperature, humidity, pressure)
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
+	}
+}

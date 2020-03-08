@@ -1,11 +1,9 @@
 package observer
 
-import "fmt"
-
 // Интерфейс работы с измерениями
 type measurementsHandler interface {
-	MeasurementsChanged()
-	SetMeasurements(float64, float64, float64)
+	MeasurementsChanged() string
+	SetMeasurements(float64, float64, float64) string
 }
 
 // WeatherDater Интерфейс источника метеоданных, способного быть субъектом
@@ -38,17 +36,17 @@ func (w *weatherData) GetPressure() float64 {
 }
 
 // MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
-func (w *weatherData) MeasurementsChanged() {
-	w.NotifyObservers()
+func (w *weatherData) MeasurementsChanged() string {
+	return w.NotifyObservers()
 }
 
 // SetMeasurements Задать измерения
-func (w *weatherData) SetMeasurements(temperature, humidity, pressure float64) {
+func (w *weatherData) SetMeasurements(temperature, humidity, pressure float64) string {
 	w.temperature = temperature
 	w.humidity = humidity
 	w.pressure = pressure
 
-	w.MeasurementsChanged()
+	return w.MeasurementsChanged()
 }
 
 // RegisterObserver Регистрация нового наблюдателя
@@ -62,15 +60,19 @@ func (w *weatherData) RemoveObserver(removedObserver observer) {
 }
 
 // NotifyObservers Оповестить наблюдателей
-func (w *weatherData) NotifyObservers() {
+func (w *weatherData) NotifyObservers() string {
+	var result string
+
 	newMeasurements := new(measurements)
 	newMeasurements.temperature = w.temperature
 	newMeasurements.humidity = w.humidity
 	newMeasurements.pressure = w.pressure
 
 	for currentObserver := range w.observers {
-		fmt.Println(currentObserver.Update(newMeasurements))
+		result += currentObserver.Update(newMeasurements)
 	}
+
+	return result
 }
 
 // NewWeatherData Создать weatherData
