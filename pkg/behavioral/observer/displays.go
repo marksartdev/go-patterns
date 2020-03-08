@@ -2,63 +2,49 @@ package observer
 
 import (
 	"fmt"
-	"io"
 	"math/rand"
-	"os"
 
 	"github.com/gonum/floats"
 )
 
 // Интерфейс визуального элемента
 type displayer interface {
-	Display() error
+	Display() string
 }
 
 // DisplayElement Интерфейс визуального элемента, способного быть наблюдателем
 type DisplayElement interface {
-	writer
 	displayer
 	observer
 }
 
 // Визуальный элемент текущего состояния
 type currentConditionsDisplay struct {
-	writer      io.Writer
 	temperature float64
 	humidity    float64
 	weatherData subject
 }
 
-// SetWriter Установить writer
-func (c *currentConditionsDisplay) SetWriter(writer io.Writer) {
-	c.writer = writer
-}
-
 // Update Обновить данные
-func (c *currentConditionsDisplay) Update(data *measurements) error {
+func (c *currentConditionsDisplay) Update(data *measurements) string {
 	c.temperature = data.temperature
 	c.humidity = data.humidity
 
-	err := c.Display()
-
-	return err
+	return c.Display()
 }
 
 // Display Вывести информацию
-func (c *currentConditionsDisplay) Display() error {
+func (c *currentConditionsDisplay) Display() string {
 	text := "Current conditions:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", c.temperature)
 	text += fmt.Sprintf("\tHumidity: %.1f\n", c.humidity)
 
-	_, err := fmt.Fprintln(c.writer, text)
-
-	return err
+	return text
 }
 
 // NewCurrentConditionsDisplay Создать визуальный элемент текущего состояния
 func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 	display := new(currentConditionsDisplay)
-	display.writer = os.Stdout
 	display.weatherData = weatherData
 
 	display.weatherData.RegisterObserver(display)
@@ -68,31 +54,23 @@ func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 
 // Визуальный элемент статистики
 type statisticsDisplay struct {
-	writer      io.Writer
 	temperature []float64
 	humidity    []float64
 	pressure    []float64
 	weatherData subject
 }
 
-// SetWriter Установить writer
-func (s *statisticsDisplay) SetWriter(writer io.Writer) {
-	s.writer = writer
-}
-
 // Update Обновить данные
-func (s *statisticsDisplay) Update(data *measurements) error {
+func (s *statisticsDisplay) Update(data *measurements) string {
 	s.temperature = append(s.temperature, data.temperature)
 	s.humidity = append(s.humidity, data.humidity)
 	s.pressure = append(s.pressure, data.pressure)
 
-	err := s.Display()
-
-	return err
+	return s.Display()
 }
 
 // Display Вывести информацию
-func (s *statisticsDisplay) Display() error {
+func (s *statisticsDisplay) Display() string {
 	var temperatureMax, temperatureMin, temperatureAvg float64
 	var humidityMax, humidityMin, humidityAvg float64
 	var pressureMax, pressureMin, pressureAvg float64
@@ -120,15 +98,12 @@ func (s *statisticsDisplay) Display() error {
 	text += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", humidityMax, humidityMin, humidityAvg)
 	text += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", pressureMax, pressureMin, pressureAvg)
 
-	_, err := fmt.Fprintln(s.writer, text)
-
-	return err
+	return text
 }
 
 // NewStatisticsDisplay Создать визуальный элемент статистики
 func NewStatisticsDisplay(weatherData subject) DisplayElement {
 	display := new(statisticsDisplay)
-	display.writer = os.Stdout
 	display.weatherData = weatherData
 
 	display.weatherData.RegisterObserver(display)
@@ -138,40 +113,31 @@ func NewStatisticsDisplay(weatherData subject) DisplayElement {
 
 // Визуальный элемент прогноза
 type forecastDisplay struct {
-	writer      io.Writer
 	temperature float64
 	humidity    float64
 	pressure    float64
 	weatherData subject
 }
 
-// SetWriter Установить writer
-func (f *forecastDisplay) SetWriter(writer io.Writer) {
-	f.writer = writer
-}
-
 // Update Обновить данные
-func (f *forecastDisplay) Update(data *measurements) error {
+func (f *forecastDisplay) Update(data *measurements) string {
 	f.temperature = data.temperature
 	f.humidity = data.humidity
 	f.pressure = data.pressure
 
 	f.makeForecast()
-	err := f.Display()
 
-	return err
+	return f.Display()
 }
 
 // Display Вывести информацию
-func (f *forecastDisplay) Display() error {
+func (f *forecastDisplay) Display() string {
 	text := "Forecast:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", f.temperature)
 	text += fmt.Sprintf("\tHumidity: %.1f\n", f.humidity)
 	text += fmt.Sprintf("\tPressure: %.1f\n", f.pressure)
 
-	_, err := fmt.Fprintln(f.writer, text)
-
-	return err
+	return text
 }
 
 // Сделать прогноз
@@ -191,7 +157,6 @@ func (f *forecastDisplay) getCoefficient() float64 {
 // NewForecastDisplay Создать визуальный элемент прогноза
 func NewForecastDisplay(weatherData subject) DisplayElement {
 	display := new(forecastDisplay)
-	display.writer = os.Stdout
 	display.weatherData = weatherData
 
 	display.weatherData.RegisterObserver(display)

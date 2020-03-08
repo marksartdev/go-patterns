@@ -1,47 +1,16 @@
 package observer
 
 import (
-	"bytes"
 	"fmt"
-	"io"
-	"os"
 	"testing"
 )
 
 var errStringF = "Некорректный результат (ожидалось %.1f, получено %.1f)"
 var errStringS = "Некорректный результат (ожидалось %s, получено %s)"
 
-// Битый reader
-type badReader struct{}
-
-func (r *badReader) Read(_ []byte) (n int, err error) {
-	return 0, os.ErrInvalid
-}
-
-// Битый writer
-type badWriter struct{}
-
-// Write Записать в writer
-func (w *badWriter) Write(_ []byte) (n int, err error) {
-	return 0, os.ErrInvalid
-}
-
 func TestNewWeatherData(t *testing.T) {
-	testReader := bytes.NewReader([]byte("1.1 1.2 1.3"))
-	testWriter := bytes.NewBuffer(make([]byte, 0))
-	expected := "Введите новые данные через пробел (temperature humidity pressure):\n"
-
 	wd := NewWeatherData()
-	wd.SetReader(testReader)
-	wd.SetWriter(testWriter)
-
-	if err := wd.SetMeasurements(); err != nil {
-		t.Error(err)
-	}
-
-	if testWriter.String() != expected {
-		t.Errorf(errStringS, expected, testWriter)
-	}
+	wd.SetMeasurements(1.1, 1.2, 1.3)
 
 	if wd.GetTemperature() != 1.1 {
 		t.Errorf(errStringF, 1.1, wd.GetTemperature())
@@ -56,72 +25,7 @@ func TestNewWeatherData(t *testing.T) {
 	}
 }
 
-func TestNewWeatherDataBadReader(t *testing.T) {
-	testReader := new(badReader)
-	testWriter := bytes.NewBuffer(make([]byte, 0))
-
-	wd := NewWeatherData()
-	wd.SetReader(testReader)
-	wd.SetWriter(testWriter)
-
-	err := wd.SetMeasurements()
-	if err == nil {
-		t.Error("Ожидалась ошибка при использовании битого Reader")
-	} else if err != os.ErrInvalid {
-		t.Error(err)
-	}
-}
-
-func TestNewWeatherDataBadWriter(t *testing.T) {
-	testReader := bytes.NewReader([]byte("1.1 1.2 1.3"))
-	testWriter := new(badWriter)
-
-	wd := NewWeatherData()
-	wd.SetReader(testReader)
-	wd.SetWriter(testWriter)
-
-	err := wd.SetMeasurements()
-	if err == nil {
-		t.Error("Ожидалась ошибка при использовании битого Writer")
-	} else if err != os.ErrInvalid {
-		t.Error(err)
-	}
-}
-
-func TestNewWeatherDataLessMeasurements(t *testing.T) {
-	testReader := bytes.NewReader([]byte("1.1 1.2"))
-	testWriter := bytes.NewBuffer(make([]byte, 0))
-
-	wd := NewWeatherData()
-	wd.SetReader(testReader)
-	wd.SetWriter(testWriter)
-
-	err := wd.SetMeasurements()
-	if err == nil {
-		t.Error("Ожидалась ошибка при вводе меньшего количества показателей")
-	} else if err != io.EOF {
-		t.Error(err)
-	}
-}
-
-func TestNewWeatherDataNaN(t *testing.T) {
-	testReader := bytes.NewReader([]byte("1.1 1.2 NotNumber"))
-	testWriter := bytes.NewBuffer(make([]byte, 0))
-
-	wd := NewWeatherData()
-	wd.SetReader(testReader)
-	wd.SetWriter(testWriter)
-
-	err := wd.SetMeasurements()
-	if err == nil {
-		t.Error("Ожидалась ошибка при вводе не числового значения")
-	} else if err.Error() != "strconv.ParseFloat: parsing \"NotNumber\": invalid syntax" {
-		t.Error(err)
-	}
-}
-
 func TestNewCurrentConditionsDisplay(t *testing.T) {
-	testWriter := bytes.NewBuffer(make([]byte, 0))
 	wd := NewWeatherData()
 
 	data := new(measurements)
@@ -131,34 +35,13 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 
 	expected := "Current conditions:\n"
 	expected += fmt.Sprintf("\tTemperature: %.1f\n", data.temperature)
-	expected += fmt.Sprintf("\tHumidity: %.1f\n\n", data.humidity)
+	expected += fmt.Sprintf("\tHumidity: %.1f\n", data.humidity)
 
 	display := NewCurrentConditionsDisplay(wd)
-	display.SetWriter(testWriter)
 
-	err := display.Update(data)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if testWriter.String() != expected {
-		t.Errorf(errStringS, expected, testWriter.String())
-	}
-}
-
-func TestNewCurrentConditionsDisplay_BadWriter(t *testing.T) {
-	testWriter := new(badWriter)
-	wd := NewWeatherData()
-	data := new(measurements)
-
-	display := NewCurrentConditionsDisplay(wd)
-	display.SetWriter(testWriter)
-
-	err := display.Update(data)
-	if err == nil {
-		t.Error("Ожидалась ошибка при использовании битого Writer")
-	} else if err != os.ErrInvalid {
-		t.Error(err)
+	result := display.Update(data)
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
 	}
 }
 
