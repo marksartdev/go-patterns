@@ -9,10 +9,15 @@ import (
 	"github.com/gonum/floats"
 )
 
-// Displayer Интерфейс экрана
-type Displayer interface {
-	SetOutput(io.Writer)
+// Интерфейс визуального элемента
+type displayer interface {
 	Display() error
+}
+
+// DisplayElement Интерфейс визуального элемента, способного быть наблюдателем
+type DisplayElement interface {
+	writer
+	displayer
 	observer
 }
 
