@@ -72,35 +72,47 @@ type statisticsDisplay struct {
 	temperature []float64
 	humidity    []float64
 	pressure    []float64
+	weatherData subject
 }
 
-// SetOutput Установить writer
-func (d *statisticsDisplay) SetOutput(writer io.Writer) {
-	d.writer = writer
+// SetWriter Установить writer
+func (s *statisticsDisplay) SetWriter(writer io.Writer) {
+	s.writer = writer
 }
 
-// Display Отобразить экран
-func (d *statisticsDisplay) Display() error {
+// Update Обновить данные
+func (s *statisticsDisplay) Update(data *measurements) error {
+	s.temperature = append(s.temperature, data.temperature)
+	s.humidity = append(s.humidity, data.humidity)
+	s.pressure = append(s.pressure, data.pressure)
+
+	err := s.Display()
+
+	return err
+}
+
+// Display Вывести информацию
+func (s *statisticsDisplay) Display() error {
 	var temperatureMax, temperatureMin, temperatureAvg float64
 	var humidityMax, humidityMin, humidityAvg float64
 	var pressureMax, pressureMin, pressureAvg float64
 
-	if len(d.temperature) > 0 {
-		temperatureMax = floats.Max(d.temperature)
-		temperatureMin = floats.Min(d.temperature)
-		temperatureAvg = floats.Sum(d.temperature) / float64(len(d.temperature))
+	if len(s.temperature) > 0 {
+		temperatureMax = floats.Max(s.temperature)
+		temperatureMin = floats.Min(s.temperature)
+		temperatureAvg = floats.Sum(s.temperature) / float64(len(s.temperature))
 	}
 
-	if len(d.humidity) > 0 {
-		humidityMax = floats.Max(d.humidity)
-		humidityMin = floats.Min(d.humidity)
-		humidityAvg = floats.Sum(d.humidity) / float64(len(d.humidity))
+	if len(s.humidity) > 0 {
+		humidityMax = floats.Max(s.humidity)
+		humidityMin = floats.Min(s.humidity)
+		humidityAvg = floats.Sum(s.humidity) / float64(len(s.humidity))
 	}
 
-	if len(d.pressure) > 0 {
-		pressureMax = floats.Max(d.pressure)
-		pressureMin = floats.Min(d.pressure)
-		pressureAvg = floats.Sum(d.pressure) / float64(len(d.pressure))
+	if len(s.pressure) > 0 {
+		pressureMax = floats.Max(s.pressure)
+		pressureMin = floats.Min(s.pressure)
+		pressureAvg = floats.Sum(s.pressure) / float64(len(s.pressure))
 	}
 
 	text := "Statistics:\n"
@@ -108,21 +120,18 @@ func (d *statisticsDisplay) Display() error {
 	text += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", humidityMax, humidityMin, humidityAvg)
 	text += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", pressureMax, pressureMin, pressureAvg)
 
-	_, err := fmt.Fprintln(d.writer, text)
+	_, err := fmt.Fprintln(s.writer, text)
+
 	return err
 }
 
-// Update Обновить данные
-func (d *statisticsDisplay) Update(data *measurements) {
-	d.temperature = append(d.temperature, data.temperature)
-	d.humidity = append(d.humidity, data.humidity)
-	d.pressure = append(d.pressure, data.pressure)
-}
-
 // NewStatisticsDisplay Создать экран статистики
-func NewStatisticsDisplay() Displayer {
+func NewStatisticsDisplay(weatherData subject) DisplayElement {
 	display := new(statisticsDisplay)
 	display.writer = os.Stdout
+	display.weatherData = weatherData
+
+	display.weatherData.RegisterObserver(display)
 
 	return display
 }
