@@ -5,7 +5,6 @@ import (
 	"io"
 	"os"
 	"strconv"
-	"strings"
 )
 
 // Интерфейс работы с измерениями
@@ -109,7 +108,7 @@ func (w *weatherData) NotifyObservers() []error {
 
 // Получить данные
 func (w *weatherData) input() (*measurements, error) {
-	var input string
+	var inputs [3]string
 	var numbers [3]float64
 
 	_, err := fmt.Fprintln(w.writer, "Введите новые данные через пробел (temperature humidity pressure):")
@@ -117,18 +116,12 @@ func (w *weatherData) input() (*measurements, error) {
 		return nil, err
 	}
 
-	_, err = fmt.Fscanln(w.reader, &input)
+	_, err = fmt.Fscan(w.reader, &inputs[0], &inputs[1], &inputs[2])
 	if err != nil {
 		return nil, err
 	}
 
-	inputs := strings.Split(input, " ")
-
 	for i, measurement := range inputs {
-		if i > 2 {
-			break
-		}
-
 		numbers[i], err = strconv.ParseFloat(measurement, 64)
 		if err != nil {
 			return nil, err
