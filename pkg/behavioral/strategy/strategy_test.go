@@ -76,7 +76,7 @@ func TestNewModelDuck(t *testing.T) {
 	compareResults(expected, duck, t, 4)
 }
 
-func TestSetQuackBehavior_MuteQuack(t *testing.T) {
+func TestSetQuacker_MuteQuack(t *testing.T) {
 	duck := NewMallardDuck()
 	compareQuackBehaviorResult("Quack-quack-quack", duck.PerformQuack(3), t)
 
@@ -84,7 +84,7 @@ func TestSetQuackBehavior_MuteQuack(t *testing.T) {
 	compareQuackBehaviorResult("<< Silence >>", duck.PerformQuack(3), t)
 }
 
-func TestSetQuackBehavior_Quack(t *testing.T) {
+func TestSetQuacker_Quack(t *testing.T) {
 	duck := NewDecoyDuck()
 	compareQuackBehaviorResult("<< Silence >>", duck.PerformQuack(3), t)
 
@@ -92,7 +92,7 @@ func TestSetQuackBehavior_Quack(t *testing.T) {
 	compareQuackBehaviorResult("Quack-quack", duck.PerformQuack(2), t)
 }
 
-func TestSetQuackBehavior_Squeak(t *testing.T) {
+func TestSetQuacker_Squeak(t *testing.T) {
 	duck := NewModelDuck()
 	compareQuackBehaviorResult("Quack-quack-quack", duck.PerformQuack(3), t)
 
@@ -100,7 +100,7 @@ func TestSetQuackBehavior_Squeak(t *testing.T) {
 	compareQuackBehaviorResult("Squeak-squeak", duck.PerformQuack(2), t)
 }
 
-func TestSetFlyBehavior_FlyNoWay(t *testing.T) {
+func TestSetFlyer_FlyNoWay(t *testing.T) {
 	duck := NewMallardDuck()
 	compareFlyBehaviorResult("I'm flying!!", duck.PerformFly(), t)
 
@@ -108,7 +108,7 @@ func TestSetFlyBehavior_FlyNoWay(t *testing.T) {
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 }
 
-func TestSetFlyBehavior_FlyWithWings(t *testing.T) {
+func TestSetFlyer_FlyWithWings(t *testing.T) {
 	duck := NewModelDuck()
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 
@@ -116,7 +116,7 @@ func TestSetFlyBehavior_FlyWithWings(t *testing.T) {
 	compareFlyBehaviorResult("I'm flying!!", duck.PerformFly(), t)
 }
 
-func TestSetFlyBehavior_FlyRocketPowered(t *testing.T) {
+func TestSetFlyer_FlyRocketPowered(t *testing.T) {
 	duck := NewModelDuck()
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 
