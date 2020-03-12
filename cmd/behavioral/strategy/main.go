@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"go-patterns/pkg/behavioral/strategy"
 	"math/rand"
+
+	"github.com/Mark-Sart/go-patterns/pkg/behavioral/strategy"
 )
 
 func main() {

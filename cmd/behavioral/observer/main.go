@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"go-patterns/pkg/behavioral/observer"
+
+	"github.com/Mark-Sart/go-patterns/pkg/behavioral/observer"
 )
 
 func main() {

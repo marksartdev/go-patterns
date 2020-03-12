@@ -1,4 +1,4 @@
-module go-patterns
+module github.com/Mark-Sart/go-patterns
 
 go 1.14
 
