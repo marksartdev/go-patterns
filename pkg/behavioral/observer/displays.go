@@ -26,9 +26,17 @@ type currentConditionsDisplay struct {
 }
 
 // Update Обновить данные
-func (c *currentConditionsDisplay) Update(data *measurements) string {
-	c.temperature = data.temperature
-	c.humidity = data.humidity
+func (c *currentConditionsDisplay) Update(observable subject, data *measurements) string {
+	if data != nil {
+		c.temperature = data.temperature
+		c.humidity = data.humidity
+	} else {
+		wd, ok := observable.(WeatherDater)
+		if ok {
+			c.temperature = wd.GetTemperature()
+			c.humidity = wd.GetHumidity()
+		}
+	}
 
 	return c.Display()
 }
@@ -61,10 +69,19 @@ type statisticsDisplay struct {
 }
 
 // Update Обновить данные
-func (s *statisticsDisplay) Update(data *measurements) string {
-	s.temperature = append(s.temperature, data.temperature)
-	s.humidity = append(s.humidity, data.humidity)
-	s.pressure = append(s.pressure, data.pressure)
+func (s *statisticsDisplay) Update(observable subject, data *measurements) string {
+	if data != nil {
+		s.temperature = append(s.temperature, data.temperature)
+		s.humidity = append(s.humidity, data.humidity)
+		s.pressure = append(s.pressure, data.pressure)
+	} else {
+		wd, ok := observable.(WeatherDater)
+		if ok {
+			s.temperature = append(s.temperature, wd.GetTemperature())
+			s.humidity = append(s.humidity, wd.GetHumidity())
+			s.pressure = append(s.pressure, wd.GetPressure())
+		}
+	}
 
 	return s.Display()
 }
@@ -120,10 +137,19 @@ type forecastDisplay struct {
 }
 
 // Update Обновить данные
-func (f *forecastDisplay) Update(data *measurements) string {
-	f.temperature = data.temperature
-	f.humidity = data.humidity
-	f.pressure = data.pressure
+func (f *forecastDisplay) Update(observable subject, data *measurements) string {
+	if data != nil {
+		f.temperature = data.temperature
+		f.humidity = data.humidity
+		f.pressure = data.pressure
+	} else {
+		wd, ok := observable.(WeatherDater)
+		if ok {
+			f.temperature = wd.GetTemperature()
+			f.humidity = wd.GetHumidity()
+			f.pressure = wd.GetPressure()
+		}
+	}
 
 	f.makeForecast()
 
