@@ -10,7 +10,7 @@ var errStringF = "Некорректный результат (ожидалос�
 var errStringS = "Некорректный результат (ожидалось %s, получено %s)"
 
 func TestNewWeatherData(t *testing.T) {
-	temperature, humidity, pressure := 1.1, 1.2, 1.3
+	temperature, humidity, pressure := 20.0, 60.0, 600.0
 
 	wd := NewWeatherData()
 	wd.SetMeasurements(temperature, humidity, pressure)
@@ -32,8 +32,8 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 	wd := NewWeatherData()
 
 	data := new(measurements)
-	data.temperature = 2.1
-	data.humidity = 2.2
+	data.temperature = 25.0
+	data.humidity = 65.0
 
 	expected := "Current conditions:\n"
 	expected += fmt.Sprintf("\tTemperature: %.1f\n", data.temperature)
@@ -41,7 +41,7 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 
 	display := NewCurrentConditionsDisplay(wd)
 
-	result := display.Update(nil, data)
+	result := display.Update(wd, data)
 	if result != expected {
 		t.Errorf(errStringS, expected, result)
 	}
@@ -50,23 +50,45 @@ func TestNewCurrentConditionsDisplay(t *testing.T) {
 func TestNewStatisticsDisplay(t *testing.T) {
 	wd := NewWeatherData()
 
+	dataMin := new(measurements)
+	dataMin.temperature = 27.8
+	dataMin.humidity = 70.0
+	dataMin.pressure = 700.0
+
+	dataMax := new(measurements)
+	dataMax.temperature = 32.2
+	dataMax.humidity = 80.0
+	dataMax.pressure = 800.0
+
+	dataAvg := new(measurements)
+	dataAvg.temperature = (dataMin.temperature + dataMax.temperature) / 2
+	dataAvg.humidity = (dataMin.humidity + dataMax.humidity) / 2
+	dataAvg.pressure = (dataMin.pressure + dataMax.pressure) / 2
+
 	expected := "Statistics:\n"
-	expected += fmt.Sprintf("\tTemperature (max/min/avg): %.1f/%.1f/%.1f\n", 3.7, 3.1, 3.4)
-	expected += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", 3.8, 3.2, 3.5)
-	expected += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", 3.9, 3.3, 3.6)
+	expected += fmt.Sprintf(
+		"\tTemperature (min/max/avg): %.1f/%.1f/%.1f\n",
+		dataMin.temperature,
+		dataMax.temperature,
+		dataAvg.temperature,
+	)
+	expected += fmt.Sprintf(
+		"\tHumidity (min/max/avg): %.1f/%.1f/%.1f\n",
+		dataMin.humidity,
+		dataMax.humidity,
+		dataAvg.humidity,
+	)
+	expected += fmt.Sprintf(
+		"\tPressure (min/max/avg): %.1f/%.1f/%.1f\n",
+		dataMin.pressure,
+		dataMax.pressure,
+		dataAvg.pressure,
+	)
 
 	display := NewStatisticsDisplay(wd)
 
-	data := new(measurements)
-	data.temperature = 3.1
-	data.humidity = 3.2
-	data.pressure = 3.3
-	result := display.Update(nil, data)
-
-	data.temperature = 3.7
-	data.humidity = 3.8
-	data.pressure = 3.9
-	result = display.Update(nil, data)
+	_ = display.Update(wd, dataMin)
+	result := display.Update(wd, dataMax)
 
 	if result != expected {
 		t.Errorf(errStringS, expected, result)
@@ -77,9 +99,9 @@ func TestNewForecastDisplay(t *testing.T) {
 	wd := NewWeatherData()
 
 	data := new(measurements)
-	data.temperature = 4.1
-	data.humidity = 4.2
-	data.pressure = 4.3
+	data.temperature = 10.0
+	data.humidity = 40.0
+	data.pressure = 550.0
 
 	rand.Seed(512)
 
@@ -90,7 +112,7 @@ func TestNewForecastDisplay(t *testing.T) {
 
 	display := NewForecastDisplay(wd)
 
-	result := display.Update(nil, data)
+	result := display.Update(wd, data)
 	if result != expected {
 		t.Errorf(errStringS, expected, result)
 	}
@@ -101,26 +123,26 @@ func getCoefficient() float64 {
 }
 
 func TestWeatherData_NotifyObservers_ActiveDelivery(t *testing.T) {
-	newMeasurements := new(measurements)
-	newMeasurements.temperature = 5.1
-	newMeasurements.humidity = 5.2
+	data := new(measurements)
+	data.temperature = 35.0
+	data.humidity = 80.0
 
 	expected := "Current conditions:\n"
-	expected += fmt.Sprintf("\tTemperature: %.1f\n", newMeasurements.temperature)
-	expected += fmt.Sprintf("\tHumidity: %.1f\n", newMeasurements.humidity)
+	expected += fmt.Sprintf("\tTemperature: %.1f\n", data.temperature)
+	expected += fmt.Sprintf("\tHumidity: %.1f\n", data.humidity)
 
 	wd := NewWeatherData()
 	_ = NewCurrentConditionsDisplay(wd)
 
 	wd.SetChanged()
-	result := wd.NotifyObservers(newMeasurements)
+	result := wd.NotifyObservers(data)
 	if result != expected {
 		t.Errorf(errStringS, expected, result)
 	}
 }
 
 func TestWeatherData_NotifyObservers_CurrentConditionsDisplay(t *testing.T) {
-	temperature, humidity, pressure := 6.1, 6.2, 6.3
+	temperature, humidity, pressure := 24.0, 62.0, 630.0
 
 	expected := "Current conditions:\n"
 	expected += fmt.Sprintf("\tTemperature: %.1f\n", temperature)
@@ -137,26 +159,56 @@ func TestWeatherData_NotifyObservers_CurrentConditionsDisplay(t *testing.T) {
 }
 
 func TestWeatherData_NotifyObservers_StatisticsDisplay(t *testing.T) {
+	dataMin := new(measurements)
+	dataMin.temperature = 26.8
+	dataMin.humidity = 65.0
+	dataMin.pressure = 650.0
+
+	dataMax := new(measurements)
+	dataMax.temperature = 32.2
+	dataMax.humidity = 77.0
+	dataMax.pressure = 770.0
+
+	dataAvg := new(measurements)
+	dataAvg.temperature = (dataMin.temperature + dataMax.temperature) / 2
+	dataAvg.humidity = (dataMin.humidity + dataMax.humidity) / 2
+	dataAvg.pressure = (dataMin.pressure + dataMax.pressure) / 2
+
 	expected := "Statistics:\n"
-	expected += fmt.Sprintf("\tTemperature (max/min/avg): %.1f/%.1f/%.1f\n", 7.7, 7.1, 7.4)
-	expected += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", 7.8, 7.2, 7.5)
-	expected += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", 7.9, 7.3, 7.6)
+	expected += fmt.Sprintf(
+		"\tTemperature (min/max/avg): %.1f/%.1f/%.1f\n",
+		dataMin.temperature,
+		dataMax.temperature,
+		dataAvg.temperature,
+	)
+	expected += fmt.Sprintf(
+		"\tHumidity (min/max/avg): %.1f/%.1f/%.1f\n",
+		dataMin.humidity,
+		dataMax.humidity,
+		dataAvg.humidity,
+	)
+	expected += fmt.Sprintf(
+		"\tPressure (min/max/avg): %.1f/%.1f/%.1f\n",
+		dataMin.pressure,
+		dataMax.pressure,
+		dataAvg.pressure,
+	)
 
 	wd := NewWeatherData()
 	_ = NewStatisticsDisplay(wd)
 
 	wd.SetChanged()
-	_ = wd.SetMeasurements(7.1, 7.2, 7.3)
+	_ = wd.SetMeasurements(dataMin.temperature, dataMin.humidity, dataMin.pressure)
 
 	wd.SetChanged()
-	result := wd.SetMeasurements(7.7, 7.8, 7.9)
+	result := wd.SetMeasurements(dataMax.temperature, dataMax.humidity, dataMax.pressure)
 	if result != expected {
 		t.Errorf(errStringS, expected, result)
 	}
 }
 
 func TestWeatherData_NotifyObservers_ForecastDisplay(t *testing.T) {
-	temperature, humidity, pressure := 8.1, 8.2, 8.3
+	temperature, humidity, pressure := 22.0, 41.0, 670.0
 	rand.Seed(512)
 
 	expected := "Forecast:\n"
@@ -175,7 +227,7 @@ func TestWeatherData_NotifyObservers_ForecastDisplay(t *testing.T) {
 }
 
 func TestWeatherData_NotifyObservers_WithoutSetChanged(t *testing.T) {
-	temperature, humidity, pressure := 9.1, 9.2, 9.3
+	temperature, humidity, pressure := 15.0, 10.0, 590.0
 
 	expected := ""
 
@@ -189,7 +241,7 @@ func TestWeatherData_NotifyObservers_WithoutSetChanged(t *testing.T) {
 }
 
 func TestWeatherData_RemoveObserver(t *testing.T) {
-	temperature, humidity, pressure := 10.1, 10.2, 10.3
+	temperature, humidity, pressure := 10.1, 35.0, 630.0
 	expected := ""
 
 	wd := NewWeatherData()
