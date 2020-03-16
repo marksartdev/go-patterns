@@ -122,6 +122,40 @@ func getCoefficient() float64 {
 	return 0.7 + rand.Float64()*(1.3-0.7)
 }
 
+func TestNewHeatIndexDisplay_Above27C(t *testing.T) {
+	wd := NewWeatherData()
+
+	data := new(measurements)
+	data.temperature = 30.0
+	data.humidity = 50.0
+
+	expected := "Heat index: 31.0\n"
+
+	display := NewHeatIndexDisplay(wd)
+
+	result := display.Update(wd, data)
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
+	}
+}
+
+func TestNewHeatIndexDisplay_Below27C(t *testing.T) {
+	wd := NewWeatherData()
+
+	data := new(measurements)
+	data.temperature = 20.0
+	data.humidity = 50.0
+
+	expected := ""
+
+	display := NewHeatIndexDisplay(wd)
+
+	result := display.Update(wd, data)
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
+	}
+}
+
 func TestWeatherData_NotifyObservers_ActiveDelivery(t *testing.T) {
 	data := new(measurements)
 	data.temperature = 35.0
@@ -218,6 +252,21 @@ func TestWeatherData_NotifyObservers_ForecastDisplay(t *testing.T) {
 
 	wd := NewWeatherData()
 	_ = NewForecastDisplay(wd)
+
+	wd.SetChanged()
+	result := wd.SetMeasurements(temperature, humidity, pressure)
+	if result != expected {
+		t.Errorf(errStringS, expected, result)
+	}
+}
+
+func TestWeatherData_NotifyObservers_HeatIndexDisplay(t *testing.T) {
+	temperature, humidity, pressure := 35.0, 60.0, 720.0
+
+	expected := "Heat index: 45.1\n"
+
+	wd := NewWeatherData()
+	_ = NewHeatIndexDisplay(wd)
 
 	wd.SetChanged()
 	result := wd.SetMeasurements(temperature, humidity, pressure)
