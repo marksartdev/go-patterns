@@ -230,7 +230,7 @@ func (h *heatIndexDisplay) Display() string {
 	c8 := 0.00072546
 	c9 := -0.000003582
 
-	headIndex := c1 +
+	heatIndex := c1 +
 		c2*h.temperature +
 		c3*h.humidity +
 		c4*h.temperature*h.humidity +
@@ -240,7 +240,7 @@ func (h *heatIndexDisplay) Display() string {
 		c8*h.temperature*math.Pow(h.humidity, 2) +
 		c9*math.Pow(h.temperature, 2)*math.Pow(h.humidity, 2)
 
-	return fmt.Sprintf("Heat index: %.1f\n", headIndex)
+	return fmt.Sprintf("Heat index: %.1f\n", heatIndex)
 }
 
 // NewHeatIndexDisplay Создать визуальный элемент теплового индекса
