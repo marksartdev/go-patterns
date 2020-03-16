@@ -2,6 +2,7 @@ package observer
 
 import (
 	"fmt"
+	"math"
 	"math/rand"
 
 	"github.com/gonum/floats"
@@ -183,6 +184,68 @@ func (f *forecastDisplay) getCoefficient() float64 {
 // NewForecastDisplay Создать визуальный элемент прогноза
 func NewForecastDisplay(weatherData subject) DisplayElement {
 	display := new(forecastDisplay)
+	display.weatherData = weatherData
+
+	display.weatherData.RegisterObserver(display)
+
+	return display
+}
+
+// Визуальный элемент теплового индекса
+type heatIndexDisplay struct {
+	temperature float64
+	humidity    float64
+	weatherData subject
+}
+
+// Update Обновить данные
+func (h *heatIndexDisplay) Update(observable subject, data *measurements) string {
+	if data != nil {
+		h.temperature = data.temperature
+		h.humidity = data.humidity
+	} else {
+		wd, ok := observable.(WeatherDater)
+		if ok {
+			h.temperature = wd.GetTemperature()
+			h.humidity = wd.GetHumidity()
+		}
+	}
+
+	return h.Display()
+}
+
+// Display Вывести информацию
+func (h *heatIndexDisplay) Display() string {
+	if h.temperature < 27 {
+		return ""
+	}
+
+	c1 := -8.78469475556
+	c2 := 1.61139411
+	c3 := 2.33854883889
+	c4 := -0.14611605
+	c5 := -0.012308094
+	c6 := -0.0164248277778
+	c7 := 0.002211732
+	c8 := 0.00072546
+	c9 := -0.000003582
+
+	headIndex := c1 +
+		c2*h.temperature +
+		c3*h.humidity +
+		c4*h.temperature*h.humidity +
+		c5*math.Pow(h.temperature, 2) +
+		c6*math.Pow(h.humidity, 2) +
+		c7*math.Pow(h.temperature, 2)*h.humidity +
+		c8*h.temperature*math.Pow(h.humidity, 2) +
+		c9*math.Pow(h.temperature, 2)*math.Pow(h.humidity, 2)
+
+	return fmt.Sprintf("Heat index: %.1f\n", headIndex)
+}
+
+// NewHeatIndexDisplay Создать визуальный элемент теплового индекса
+func NewHeatIndexDisplay(weatherData subject) DisplayElement {
+	display := new(heatIndexDisplay)
 	display.weatherData = weatherData
 
 	display.weatherData.RegisterObserver(display)
