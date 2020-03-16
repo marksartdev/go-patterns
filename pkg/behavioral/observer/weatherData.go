@@ -46,12 +46,12 @@ func (w *weatherData) RemoveObserver(removedObserver observer) {
 }
 
 // NotifyObservers Оповестить наблюдателей
-func (w *weatherData) NotifyObservers(newMeasurements *measurements) string {
+func (w *weatherData) NotifyObservers(data *measurements) string {
 	var result string
 
 	if w.HasChanged() {
 		for currentObserver := range w.observers {
-			result += currentObserver.Update(w, newMeasurements)
+			result += currentObserver.Update(w, data)
 		}
 
 		w.ClearChanged()
