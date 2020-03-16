@@ -111,9 +111,9 @@ func (s *statisticsDisplay) Display() string {
 	}
 
 	text := "Statistics:\n"
-	text += fmt.Sprintf("\tTemperature (max/min/avg): %.1f/%.1f/%.1f\n", temperatureMax, temperatureMin, temperatureAvg)
-	text += fmt.Sprintf("\tHumidity (max/min/avg): %.1f/%.1f/%.1f\n", humidityMax, humidityMin, humidityAvg)
-	text += fmt.Sprintf("\tPressure (max/min/avg): %.1f/%.1f/%.1f\n", pressureMax, pressureMin, pressureAvg)
+	text += fmt.Sprintf("\tTemperature (min/max/avg): %.1f/%.1f/%.1f\n", temperatureMin, temperatureMax, temperatureAvg)
+	text += fmt.Sprintf("\tHumidity (min/max/avg): %.1f/%.1f/%.1f\n", humidityMin, humidityMax, humidityAvg)
+	text += fmt.Sprintf("\tPressure (min/max/avg): %.1f/%.1f/%.1f\n", pressureMin, pressureMax, pressureAvg)
 
 	return text
 }
