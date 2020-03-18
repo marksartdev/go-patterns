@@ -63,12 +63,12 @@ func (b *beverage) SetSoy() {
 	b.soy = true
 }
 
-// HasMocha Проверить наличие мокко
+// HasMocha Проверить наличие шоколада
 func (b *beverage) HasMocha() bool {
 	return b.mocha
 }
 
-// SetMocha Задать мокко
+// SetMocha Задать шоколад
 func (b *beverage) SetMocha() {
 	b.mocha = true
 }
@@ -121,7 +121,7 @@ func NewHouseBlend() Beverage {
 	return bv
 }
 
-// Напиток "Темный жаренный кофе"
+// Напиток "Кофе темной обжарки"
 type darkRoast struct {
 	beverage
 }
@@ -131,15 +131,15 @@ func (d *darkRoast) Cost() float64 {
 	return 60.0 + d.beverage.Cost()
 }
 
-// NewDarkRoast Создать напиток "Темный жаренный кофе"
+// NewDarkRoast Создать напиток "Кофе темной обжарки"
 func NewDarkRoast() Beverage {
 	bv := new(darkRoast)
-	bv.description = "Темный жаренный кофе"
+	bv.description = "Кофе темной обжарки"
 
 	return bv
 }
 
-// Напиток "Без кофеина"
+// Напиток "Кофе без кофеина"
 type decaf struct {
 	beverage
 }
@@ -149,10 +149,10 @@ func (d *decaf) Cost() float64 {
 	return 40.0 + d.beverage.Cost()
 }
 
-// NewDecaf Создать напиток "Без кофеина"
+// NewDecaf Создать напиток "Кофе без кофеина"
 func NewDecaf() Beverage {
 	bv := new(decaf)
-	bv.description = "Без кофеина"
+	bv.description = "Кофе без кофеина"
 
 	return bv
 }
