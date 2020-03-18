@@ -68,7 +68,7 @@ func (b *beverage) HasMocha() bool {
 	return b.mocha
 }
 
-// SetMocha SetSoy Задать мокко
+// SetMocha Задать мокко
 func (b *beverage) SetMocha() {
 	b.mocha = true
 }
