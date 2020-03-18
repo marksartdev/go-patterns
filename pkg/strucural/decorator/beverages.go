@@ -43,12 +43,12 @@ func (b *beverage) GetDescription() string {
 	return b.description
 }
 
-// HasMilk Проверить наличие молока
+// HasMilk Проверить наличие молочной пены
 func (b *beverage) HasMilk() bool {
 	return b.milk
 }
 
-// SetMilk Задать молоко
+// SetMilk Задать молочную пену
 func (b *beverage) SetMilk() {
 	b.milk = true
 }
@@ -103,7 +103,7 @@ func (b *beverage) Cost() float64 {
 	return cost
 }
 
-// Напиток "Домашний кофе"
+// Кофе "Домашняя смесь"
 type houseBlend struct {
 	beverage
 }
@@ -113,15 +113,15 @@ func (h *houseBlend) Cost() float64 {
 	return 50.0 + h.beverage.Cost()
 }
 
-// NewHouseBlend Создать напиток "Домашний кофе"
+// NewHouseBlend Создать кофе "Домашняя смесь"
 func NewHouseBlend() Beverage {
 	bv := new(houseBlend)
-	bv.description = "Домашний кофе"
+	bv.description = "Кофе \"Домашняя смесь\""
 
 	return bv
 }
 
-// Напиток "Кофе темной обжарки"
+// Кофе "Темная обжарка"
 type darkRoast struct {
 	beverage
 }
@@ -131,15 +131,15 @@ func (d *darkRoast) Cost() float64 {
 	return 60.0 + d.beverage.Cost()
 }
 
-// NewDarkRoast Создать напиток "Кофе темной обжарки"
+// NewDarkRoast Создать кофе "Темная обжарка"
 func NewDarkRoast() Beverage {
 	bv := new(darkRoast)
-	bv.description = "Кофе темной обжарки"
+	bv.description = "Кофе \"Темная обжарка\""
 
 	return bv
 }
 
-// Напиток "Кофе без кофеина"
+// Кофе "Без кофеина"
 type decaf struct {
 	beverage
 }
@@ -149,15 +149,15 @@ func (d *decaf) Cost() float64 {
 	return 40.0 + d.beverage.Cost()
 }
 
-// NewDecaf Создать напиток "Кофе без кофеина"
+// NewDecaf Создать кофе "Без кофеина"
 func NewDecaf() Beverage {
 	bv := new(decaf)
-	bv.description = "Кофе без кофеина"
+	bv.description = "Кофе \"Без кофеина\""
 
 	return bv
 }
 
-// Напиток "Эспрессо"
+// Кофе "Эспрессо"
 type espresso struct {
 	beverage
 }
@@ -167,10 +167,10 @@ func (e *espresso) Cost() float64 {
 	return 30.0 + e.beverage.Cost()
 }
 
-// NewEspresso Создать напиток "Эспрессо"
+// NewEspresso Создать кофе "Эспрессо"
 func NewEspresso() Beverage {
 	bv := new(espresso)
-	bv.description = "Эспрессо"
+	bv.description = "Кофе \"Эспрессо\""
 
 	return bv
 }
