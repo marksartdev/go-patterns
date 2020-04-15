@@ -50,3 +50,58 @@ func checkBeverage(expected Beverage, result Beverage, t *testing.T) {
 		t.Errorf(costErrString, expected.Cost(), result.Cost())
 	}
 }
+
+func TestNewMilkDecorator(t *testing.T) {
+	expected := new(beverage)
+	expected.description = "Кофе \"Домашняя смесь\", молочная пена"
+	expected.cost = .89 + .10
+	result := NewHouseBlend()
+	result = NewMilkDecorator(result)
+
+	checkBeverage(expected, result, t)
+}
+
+func TestNewMochaDecorator(t *testing.T) {
+	expected := new(beverage)
+	expected.description = "Кофе \"Темная обжарка\", шоколад"
+	expected.cost = .99 + .20
+	result := NewDarkRoast()
+	result = NewMochaDecorator(result)
+
+	checkBeverage(expected, result, t)
+}
+
+func TestNewSoyDecorator(t *testing.T) {
+	expected := new(beverage)
+	expected.description = "Кофе \"Без кофеина\", соя"
+	expected.cost = 1.05 + .15
+	result := NewDecaf()
+	result = NewSoyDecorator(result)
+
+	checkBeverage(expected, result, t)
+}
+
+func TestNewWhipDecorator(t *testing.T) {
+	expected := new(beverage)
+	expected.description = "Кофе \"Эспрессо\", взбитые сливки"
+	expected.cost = 1.99 + .10
+	result := NewEspresso()
+	result = NewWhipDecorator(result)
+
+	checkBeverage(expected, result, t)
+}
+
+func TestAllCondiments(t *testing.T) {
+	expected := new(beverage)
+	expected.description = "Кофе \"Домашняя смесь\", молочная пена, шоколад, соя, взбитые сливки, шоколад, взбитые сливки"
+	expected.cost = .89 + .10 + .20 + .15 + .10 + .20 + .10
+	result := NewHouseBlend()
+	result = NewMilkDecorator(result)
+	result = NewMochaDecorator(result)
+	result = NewSoyDecorator(result)
+	result = NewWhipDecorator(result)
+	result = NewMochaDecorator(result)
+	result = NewWhipDecorator(result)
+
+	checkBeverage(expected, result, t)
+}
