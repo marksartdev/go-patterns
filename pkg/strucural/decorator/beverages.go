@@ -39,11 +39,11 @@ type houseBlend struct {
 
 // NewHouseBlend Создать кофе "Домашняя смесь"
 func NewHouseBlend() Beverage {
-	bv := new(houseBlend)
-	bv.description = "Кофе \"Домашняя смесь\""
-	bv.cost = .89
+	b := new(houseBlend)
+	b.description = "Кофе \"Домашняя смесь\""
+	b.cost = .89
 
-	return bv
+	return b
 }
 
 // Кофе "Темная обжарка"
@@ -53,11 +53,11 @@ type darkRoast struct {
 
 // NewDarkRoast Создать кофе "Темная обжарка"
 func NewDarkRoast() Beverage {
-	bv := new(darkRoast)
-	bv.description = "Кофе \"Темная обжарка\""
-	bv.cost = .99
+	b := new(darkRoast)
+	b.description = "Кофе \"Темная обжарка\""
+	b.cost = .99
 
-	return bv
+	return b
 }
 
 // Кофе "Без кофеина"
@@ -67,11 +67,11 @@ type decaf struct {
 
 // NewDecaf Создать кофе "Без кофеина"
 func NewDecaf() Beverage {
-	bv := new(decaf)
-	bv.description = "Кофе \"Без кофеина\""
-	bv.cost = 1.05
+	b := new(decaf)
+	b.description = "Кофе \"Без кофеина\""
+	b.cost = 1.05
 
-	return bv
+	return b
 }
 
 // Кофе "Эспрессо"
@@ -81,9 +81,9 @@ type espresso struct {
 
 // NewEspresso Создать кофе "Эспрессо"
 func NewEspresso() Beverage {
-	bv := new(espresso)
-	bv.description = "Кофе \"Эспрессо\""
-	bv.cost = 1.99
+	b := new(espresso)
+	b.description = "Кофе \"Эспрессо\""
+	b.cost = 1.99
 
-	return bv
+	return b
 }
