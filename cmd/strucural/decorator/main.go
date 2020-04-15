@@ -2,31 +2,31 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 
 	"github.com/Mark-Sart/go-patterns/pkg/strucural/decorator"
 )
 
 func main() {
-	houseBlend := decorator.NewHouseBlend()
-	houseBlend = decorator.NewMilkDecorator(houseBlend)
+	beverages := []func() decorator.Beverage{
+		decorator.NewHouseBlend,
+		decorator.NewDarkRoast,
+		decorator.NewDecaf,
+		decorator.NewEspresso,
+	}
 
-	darkRoast := decorator.NewDarkRoast()
-	darkRoast = decorator.NewMilkDecorator(darkRoast)
-	darkRoast = decorator.NewMochaDecorator(darkRoast)
+	condiments := []func(decorator.Beverage) decorator.Beverage{
+		decorator.NewMilkDecorator,
+		decorator.NewMochaDecorator,
+		decorator.NewSoyDecorator,
+		decorator.NewWhipDecorator,
+	}
 
-	decaf := decorator.NewDecaf()
-	decaf = decorator.NewMilkDecorator(decaf)
-	decaf = decorator.NewMochaDecorator(decaf)
-	decaf = decorator.NewSoyDecorator(decaf)
+	for i := 0; i < 10; i++ {
+		beverage := beverages[rand.Intn(len(beverages))]()
+		beverage = condiments[rand.Intn(len(condiments))](beverage)
+		beverage = condiments[rand.Intn(len(condiments))](beverage)
 
-	espresso := decorator.NewEspresso()
-	espresso = decorator.NewMilkDecorator(espresso)
-	espresso = decorator.NewMochaDecorator(espresso)
-	espresso = decorator.NewSoyDecorator(espresso)
-	espresso = decorator.NewWhipDecorator(espresso)
-
-	fmt.Printf("%s: %.2f\n", houseBlend.GetDescription(), houseBlend.Cost())
-	fmt.Printf("%s: %.2f\n", darkRoast.GetDescription(), darkRoast.Cost())
-	fmt.Printf("%s: %.2f\n", decaf.GetDescription(), decaf.Cost())
-	fmt.Printf("%s: %.2f\n", espresso.GetDescription(), espresso.Cost())
+		fmt.Printf("%s: %.2f\n", beverage.GetDescription(), beverage.Cost())
+	}
 }
