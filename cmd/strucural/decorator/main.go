@@ -7,18 +7,26 @@ import (
 )
 
 func main() {
+	houseBlend := decorator.NewHouseBlend()
+	houseBlend = decorator.NewMilkDecorator(houseBlend)
+
+	darkRoast := decorator.NewDarkRoast()
+	darkRoast = decorator.NewMilkDecorator(darkRoast)
+	darkRoast = decorator.NewMochaDecorator(darkRoast)
+
 	decaf := decorator.NewDecaf()
-	fmt.Printf("%s: %.1f\n", decaf.GetDescription(), decaf.Cost())
+	decaf = decorator.NewMilkDecorator(decaf)
+	decaf = decorator.NewMochaDecorator(decaf)
+	decaf = decorator.NewSoyDecorator(decaf)
 
-	decaf.SetMilk()
-	fmt.Printf("+ milk: %.1f\n", decaf.Cost())
+	espresso := decorator.NewEspresso()
+	espresso = decorator.NewMilkDecorator(espresso)
+	espresso = decorator.NewMochaDecorator(espresso)
+	espresso = decorator.NewSoyDecorator(espresso)
+	espresso = decorator.NewWhipDecorator(espresso)
 
-	decaf.SetSoy()
-	fmt.Printf("+ soy: %.1f\n", decaf.Cost())
-
-	decaf.SetMocha()
-	fmt.Printf("+ mocha: %.1f\n", decaf.Cost())
-
-	decaf.SetWhip()
-	fmt.Printf("+ whip: %.1f\n", decaf.Cost())
+	fmt.Printf("%s: %.2f\n", houseBlend.GetDescription(), houseBlend.Cost())
+	fmt.Printf("%s: %.2f\n", darkRoast.GetDescription(), darkRoast.Cost())
+	fmt.Printf("%s: %.2f\n", decaf.GetDescription(), decaf.Cost())
+	fmt.Printf("%s: %.2f\n", espresso.GetDescription(), espresso.Cost())
 }
