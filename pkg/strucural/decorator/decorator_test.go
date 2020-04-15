@@ -41,16 +41,6 @@ func TestNewEspresso(t *testing.T) {
 	checkBeverage(expected, result, t)
 }
 
-func checkBeverage(expected Beverage, result Beverage, t *testing.T) {
-	if result.GetDescription() != expected.GetDescription() {
-		t.Errorf(descriptionErrString, expected.GetDescription(), result.GetDescription())
-	}
-
-	if result.Cost() != expected.Cost() {
-		t.Errorf(costErrString, expected.Cost(), result.Cost())
-	}
-}
-
 func TestNewMilkDecorator(t *testing.T) {
 	expected := new(beverage)
 	expected.description = "Кофе \"Домашняя смесь\", молочная пена"
@@ -104,4 +94,14 @@ func TestAllCondiments(t *testing.T) {
 	result = NewWhipDecorator(result)
 
 	checkBeverage(expected, result, t)
+}
+
+func checkBeverage(expected Beverage, result Beverage, t *testing.T) {
+	if result.GetDescription() != expected.GetDescription() {
+		t.Errorf(descriptionErrString, expected.GetDescription(), result.GetDescription())
+	}
+
+	if result.Cost() != expected.Cost() {
+		t.Errorf(costErrString, expected.Cost(), result.Cost())
+	}
 }
