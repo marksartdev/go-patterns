@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-var errStringF = "Некорректный результат (ожидалось %.1f, получено %.1f)"
-var errStringS = "Некорректный результат (ожидалось %s, получено %s)"
+var errStringF = "Некорректный результат. Ожидалось %f, получено %f."
+var errStringS = "Некорректный результат. Ожидалось %s, получено %s."
 
 func TestNewWeatherData(t *testing.T) {
 	temperature, humidity, pressure := 20.0, 60.0, 600.0
