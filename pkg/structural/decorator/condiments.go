@@ -6,7 +6,7 @@ import "fmt"
 type condimentDecorator struct {
 	beverage    Beverage
 	description string
-	cost        float64
+	cost        [3]float64
 }
 
 // GetDescription Получить описание
@@ -16,7 +16,17 @@ func (c *condimentDecorator) GetDescription() string {
 
 // Cost Рассчитать стоимость
 func (c *condimentDecorator) Cost() float64 {
-	return c.beverage.Cost() + c.cost
+	return c.beverage.Cost() + c.cost[c.GetSize()]
+}
+
+// GetSize Получить размер стакана
+func (c *condimentDecorator) GetSize() int {
+	return c.beverage.GetSize()
+}
+
+// SetSize Установить размер стакана
+func (c *condimentDecorator) SetSize(size int) {
+	c.beverage.SetSize(size)
 }
 
 // Молочная пена
@@ -29,7 +39,7 @@ func NewMilkDecorator(beverage Beverage) Beverage {
 	d := new(milkDecorator)
 	d.beverage = beverage
 	d.description = "молочная пена"
-	d.cost = .10
+	d.cost = [3]float64{.10, .15, .20}
 
 	return d
 }
@@ -44,7 +54,7 @@ func NewMochaDecorator(beverage Beverage) Beverage {
 	d := new(mochaDecorator)
 	d.beverage = beverage
 	d.description = "шоколад"
-	d.cost = .20
+	d.cost = [3]float64{.20, .25, .30}
 
 	return d
 }
@@ -59,7 +69,7 @@ func NewSoyDecorator(beverage Beverage) Beverage {
 	d := new(soyDecorator)
 	d.beverage = beverage
 	d.description = "соя"
-	d.cost = .15
+	d.cost = [3]float64{.15, .20, .25}
 
 	return d
 }
@@ -74,7 +84,7 @@ func NewWhipDecorator(beverage Beverage) Beverage {
 	d := new(whipDecorator)
 	d.beverage = beverage
 	d.description = "взбитые сливки"
-	d.cost = .10
+	d.cost = [3]float64{.10, .15, .20}
 
 	return d
 }
