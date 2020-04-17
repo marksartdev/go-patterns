@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"math/rand"
+	"time"
 
 	"github.com/Mark-Sart/go-patterns/pkg/structural/decorator"
 )
@@ -25,10 +26,16 @@ func main() {
 		decorator.NewWhipDecorator,
 	}
 
+	sizes := [3]int{decorator.Small, decorator.Medium, decorator.Large}
+
+	source := rand.NewSource(time.Now().UnixNano())
+	random := rand.New(source)
+
 	for i := 0; i < 10; i++ {
-		beverage := beverages[rand.Intn(len(beverages))]()
-		beverage = condiments[rand.Intn(len(condiments))](beverage)
-		beverage = condiments[rand.Intn(len(condiments))](beverage)
+		beverage := beverages[random.Intn(len(beverages))]()
+		beverage = condiments[random.Intn(len(condiments))](beverage)
+		beverage = condiments[random.Intn(len(condiments))](beverage)
+		beverage.SetSize(sizes[random.Intn(len(sizes))])
 
 		fmt.Printf("%s: %.2f\n", beverage.GetDescription(), beverage.Cost())
 	}
