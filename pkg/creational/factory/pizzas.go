@@ -1,88 +1,125 @@
 package factory
 
-import "fmt"
+// Интерфейс методов получения информации о пицце
+type getters interface {
+	GetName() string
+	IsPrepared() bool
+	IsBaked() bool
+	IsCutted() bool
+	IsBoxed() bool
+}
 
 // Pizza Интерфейс пиццы
 type Pizza interface {
-	Prepare() string
-	Bake() string
-	Cut() string
-	Box() string
+	getters
+	prepare()
+	bake()
+	cut()
+	box()
 }
 
 // Базовая структура пиццы
-type pizza struct {
-	name string
+type basePizza struct {
+	name       string
+	isPrepared bool
+	isBaked    bool
+	isCutted   bool
+	isBoxed    bool
 }
 
-// Prepare Приготовить пиццу
-func (p *pizza) Prepare() string {
-	return fmt.Sprintf("Готовим пиццу %q", p.name)
+// GetName Получить название пиццы
+func (b *basePizza) GetName() string {
+	return b.name
 }
 
-// Bake Испечь пиццу
-func (p *pizza) Bake() string {
-	return fmt.Sprintf("Выпекаем пиццу %q", p.name)
+// IsPrepared Получить статус подготовки пиццы
+func (b *basePizza) IsPrepared() bool {
+	return b.isPrepared
 }
 
-// Cut Разрезать пиццу
-func (p *pizza) Cut() string {
-	return fmt.Sprintf("Разрезаем пиццу %q", p.name)
+// IsBaked Получить статус запекания пиццы
+func (b *basePizza) IsBaked() bool {
+	return b.isBaked
 }
 
-// Box Упаковать пиццу
-func (p *pizza) Box() string {
-	return fmt.Sprintf("Упаковываем пиццу %q", p.name)
+// IsCutted Получить статус разрезания пиццы
+func (b *basePizza) IsCutted() bool {
+	return b.isCutted
+}
+
+// IsBoxed Получить статус упаковки пиццы
+func (b *basePizza) IsBoxed() bool {
+	return b.isBoxed
+}
+
+// Приготовить пиццу
+func (b *basePizza) prepare() {
+	b.isPrepared = true
+}
+
+// Испечь пиццу
+func (b *basePizza) bake() {
+	b.isBaked = true
+}
+
+// Разрезать пиццу
+func (b *basePizza) cut() {
+	b.isCutted = true
+}
+
+// Упаковать пиццу
+func (b *basePizza) box() {
+	b.isBoxed = true
 }
 
 // Сырная пицца
 type cheesePizza struct {
-	pizza
+	basePizza
 }
 
 // Создать сырную пиццу
 func newCheesePizza() Pizza {
-	p := new(cheesePizza)
-	p.name = "Сырная"
+	pizza := new(cheesePizza)
+	pizza.name = "Сырная"
 
-	return p
+	return pizza
 }
 
 // Пицца "Пепперони"
 type pepperoniPizza struct {
-	pizza
+	basePizza
 }
 
 // Создать пиццу "Пепперони"
 func newPepperoniPizza() Pizza {
-	p := new(pepperoniPizza)
-	p.name = "Пепперони"
+	pizza := new(pepperoniPizza)
+	pizza.name = "Пепперони"
 
-	return p
+	return pizza
 }
 
 // Пицца с мидиями
 type clamPizza struct {
-	pizza
+	basePizza
 }
 
 // Создать пиццу с мидиями
 func newClamPizza() Pizza {
-	p := new(clamPizza)
-	p.name = "С мидиями"
+	pizza := new(clamPizza)
+	pizza.name = "С мидиями"
 
-	return p
+	return pizza
 }
 
 // Вегетарианская пицца
 type veggiePizza struct {
-	pizza
+	basePizza
 }
 
 // Создать вегетарианскую пиццу
 func newVeggiePizza() Pizza {
-	p := new(veggiePizza)
-	p.name = "Вегетарианская"
+	pizza := new(veggiePizza)
+	pizza.name = "Вегетарианская"
 
-	return p
+	return pizza
 }
