@@ -1,5 +1,7 @@
 package factory
 
+const chicagoPizzaStyle = "Чикаго"
+
 // Сырная пицца в Чикагском стиле
 type simpleChicagoStyleCheesePizza struct {
 	simplePizza
@@ -9,7 +11,7 @@ type simpleChicagoStyleCheesePizza struct {
 func newSimpleChicagoStyleCheesePizza() SimplePizza {
 	pizza := new(simpleChicagoStyleCheesePizza)
 	pizza.Name = "Сырная"
-	pizza.Style = "Чикаго"
+	pizza.Style = chicagoPizzaStyle
 
 	return pizza
 }
@@ -23,7 +25,7 @@ type simpleChicagoStylePepperoniPizza struct {
 func newSimpleChicagoStylePepperoniPizza() SimplePizza {
 	pizza := new(simpleChicagoStylePepperoniPizza)
 	pizza.Name = "Пепперони"
-	pizza.Style = "Чикаго"
+	pizza.Style = chicagoPizzaStyle
 
 	return pizza
 }
@@ -37,7 +39,7 @@ type simpleChicagoStyleClamPizza struct {
 func newSimpleChicagoStyleClamPizza() SimplePizza {
 	pizza := new(simpleChicagoStyleClamPizza)
 	pizza.Name = "С мидиями"
-	pizza.Style = "Чикаго"
+	pizza.Style = chicagoPizzaStyle
 
 	return pizza
 }
@@ -51,7 +53,7 @@ type simpleChicagoStyleVeggiePizza struct {
 func newSimpleChicagoStyleVeggiePizza() SimplePizza {
 	pizza := new(simpleChicagoStyleVeggiePizza)
 	pizza.Name = "Вегетарианская"
-	pizza.Style = "Чикаго"
+	pizza.Style = chicagoPizzaStyle
 
 	return pizza
 }

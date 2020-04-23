@@ -19,12 +19,18 @@ func main() {
 	ctx := context.Background()
 	ctx, finish := context.WithCancel(ctx)
 	wg := new(sync.WaitGroup)
-	wg.Add(2)
+
+	cnt := 0
 
 	pizzaTypes := [4]string{"cheese", "pepperoni", "clam", "veggie"}
 
 	go startSimplePizzaStore(ctx, wg, chNY, "New-York")
+	cnt++
+
 	go startSimplePizzaStore(ctx, wg, chChicago, "Chicago")
+	cnt++
+
+	wg.Add(cnt)
 
 	for i := 0; i < 10; i++ {
 		pizzaType := pizzaTypes[random.Intn(len(pizzaTypes))]
@@ -42,10 +48,12 @@ func main() {
 }
 
 func startSimplePizzaStore(ctx context.Context, wg *sync.WaitGroup, chOrder chan string, style string) {
-	var simpleStore factory.SimplePizzaStore
-	var simpleFactory factory.SimplePizzaFactory
-	var pizza factory.SimplePizza
-	var pizzaProperties factory.SimplePizzaProperties
+	var (
+		simpleStore     factory.SimplePizzaStore
+		simpleFactory   factory.SimplePizzaFactory
+		pizza           factory.SimplePizza
+		pizzaProperties factory.SimplePizzaProperties
+	)
 
 	if style == "New-York" {
 		simpleFactory = factory.NewSimpleNYPizzaFactory()
@@ -61,6 +69,7 @@ func startSimplePizzaStore(ctx context.Context, wg *sync.WaitGroup, chOrder chan
 			fmt.Printf("Пиццерия %s закрывается...\n", style)
 			time.Sleep(time.Second)
 			wg.Done()
+
 			return
 		case pizzaType := <-chOrder:
 			pizza = simpleStore.OrderPizza(pizzaType)
