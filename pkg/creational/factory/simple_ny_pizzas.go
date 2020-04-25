@@ -4,7 +4,7 @@ const nyPizzaStyle = "Нью-Йорк"
 
 // Сырная пицца в Нью-Йоркском стиле
 type simpleNYStyleCheesePizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать сырную пиццу в Нью-Йоркском стиле
@@ -18,7 +18,7 @@ func newSimpleNYStyleCheesePizza() SimplePizza {
 
 // Пицца "Пепперони" в Нью-Йоркском стиле
 type simpleNYStylePepperoniPizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать пиццу "Пепперони" в Нью-Йоркском стиле
@@ -32,7 +32,7 @@ func newSimpleNYStylePepperoniPizza() SimplePizza {
 
 // Пицца с мидиями в Нью-Йоркском стиле
 type simpleNYStyleClamPizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать пиццу с мидиями в Нью-Йоркском стиле
@@ -46,7 +46,7 @@ func newSimpleNYStyleClamPizza() SimplePizza {
 
 // Вегетарианская пицца в Нью-Йоркском стиле
 type simpleNYStyleVeggiePizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать вегетарианскую пиццу в Нью-Йоркском стиле

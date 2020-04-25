@@ -4,7 +4,7 @@ const chicagoPizzaStyle = "Чикаго"
 
 // Сырная пицца в Чикагском стиле
 type simpleChicagoStyleCheesePizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать сырную пиццу в Чикагском стиле
@@ -18,7 +18,7 @@ func newSimpleChicagoStyleCheesePizza() SimplePizza {
 
 // Пицца "Пепперони" в Чикагском стиле
 type simpleChicagoStylePepperoniPizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать пиццу "Пепперони" в Чикагском стиле
@@ -32,7 +32,7 @@ func newSimpleChicagoStylePepperoniPizza() SimplePizza {
 
 // Пицца с мидиями в Чикагском стиле
 type simpleChicagoStyleClamPizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать пиццу с мидиями в Чикагском стиле
@@ -46,7 +46,7 @@ func newSimpleChicagoStyleClamPizza() SimplePizza {
 
 // Вегетарианская пицца в Чикагском стиле
 type simpleChicagoStyleVeggiePizza struct {
-	simplePizza
+	simpleAbstractPizza
 }
 
 // Создать вегетарианскую пиццу в Чикагском стиле

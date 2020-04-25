@@ -66,8 +66,8 @@ func startSimplePizzaStore(ctx context.Context, wg *sync.WaitGroup, chOrder chan
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Printf("Пиццерия %s закрывается...\n", style)
 			time.Sleep(time.Second)
+			fmt.Printf("Пиццерия %s закрывается...\n", style)
 			wg.Done()
 
 			return

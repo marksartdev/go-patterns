@@ -19,32 +19,32 @@ type SimplePizza interface {
 	GetProperties() SimplePizzaProperties
 }
 
-// Базовая структура пиццы
-type simplePizza struct {
+// Абстрактная пицца
+type simpleAbstractPizza struct {
 	SimplePizzaProperties
 }
 
 // Приготовить пиццу
-func (s *simplePizza) prepare() {
+func (s *simpleAbstractPizza) prepare() {
 	s.IsPrepared = true
 }
 
 // Испечь пиццу
-func (s *simplePizza) bake() {
+func (s *simpleAbstractPizza) bake() {
 	s.IsBaked = true
 }
 
 // Разрезать пиццу
-func (s *simplePizza) cut() {
+func (s *simpleAbstractPizza) cut() {
 	s.IsCutted = true
 }
 
 // Упаковать пиццу
-func (s *simplePizza) box() {
+func (s *simpleAbstractPizza) box() {
 	s.IsBoxed = true
 }
 
 // GetProperties Получить свойства пиццы
-func (s *simplePizza) GetProperties() SimplePizzaProperties {
+func (s *simpleAbstractPizza) GetProperties() SimplePizzaProperties {
 	return s.SimplePizzaProperties
 }
