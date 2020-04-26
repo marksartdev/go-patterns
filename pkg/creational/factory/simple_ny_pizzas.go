@@ -3,13 +3,13 @@ package factory
 const nyPizzaStyle = "Нью-Йорк"
 
 // Сырная пицца в Нью-Йоркском стиле
-type simpleNYStyleCheesePizza struct {
+type simpleNYCheesePizza struct {
 	simpleAbstractPizza
 }
 
 // Создать сырную пиццу в Нью-Йоркском стиле
-func newSimpleNYStyleCheesePizza() SimplePizza {
-	pizza := new(simpleNYStyleCheesePizza)
+func newSimpleNYCheesePizza() SimplePizza {
+	pizza := new(simpleNYCheesePizza)
 	pizza.Name = "Сырная"
 	pizza.Style = nyPizzaStyle
 
@@ -17,13 +17,13 @@ func newSimpleNYStyleCheesePizza() SimplePizza {
 }
 
 // Пицца "Пепперони" в Нью-Йоркском стиле
-type simpleNYStylePepperoniPizza struct {
+type simpleNYPepperoniPizza struct {
 	simpleAbstractPizza
 }
 
 // Создать пиццу "Пепперони" в Нью-Йоркском стиле
-func newSimpleNYStylePepperoniPizza() SimplePizza {
-	pizza := new(simpleNYStylePepperoniPizza)
+func newSimpleNYPepperoniPizza() SimplePizza {
+	pizza := new(simpleNYPepperoniPizza)
 	pizza.Name = "Пепперони"
 	pizza.Style = nyPizzaStyle
 
@@ -31,13 +31,13 @@ func newSimpleNYStylePepperoniPizza() SimplePizza {
 }
 
 // Пицца с мидиями в Нью-Йоркском стиле
-type simpleNYStyleClamPizza struct {
+type simpleNYClamPizza struct {
 	simpleAbstractPizza
 }
 
 // Создать пиццу с мидиями в Нью-Йоркском стиле
-func newSimpleNYStyleClamPizza() SimplePizza {
-	pizza := new(simpleNYStyleClamPizza)
+func newSimpleNYClamPizza() SimplePizza {
+	pizza := new(simpleNYClamPizza)
 	pizza.Name = "С мидиями"
 	pizza.Style = nyPizzaStyle
 
@@ -45,13 +45,13 @@ func newSimpleNYStyleClamPizza() SimplePizza {
 }
 
 // Вегетарианская пицца в Нью-Йоркском стиле
-type simpleNYStyleVeggiePizza struct {
+type simpleNYVeggiePizza struct {
 	simpleAbstractPizza
 }
 
 // Создать вегетарианскую пиццу в Нью-Йоркском стиле
-func newSimpleNYStyleVeggiePizza() SimplePizza {
-	pizza := new(simpleNYStyleVeggiePizza)
+func newSimpleNYVeggiePizza() SimplePizza {
+	pizza := new(simpleNYVeggiePizza)
 	pizza.Name = "Вегетарианская"
 	pizza.Style = nyPizzaStyle
 

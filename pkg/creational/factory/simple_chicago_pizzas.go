@@ -3,13 +3,13 @@ package factory
 const chicagoPizzaStyle = "Чикаго"
 
 // Сырная пицца в Чикагском стиле
-type simpleChicagoStyleCheesePizza struct {
+type simpleChicagoCheesePizza struct {
 	simpleAbstractPizza
 }
 
 // Создать сырную пиццу в Чикагском стиле
-func newSimpleChicagoStyleCheesePizza() SimplePizza {
-	pizza := new(simpleChicagoStyleCheesePizza)
+func newSimpleChicagoCheesePizza() SimplePizza {
+	pizza := new(simpleChicagoCheesePizza)
 	pizza.Name = "Сырная"
 	pizza.Style = chicagoPizzaStyle
 
@@ -17,13 +17,13 @@ func newSimpleChicagoStyleCheesePizza() SimplePizza {
 }
 
 // Пицца "Пепперони" в Чикагском стиле
-type simpleChicagoStylePepperoniPizza struct {
+type simpleChicagoPepperoniPizza struct {
 	simpleAbstractPizza
 }
 
 // Создать пиццу "Пепперони" в Чикагском стиле
-func newSimpleChicagoStylePepperoniPizza() SimplePizza {
-	pizza := new(simpleChicagoStylePepperoniPizza)
+func newSimpleChicagoPepperoniPizza() SimplePizza {
+	pizza := new(simpleChicagoPepperoniPizza)
 	pizza.Name = "Пепперони"
 	pizza.Style = chicagoPizzaStyle
 
@@ -31,13 +31,13 @@ func newSimpleChicagoStylePepperoniPizza() SimplePizza {
 }
 
 // Пицца с мидиями в Чикагском стиле
-type simpleChicagoStyleClamPizza struct {
+type simpleChicagoClamPizza struct {
 	simpleAbstractPizza
 }
 
 // Создать пиццу с мидиями в Чикагском стиле
-func newSimpleChicagoStyleClamPizza() SimplePizza {
-	pizza := new(simpleChicagoStyleClamPizza)
+func newSimpleChicagoClamPizza() SimplePizza {
+	pizza := new(simpleChicagoClamPizza)
 	pizza.Name = "С мидиями"
 	pizza.Style = chicagoPizzaStyle
 
@@ -45,13 +45,13 @@ func newSimpleChicagoStyleClamPizza() SimplePizza {
 }
 
 // Вегетарианская пицца в Чикагском стиле
-type simpleChicagoStyleVeggiePizza struct {
+type simpleChicagoVeggiePizza struct {
 	simpleAbstractPizza
 }
 
 // Создать вегетарианскую пиццу в Чикагском стиле
-func newSimpleChicagoStyleVeggiePizza() SimplePizza {
-	pizza := new(simpleChicagoStyleVeggiePizza)
+func newSimpleChicagoVeggiePizza() SimplePizza {
+	pizza := new(simpleChicagoVeggiePizza)
 	pizza.Name = "Вегетарианская"
 	pizza.Style = chicagoPizzaStyle
 

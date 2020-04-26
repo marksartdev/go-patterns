@@ -1,10 +1,5 @@
 package factory
 
-// SimplePizzaStore Интерфейс простой пиццерии
-type SimplePizzaStore interface {
-	OrderPizza(string) SimplePizza
-}
-
 // Простая пиццерия
 type simplePizzaStore struct {
 	factory SimplePizzaFactory
@@ -22,7 +17,7 @@ func (p *simplePizzaStore) OrderPizza(pizzaType string) SimplePizza {
 }
 
 // NewSimplePizzaStore Создать простую пиццерию
-func NewSimplePizzaStore(factory SimplePizzaFactory) SimplePizzaStore {
+func NewSimplePizzaStore(factory SimplePizzaFactory) PizzaStore {
 	store := new(simplePizzaStore)
 	store.factory = factory
 

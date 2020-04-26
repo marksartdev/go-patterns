@@ -13,17 +13,17 @@ func (s *simpleNYPizzaFactory) createPizza(pizzaType string) SimplePizza {
 	var pizza SimplePizza
 
 	switch pizzaType {
-	case "cheese":
-		pizza = newSimpleNYStyleCheesePizza()
+	case Cheese:
+		pizza = newSimpleNYCheesePizza()
 
-	case "pepperoni":
-		pizza = newSimpleNYStylePepperoniPizza()
+	case Pepperoni:
+		pizza = newSimpleNYPepperoniPizza()
 
-	case "clam":
-		pizza = newSimpleNYStyleClamPizza()
+	case Clam:
+		pizza = newSimpleNYClamPizza()
 
-	case "veggie":
-		pizza = newSimpleNYStyleVeggiePizza()
+	case Veggie:
+		pizza = newSimpleNYVeggiePizza()
 
 	default:
 		pizza = nil
@@ -45,17 +45,17 @@ func (s *simpleChicagoPizzaFactory) createPizza(pizzaType string) SimplePizza {
 	var pizza SimplePizza
 
 	switch pizzaType {
-	case "cheese":
-		pizza = newSimpleChicagoStyleCheesePizza()
+	case Cheese:
+		pizza = newSimpleChicagoCheesePizza()
 
-	case "pepperoni":
-		pizza = newSimpleChicagoStylePepperoniPizza()
+	case Pepperoni:
+		pizza = newSimpleChicagoPepperoniPizza()
 
-	case "clam":
-		pizza = newSimpleChicagoStyleClamPizza()
+	case Clam:
+		pizza = newSimpleChicagoClamPizza()
 
-	case "veggie":
-		pizza = newSimpleChicagoStyleVeggiePizza()
+	case Veggie:
+		pizza = newSimpleChicagoVeggiePizza()
 
 	default:
 		pizza = nil

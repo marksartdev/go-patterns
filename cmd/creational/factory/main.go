@@ -14,32 +14,46 @@ func main() {
 	source := rand.NewSource(time.Now().UnixNano())
 	random := rand.New(source)
 
-	chNY := make(chan string)
-	chChicago := make(chan string)
+	ch := make(chan string)
 	ctx := context.Background()
 	ctx, finish := context.WithCancel(ctx)
 	wg := new(sync.WaitGroup)
 
 	cnt := 0
 
-	pizzaTypes := [4]string{"cheese", "pepperoni", "clam", "veggie"}
+	pizzaTypes := [4]string{factory.Cheese, factory.Pepperoni, factory.Clam, factory.Veggie}
 
-	go startSimplePizzaStore(ctx, wg, chNY, "New-York")
+	var (
+		simpleNYPizzaFactory, simpleChicagoPizzaFactory factory.SimplePizzaFactory
+		simpleNYPizzaStore, simpleChicagoPizzaStore     factory.PizzaStore
+		nyPizzaStore, chicagoPizzaStore                 factory.PizzaStore
+	)
+
+	simpleNYPizzaFactory = factory.NewSimpleNYPizzaFactory()
+	simpleNYPizzaStore = factory.NewSimplePizzaStore(simpleNYPizzaFactory)
+	simpleChicagoPizzaFactory = factory.NewSimpleChicagoPizzaFactory()
+	simpleChicagoPizzaStore = factory.NewSimplePizzaStore(simpleChicagoPizzaFactory)
+	nyPizzaStore = factory.NewNYPizzaStore()
+	chicagoPizzaStore = factory.NewChicagoPizzaStore()
+
+	go startPizzaStore(ctx, wg, ch, simpleNYPizzaStore, "Нью-Йоркская пиццерия (простая)")
 	cnt++
 
-	go startSimplePizzaStore(ctx, wg, chChicago, "Chicago")
+	go startPizzaStore(ctx, wg, ch, simpleChicagoPizzaStore, "Чикагская пиццерия (простая)")
+	cnt++
+
+	go startPizzaStore(ctx, wg, ch, nyPizzaStore, "Нью-Йоркская пиццерия")
+	cnt++
+
+	go startPizzaStore(ctx, wg, ch, chicagoPizzaStore, "Чикагская пиццерия")
 	cnt++
 
 	wg.Add(cnt)
 
-	for i := 0; i < 10; i++ {
+	for i := 0; i < 20; i++ {
 		pizzaType := pizzaTypes[random.Intn(len(pizzaTypes))]
 
-		if i%2 == 0 {
-			chNY <- pizzaType
-		} else {
-			chChicago <- pizzaType
-		}
+		ch <- pizzaType
 	}
 
 	finish()
@@ -47,36 +61,33 @@ func main() {
 	fmt.Println("Все пиццерии успешно закрылись!")
 }
 
-func startSimplePizzaStore(ctx context.Context, wg *sync.WaitGroup, chOrder chan string, style string) {
+func startPizzaStore(
+	ctx context.Context,
+	wg *sync.WaitGroup,
+	ch chan string,
+	pizzaStore factory.PizzaStore,
+	pizzaStoreName string,
+) {
 	var (
-		simpleStore     factory.SimplePizzaStore
-		simpleFactory   factory.SimplePizzaFactory
 		pizza           factory.SimplePizza
 		pizzaProperties factory.SimplePizzaProperties
 	)
-
-	if style == "New-York" {
-		simpleFactory = factory.NewSimpleNYPizzaFactory()
-	} else {
-		simpleFactory = factory.NewSimpleChicagoPizzaFactory()
-	}
-
-	simpleStore = factory.NewSimplePizzaStore(simpleFactory)
 
 	for {
 		select {
 		case <-ctx.Done():
 			time.Sleep(time.Second)
-			fmt.Printf("Пиццерия %s закрывается...\n", style)
+			fmt.Println("Пиццерия закрывается...")
 			wg.Done()
 
 			return
-		case pizzaType := <-chOrder:
-			pizza = simpleStore.OrderPizza(pizzaType)
+		case pizzaType := <-ch:
+			pizza = pizzaStore.OrderPizza(pizzaType)
 			pizzaProperties = pizza.GetProperties()
 
 			fmt.Printf(
-				"%-12s Название: %-18s Приготовлена: %-8v Выпечена: %-8v Разрезана: %-8v Упакована: %-8v\n",
+				"%-40s Стиль: %-12s Название: %-18s Приготовлена: %-8v Выпечена: %-8v Разрезана: %-8v Упакована: %-8v\n",
+				pizzaStoreName,
 				pizzaProperties.Style,
 				pizzaProperties.Name,
 				pizzaProperties.IsPrepared,

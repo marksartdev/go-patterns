@@ -1,5 +1,16 @@
 package factory
 
+const (
+	// Cheese Сырная пицца
+	Cheese = "cheese"
+	// Pepperoni Пицца "Пепперони"
+	Pepperoni = "pepperoni"
+	// Clam Пицца с мидиями
+	Clam = "clam"
+	// Veggie Вегетарианская пицца
+	Veggie = "veggie"
+)
+
 // SimplePizzaProperties Свойства пиццы
 type SimplePizzaProperties struct {
 	Name       string
