@@ -8,13 +8,15 @@ import (
 	"github.com/gonum/floats"
 )
 
+const (
+	descriptionErrString = "Не соответствует описание напитка. Ожидалось %q, получено %q."
+	costErrString        = "Не соответствует стоимость напитка. Ожидалось %f, получено %f."
+)
+
 type expectedData struct {
 	description string
 	cost        float64
 }
-
-const descriptionErrString = "Не соответствует описание напитка. Ожидалось %q, получено %q."
-const costErrString = "Не соответствует стоимость напитка. Ожидалось %f, получено %f."
 
 func TestNewHouseBlend(t *testing.T) {
 	expected := new(expectedData)
