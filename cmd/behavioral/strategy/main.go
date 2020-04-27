@@ -7,6 +7,8 @@ import (
 	"github.com/Mark-Sart/go-patterns/pkg/behavioral/strategy"
 )
 
+const maxQuacks = 5
+
 func main() {
 	var quackers []strategy.Quacker
 	quackers = append(quackers, new(strategy.MuteQuack))
@@ -26,7 +28,7 @@ func main() {
 	ducks = append(ducks, strategy.NewModelDuck())
 
 	for num, duck := range ducks {
-		quackCount := rand.Intn(5) + 1
+		quackCount := rand.Intn(maxQuacks) + 1
 
 		fmt.Printf("Duck %d\n", num)
 		fmt.Printf("Display: %s\n", duck.Display())

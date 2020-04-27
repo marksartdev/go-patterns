@@ -8,7 +8,7 @@ type Flyer interface {
 // FlyNoWay Реализация для уток, которые не умеют летать
 type FlyNoWay struct{}
 
-// Полететь
+// Полететь.
 func (f *FlyNoWay) fly() string {
 	return "I can't fly!!"
 }
@@ -16,7 +16,7 @@ func (f *FlyNoWay) fly() string {
 // FlyWithWings Реализация для летающих уток
 type FlyWithWings struct{}
 
-// Полететь
+// Полететь.
 func (f *FlyWithWings) fly() string {
 	return "I'm flying!!"
 }
@@ -24,7 +24,7 @@ func (f *FlyWithWings) fly() string {
 // FlyRocketPowered Реализация реактивного полета
 type FlyRocketPowered struct{}
 
-// Полететь
+// Полететь.
 func (f *FlyRocketPowered) fly() string {
 	return "I'm flying with a rocket!!"
 }

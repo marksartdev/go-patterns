@@ -13,7 +13,7 @@ type Quacker interface {
 // MuteQuack Реализация для молчаливых уток
 type MuteQuack struct{}
 
-// Крякнуть
+// Крякнуть.
 func (m *MuteQuack) quack(_ int) string {
 	return "<< Silence >>"
 }
@@ -21,7 +21,7 @@ func (m *MuteQuack) quack(_ int) string {
 // Quack Реализация для крякающих уток
 type Quack struct{}
 
-// Крякнуть
+// Крякнуть.
 func (q *Quack) quack(count int) string {
 	speech := make([]string, count)
 	for i := 0; i < count; i++ {
@@ -37,7 +37,7 @@ func (q *Quack) quack(count int) string {
 // Squeak Реализация для пищащих уток
 type Squeak struct{}
 
-// Крякнуть
+// Крякнуть.
 func (s *Squeak) quack(count int) string {
 	speech := make([]string, count)
 	for i := 0; i < count; i++ {

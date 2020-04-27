@@ -40,27 +40,27 @@ type baseDuck struct {
 	flyer   Flyer
 }
 
-// Swim Плыть
+// Swim Плыть.
 func (b *baseDuck) Swim() string {
 	return "All ducks float, even decoys!"
 }
 
-// PerformQuack Крякнуть
+// PerformQuack Крякнуть.
 func (b *baseDuck) PerformQuack(count int) string {
 	return b.quacker.quack(count)
 }
 
-// PerformFly Полететь
+// PerformFly Полететь.
 func (b *baseDuck) PerformFly() string {
 	return b.flyer.fly()
 }
 
-// SetQuacker Установить алгоритм кряканья
+// SetQuacker Установить алгоритм кряканья.
 func (b *baseDuck) SetQuacker(quacker Quacker) {
 	b.quacker = quacker
 }
 
-// SetFlyer Установить алгоритм полетов
+// SetFlyer Установить алгоритм полетов.
 func (b *baseDuck) SetFlyer(flyer Flyer) {
 	b.flyer = flyer
 }
@@ -70,12 +70,12 @@ type mallardDuck struct {
 	baseDuck
 }
 
-// Display Внешний вид кряквы
+// Display Внешний вид кряквы.
 func (m *mallardDuck) Display() string {
 	return "I'm a mallard duck"
 }
 
-// NewMallardDuck Создать крякву
+// NewMallardDuck Создать крякву.
 func NewMallardDuck() Duck {
 	duck := new(mallardDuck)
 	duck.quacker = new(Quack)
@@ -89,12 +89,12 @@ type redheadDuck struct {
 	baseDuck
 }
 
-// Display Внешний вид красноголового нырка
+// Display Внешний вид красноголового нырка.
 func (r *redheadDuck) Display() string {
 	return "I'm a redhead duck"
 }
 
-// NewRedheadDuck Создать красноголового нырка
+// NewRedheadDuck Создать красноголового нырка.
 func NewRedheadDuck() Duck {
 	duck := new(redheadDuck)
 	duck.quacker = new(Quack)
@@ -108,12 +108,12 @@ type rubberDuck struct {
 	baseDuck
 }
 
-// Display Внешний вид резиновой уточки
+// Display Внешний вид резиновой уточки.
 func (r *rubberDuck) Display() string {
 	return "I'm a rubber duck"
 }
 
-// NewRubberDuck Создать резиновую уточку
+// NewRubberDuck Создать резиновую уточку.
 func NewRubberDuck() Duck {
 	duck := new(rubberDuck)
 	duck.quacker = new(Squeak)
@@ -127,12 +127,12 @@ type decoyDuck struct {
 	baseDuck
 }
 
-// Display Внешний вид деревянной утки
+// Display Внешний вид деревянной утки.
 func (d *decoyDuck) Display() string {
 	return "I'm a decoy duck"
 }
 
-// NewDecoyDuck Создать деревянную утку
+// NewDecoyDuck Создать деревянную утку.
 func NewDecoyDuck() Duck {
 	duck := new(decoyDuck)
 	duck.quacker = new(MuteQuack)
@@ -146,12 +146,12 @@ type modelDuck struct {
 	baseDuck
 }
 
-// Display Внешний вид утки приманки
+// Display Внешний вид утки приманки.
 func (m *modelDuck) Display() string {
 	return "I'm a model duck"
 }
 
-// NewModelDuck Создать утку-приманку
+// NewModelDuck Создать утку-приманку.
 func NewModelDuck() Duck {
 	duck := new(modelDuck)
 	duck.quacker = new(Quack)

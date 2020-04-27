@@ -1,6 +1,10 @@
-package strategy
+package strategy_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/Mark-Sart/go-patterns/pkg/behavioral/strategy"
+)
 
 type testDuck struct {
 	display      string
@@ -12,7 +16,7 @@ type testDuck struct {
 var errString = "Некорректный результат. Ожидалось %q, получено %q."
 
 func TestNewMallardDuck(t *testing.T) {
-	duck := NewMallardDuck()
+	duck := strategy.NewMallardDuck()
 
 	expected := &testDuck{
 		display:      "I'm a mallard duck",
@@ -25,7 +29,7 @@ func TestNewMallardDuck(t *testing.T) {
 }
 
 func TestNewRedheadDuck(t *testing.T) {
-	duck := NewRedheadDuck()
+	duck := strategy.NewRedheadDuck()
 
 	expected := &testDuck{
 		display:      "I'm a redhead duck",
@@ -38,7 +42,7 @@ func TestNewRedheadDuck(t *testing.T) {
 }
 
 func TestNewRubberDuck(t *testing.T) {
-	duck := NewRubberDuck()
+	duck := strategy.NewRubberDuck()
 
 	expected := &testDuck{
 		display:      "I'm a rubber duck",
@@ -51,7 +55,7 @@ func TestNewRubberDuck(t *testing.T) {
 }
 
 func TestNewDecoyDuck(t *testing.T) {
-	duck := NewDecoyDuck()
+	duck := strategy.NewDecoyDuck()
 
 	expected := &testDuck{
 		display:      "I'm a decoy duck",
@@ -64,7 +68,7 @@ func TestNewDecoyDuck(t *testing.T) {
 }
 
 func TestNewModelDuck(t *testing.T) {
-	duck := NewModelDuck()
+	duck := strategy.NewModelDuck()
 
 	expected := &testDuck{
 		display:      "I'm a model duck",
@@ -77,54 +81,54 @@ func TestNewModelDuck(t *testing.T) {
 }
 
 func TestSetQuacker_MuteQuack(t *testing.T) {
-	duck := NewMallardDuck()
+	duck := strategy.NewMallardDuck()
 	compareQuackBehaviorResult("Quack-quack-quack", duck.PerformQuack(3), t)
 
-	duck.SetQuacker(new(MuteQuack))
+	duck.SetQuacker(new(strategy.MuteQuack))
 	compareQuackBehaviorResult("<< Silence >>", duck.PerformQuack(3), t)
 }
 
 func TestSetQuacker_Quack(t *testing.T) {
-	duck := NewDecoyDuck()
+	duck := strategy.NewDecoyDuck()
 	compareQuackBehaviorResult("<< Silence >>", duck.PerformQuack(3), t)
 
-	duck.SetQuacker(new(Quack))
+	duck.SetQuacker(new(strategy.Quack))
 	compareQuackBehaviorResult("Quack-quack", duck.PerformQuack(2), t)
 }
 
 func TestSetQuacker_Squeak(t *testing.T) {
-	duck := NewModelDuck()
+	duck := strategy.NewModelDuck()
 	compareQuackBehaviorResult("Quack-quack-quack", duck.PerformQuack(3), t)
 
-	duck.SetQuacker(new(Squeak))
+	duck.SetQuacker(new(strategy.Squeak))
 	compareQuackBehaviorResult("Squeak-squeak", duck.PerformQuack(2), t)
 }
 
 func TestSetFlyer_FlyNoWay(t *testing.T) {
-	duck := NewMallardDuck()
+	duck := strategy.NewMallardDuck()
 	compareFlyBehaviorResult("I'm flying!!", duck.PerformFly(), t)
 
-	duck.SetFlyer(new(FlyNoWay))
+	duck.SetFlyer(new(strategy.FlyNoWay))
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 }
 
 func TestSetFlyer_FlyWithWings(t *testing.T) {
-	duck := NewModelDuck()
+	duck := strategy.NewModelDuck()
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 
-	duck.SetFlyer(new(FlyWithWings))
+	duck.SetFlyer(new(strategy.FlyWithWings))
 	compareFlyBehaviorResult("I'm flying!!", duck.PerformFly(), t)
 }
 
 func TestSetFlyer_FlyRocketPowered(t *testing.T) {
-	duck := NewModelDuck()
+	duck := strategy.NewModelDuck()
 	compareFlyBehaviorResult("I can't fly!!", duck.PerformFly(), t)
 
-	duck.SetFlyer(new(FlyRocketPowered))
+	duck.SetFlyer(new(strategy.FlyRocketPowered))
 	compareFlyBehaviorResult("I'm flying with a rocket!!", duck.PerformFly(), t)
 }
 
-func compareResults(expected *testDuck, duck Duck, t *testing.T, quackCount int) {
+func compareResults(expected *testDuck, duck strategy.Duck, t *testing.T, quackCount int) {
 	result := testDuck{
 		display:      duck.Display(),
 		swim:         duck.Swim(),
@@ -133,11 +137,11 @@ func compareResults(expected *testDuck, duck Duck, t *testing.T, quackCount int)
 	}
 
 	if expected.display != result.display {
-		t.Errorf(errString, "Display()", expected.display, result.display)
+		t.Errorf(errString, expected.display, result.display)
 	}
 
 	if expected.swim != result.swim {
-		t.Errorf(errString, "Swim()", expected.swim, result.swim)
+		t.Errorf(errString, expected.swim, result.swim)
 	}
 
 	compareQuackBehaviorResult(expected.performQuack, result.performQuack, t)
@@ -146,12 +150,12 @@ func compareResults(expected *testDuck, duck Duck, t *testing.T, quackCount int)
 
 func compareQuackBehaviorResult(expected string, result string, t *testing.T) {
 	if expected != result {
-		t.Errorf(errString, "PerformQuack()", expected, result)
+		t.Errorf(errString, expected, result)
 	}
 }
 
 func compareFlyBehaviorResult(expected string, result string, t *testing.T) {
 	if expected != result {
-		t.Errorf(errString, "PerformFly()", expected, result)
+		t.Errorf(errString, expected, result)
 	}
 }
