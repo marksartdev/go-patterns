@@ -6,14 +6,14 @@ import (
 	"github.com/Mark-Sart/go-patterns/pkg/behavioral/strategy"
 )
 
+const errString = "Некорректный результат. Ожидалось %q, получено %q."
+
 type testDuck struct {
 	display      string
 	swim         string
 	performQuack string
 	performFly   string
 }
-
-var errString = "Некорректный результат. Ожидалось %q, получено %q."
 
 func TestNewMallardDuck(t *testing.T) {
 	duck := strategy.NewMallardDuck()

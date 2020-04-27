@@ -39,22 +39,22 @@ type beverage struct {
 	size        int
 }
 
-// GetDescription Получить описание
+// GetDescription Получить описание.
 func (b *beverage) GetDescription() string {
 	return b.description
 }
 
-// Cost Рассчитать стоимость
+// Cost Рассчитать стоимость.
 func (b *beverage) Cost() float64 {
 	return b.cost[b.size]
 }
 
-// GetSize Получить размер стакана
+// GetSize Получить размер стакана.
 func (b *beverage) GetSize() int {
 	return b.size
 }
 
-// SetSize Установить размер стакана
+// SetSize Установить размер стакана.
 func (b *beverage) SetSize(size int) {
 	b.size = size
 }
@@ -64,7 +64,7 @@ type houseBlend struct {
 	beverage
 }
 
-// NewHouseBlend Создать кофе "Домашняя смесь"
+// NewHouseBlend Создать кофе "Домашняя смесь".
 func NewHouseBlend() Beverage {
 	b := new(houseBlend)
 	b.description = "Кофе \"Домашняя смесь\""
@@ -79,7 +79,7 @@ type darkRoast struct {
 	beverage
 }
 
-// NewDarkRoast Создать кофе "Темная обжарка"
+// NewDarkRoast Создать кофе "Темная обжарка".
 func NewDarkRoast() Beverage {
 	b := new(darkRoast)
 	b.description = "Кофе \"Темная обжарка\""
@@ -94,7 +94,7 @@ type decaf struct {
 	beverage
 }
 
-// NewDecaf Создать кофе "Без кофеина"
+// NewDecaf Создать кофе "Без кофеина".
 func NewDecaf() Beverage {
 	b := new(decaf)
 	b.description = "Кофе \"Без кофеина\""
@@ -109,7 +109,7 @@ type espresso struct {
 	beverage
 }
 
-// NewEspresso Создать кофе "Эспрессо"
+// NewEspresso Создать кофе "Эспрессо".
 func NewEspresso() Beverage {
 	b := new(espresso)
 	b.description = "Кофе \"Эспрессо\""

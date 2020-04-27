@@ -43,6 +43,7 @@ func main() {
 	fmt.Println()
 
 	textBuffer := bytes.NewBuffer([]byte("I know the Decorator Pattern therefore I RULE!"))
+
 	var reader io.Reader = bufio.NewReader(textBuffer)
 	reader = decorator.NewLowCaseReader(reader)
 

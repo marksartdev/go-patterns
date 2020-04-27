@@ -1,4 +1,4 @@
-package decorator
+package decorator_test
 
 import (
 	"bufio"
@@ -6,6 +6,8 @@ import (
 	"io"
 	"strings"
 	"testing"
+
+	"github.com/Mark-Sart/go-patterns/pkg/structural/decorator"
 )
 
 func TestNewLowCaseReader(t *testing.T) {
@@ -13,8 +15,9 @@ func TestNewLowCaseReader(t *testing.T) {
 	expected := strings.ToLower(text)
 
 	textBuffer := bytes.NewBuffer([]byte(text))
+
 	var reader io.Reader = bufio.NewReader(textBuffer)
-	reader = NewLowCaseReader(reader)
+	reader = decorator.NewLowCaseReader(reader)
 
 	result := make([]byte, 0)
 	buffer := make([]byte, 8)
