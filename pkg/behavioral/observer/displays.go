@@ -8,6 +8,12 @@ import (
 	"github.com/gonum/floats"
 )
 
+const (
+	// RandSeed Индекс для генератора случайных чисел
+	RandSeed                = 512
+	minHeatIndexTemperature = 27
+)
+
 // Интерфейс визуального элемента
 type displayer interface {
 	Display() string
@@ -26,11 +32,11 @@ type currentConditionsDisplay struct {
 	weatherData subject
 }
 
-// Update Обновить данные
-func (c *currentConditionsDisplay) Update(observable subject, data *measurements) string {
+// Update Обновить данные.
+func (c *currentConditionsDisplay) Update(observable subject, data *Measurements) string {
 	if data != nil {
-		c.temperature = data.temperature
-		c.humidity = data.humidity
+		c.temperature = data.Temperature
+		c.humidity = data.Humidity
 	} else {
 		wd, ok := observable.(WeatherDater)
 		if ok {
@@ -42,7 +48,7 @@ func (c *currentConditionsDisplay) Update(observable subject, data *measurements
 	return c.Display()
 }
 
-// Display Вывести информацию
+// Display Вывести информацию.
 func (c *currentConditionsDisplay) Display() string {
 	text := "Current conditions:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", c.temperature)
@@ -51,7 +57,7 @@ func (c *currentConditionsDisplay) Display() string {
 	return text
 }
 
-// NewCurrentConditionsDisplay Создать визуальный элемент текущего состояния
+// NewCurrentConditionsDisplay Создать визуальный элемент текущего состояния.
 func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 	display := new(currentConditionsDisplay)
 	display.weatherData = weatherData
@@ -69,12 +75,12 @@ type statisticsDisplay struct {
 	weatherData subject
 }
 
-// Update Обновить данные
-func (s *statisticsDisplay) Update(observable subject, data *measurements) string {
+// Update Обновить данные.
+func (s *statisticsDisplay) Update(observable subject, data *Measurements) string {
 	if data != nil {
-		s.temperature = append(s.temperature, data.temperature)
-		s.humidity = append(s.humidity, data.humidity)
-		s.pressure = append(s.pressure, data.pressure)
+		s.temperature = append(s.temperature, data.Temperature)
+		s.humidity = append(s.humidity, data.Humidity)
+		s.pressure = append(s.pressure, data.Pressure)
 	} else {
 		wd, ok := observable.(WeatherDater)
 		if ok {
@@ -87,11 +93,13 @@ func (s *statisticsDisplay) Update(observable subject, data *measurements) strin
 	return s.Display()
 }
 
-// Display Вывести информацию
+// Display Вывести информацию.
 func (s *statisticsDisplay) Display() string {
-	var temperatureMax, temperatureMin, temperatureAvg float64
-	var humidityMax, humidityMin, humidityAvg float64
-	var pressureMax, pressureMin, pressureAvg float64
+	var (
+		temperatureMax, temperatureMin, temperatureAvg float64
+		humidityMax, humidityMin, humidityAvg          float64
+		pressureMax, pressureMin, pressureAvg          float64
+	)
 
 	if len(s.temperature) > 0 {
 		temperatureMax = floats.Max(s.temperature)
@@ -119,7 +127,7 @@ func (s *statisticsDisplay) Display() string {
 	return text
 }
 
-// NewStatisticsDisplay Создать визуальный элемент статистики
+// NewStatisticsDisplay Создать визуальный элемент статистики.
 func NewStatisticsDisplay(weatherData subject) DisplayElement {
 	display := new(statisticsDisplay)
 	display.weatherData = weatherData
@@ -137,12 +145,12 @@ type forecastDisplay struct {
 	weatherData subject
 }
 
-// Update Обновить данные
-func (f *forecastDisplay) Update(observable subject, data *measurements) string {
+// Update Обновить данные.
+func (f *forecastDisplay) Update(observable subject, data *Measurements) string {
 	if data != nil {
-		f.temperature = data.temperature
-		f.humidity = data.humidity
-		f.pressure = data.pressure
+		f.temperature = data.Temperature
+		f.humidity = data.Humidity
+		f.pressure = data.Pressure
 	} else {
 		wd, ok := observable.(WeatherDater)
 		if ok {
@@ -157,7 +165,7 @@ func (f *forecastDisplay) Update(observable subject, data *measurements) string 
 	return f.Display()
 }
 
-// Display Вывести информацию
+// Display Вывести информацию.
 func (f *forecastDisplay) Display() string {
 	text := "Forecast:\n"
 	text += fmt.Sprintf("\tTemperature: %.1f\n", f.temperature)
@@ -167,21 +175,21 @@ func (f *forecastDisplay) Display() string {
 	return text
 }
 
-// Сделать прогноз
+// Сделать прогноз.
 func (f *forecastDisplay) makeForecast() {
-	rand.Seed(512)
+	rand.Seed(RandSeed)
 
 	f.temperature = f.getCoefficient() * f.temperature
 	f.humidity = f.getCoefficient() * f.humidity
 	f.pressure = f.getCoefficient() * f.pressure
 }
 
-// Получить коэффициент для прогноза
+// Получить коэффициент для прогноза.
 func (f *forecastDisplay) getCoefficient() float64 {
 	return 0.7 + rand.Float64()*(1.3-0.7)
 }
 
-// NewForecastDisplay Создать визуальный элемент прогноза
+// NewForecastDisplay Создать визуальный элемент прогноза.
 func NewForecastDisplay(weatherData subject) DisplayElement {
 	display := new(forecastDisplay)
 	display.weatherData = weatherData
@@ -198,11 +206,11 @@ type heatIndexDisplay struct {
 	weatherData subject
 }
 
-// Update Обновить данные
-func (h *heatIndexDisplay) Update(observable subject, data *measurements) string {
+// Update Обновить данные.
+func (h *heatIndexDisplay) Update(observable subject, data *Measurements) string {
 	if data != nil {
-		h.temperature = data.temperature
-		h.humidity = data.humidity
+		h.temperature = data.Temperature
+		h.humidity = data.Humidity
 	} else {
 		wd, ok := observable.(WeatherDater)
 		if ok {
@@ -214,9 +222,9 @@ func (h *heatIndexDisplay) Update(observable subject, data *measurements) string
 	return h.Display()
 }
 
-// Display Вывести информацию
+// Display Вывести информацию.
 func (h *heatIndexDisplay) Display() string {
-	if h.temperature < 27 {
+	if h.temperature < minHeatIndexTemperature {
 		return ""
 	}
 
@@ -243,7 +251,7 @@ func (h *heatIndexDisplay) Display() string {
 	return fmt.Sprintf("Heat index: %.1f\n", heatIndex)
 }
 
-// NewHeatIndexDisplay Создать визуальный элемент теплового индекса
+// NewHeatIndexDisplay Создать визуальный элемент теплового индекса.
 func NewHeatIndexDisplay(weatherData subject) DisplayElement {
 	display := new(heatIndexDisplay)
 	display.weatherData = weatherData

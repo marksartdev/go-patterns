@@ -4,7 +4,7 @@ package observer
 type subject interface {
 	RegisterObserver(observer)
 	RemoveObserver(observer)
-	NotifyObservers(*measurements) string
+	NotifyObservers(*Measurements) string
 	SetChanged()
 	HasChanged() bool
 	ClearChanged()
@@ -15,12 +15,12 @@ type subject interface {
 
 // Интерфейс наблюдателя
 type observer interface {
-	Update(subject, *measurements) string
+	Update(subject, *Measurements) string
 }
 
-// Измерения
-type measurements struct {
-	temperature float64
-	humidity    float64
-	pressure    float64
+// Measurements Измерения
+type Measurements struct {
+	Temperature float64
+	Humidity    float64
+	Pressure    float64
 }

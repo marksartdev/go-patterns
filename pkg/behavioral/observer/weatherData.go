@@ -21,12 +21,12 @@ type weatherData struct {
 	pressure    float64
 }
 
-// MeasurementsChanged Вызывается при каждом обновлении показаний датчиков
+// MeasurementsChanged Вызывается при каждом обновлении показаний датчиков.
 func (w *weatherData) MeasurementsChanged() string {
 	return w.NotifyObservers(nil)
 }
 
-// SetMeasurements Задать измерения
+// SetMeasurements Задать измерения.
 func (w *weatherData) SetMeasurements(temperature, humidity, pressure float64) string {
 	w.temperature = temperature
 	w.humidity = humidity
@@ -35,18 +35,18 @@ func (w *weatherData) SetMeasurements(temperature, humidity, pressure float64) s
 	return w.MeasurementsChanged()
 }
 
-// RegisterObserver Регистрация нового наблюдателя
+// RegisterObserver Регистрация нового наблюдателя.
 func (w *weatherData) RegisterObserver(newObserver observer) {
 	w.observers[newObserver] = struct{}{}
 }
 
-// RemoveObserver Удалить наблюдателя из списка
+// RemoveObserver Удалить наблюдателя из списка.
 func (w *weatherData) RemoveObserver(removedObserver observer) {
 	delete(w.observers, removedObserver)
 }
 
-// NotifyObservers Оповестить наблюдателей
-func (w *weatherData) NotifyObservers(data *measurements) string {
+// NotifyObservers Оповестить наблюдателей.
+func (w *weatherData) NotifyObservers(data *Measurements) string {
 	var result string
 
 	if w.HasChanged() {
@@ -60,37 +60,37 @@ func (w *weatherData) NotifyObservers(data *measurements) string {
 	return result
 }
 
-// SetChanged Зафиксировать изменения
+// SetChanged Зафиксировать изменения.
 func (w *weatherData) SetChanged() {
 	w.changed = true
 }
 
-// HasChanged Проверить фиксацию изменений
+// HasChanged Проверить фиксацию изменений.
 func (w *weatherData) HasChanged() bool {
 	return w.changed
 }
 
-// ClearChanged Снять фиксацию изменений
+// ClearChanged Снять фиксацию изменений.
 func (w *weatherData) ClearChanged() {
 	w.changed = false
 }
 
-// GetTemperature Получить текущую температуру
+// GetTemperature Получить текущую температуру.
 func (w *weatherData) GetTemperature() float64 {
 	return w.temperature
 }
 
-// GetHumidity Получить текущую влажность
+// GetHumidity Получить текущую влажность.
 func (w *weatherData) GetHumidity() float64 {
 	return w.humidity
 }
 
-// GetPressure Получить текущее давление
+// GetPressure Получить текущее давление.
 func (w *weatherData) GetPressure() float64 {
 	return w.pressure
 }
 
-// NewWeatherData Создать weatherData
+// NewWeatherData Создать weatherData.
 func NewWeatherData() WeatherDater {
 	wd := new(weatherData)
 	wd.observers = make(map[observer]struct{})
