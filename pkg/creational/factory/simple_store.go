@@ -5,7 +5,7 @@ type simplePizzaStore struct {
 	factory SimplePizzaFactory
 }
 
-// OrderPizza Заказать пиццу
+// OrderPizza Заказать пиццу.
 func (p *simplePizzaStore) OrderPizza(pizzaType string) SimplePizza {
 	pizza := p.factory.createPizza(pizzaType)
 	pizza.prepare()
@@ -16,7 +16,7 @@ func (p *simplePizzaStore) OrderPizza(pizzaType string) SimplePizza {
 	return pizza
 }
 
-// NewSimplePizzaStore Создать простую пиццерию
+// NewSimplePizzaStore Создать простую пиццерию.
 func NewSimplePizzaStore(factory SimplePizzaFactory) PizzaStore {
 	store := new(simplePizzaStore)
 	store.factory = factory

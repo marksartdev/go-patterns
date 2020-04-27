@@ -5,7 +5,7 @@ type nyPizzaStore struct {
 	abstractPizzaStore
 }
 
-// Создать пиццу в Нью-Йоркском стиле
+// Создать пиццу в Нью-Йоркском стиле.
 func createNYPizza(pizzaType string) SimplePizza {
 	switch pizzaType {
 	case Cheese:
@@ -21,7 +21,7 @@ func createNYPizza(pizzaType string) SimplePizza {
 	return nil
 }
 
-// NewNYPizzaStore Создать пиццерию в Нью-Йоркском стиле
+// NewNYPizzaStore Создать пиццерию в Нью-Йоркском стиле.
 func NewNYPizzaStore() PizzaStore {
 	store := new(nyPizzaStore)
 	store.createPizza = createNYPizza
@@ -34,7 +34,7 @@ type chicagoPizzaStore struct {
 	abstractPizzaStore
 }
 
-// Создать пиццу в Чикагском стиле
+// Создать пиццу в Чикагском стиле.
 func createChicagoPizza(pizzaType string) SimplePizza {
 	switch pizzaType {
 	case Cheese:
@@ -50,7 +50,7 @@ func createChicagoPizza(pizzaType string) SimplePizza {
 	return nil
 }
 
-// NewChicagoPizzaStore Создать пиццерию в Чикагском стиле
+// NewChicagoPizzaStore Создать пиццерию в Чикагском стиле.
 func NewChicagoPizzaStore() PizzaStore {
 	store := new(chicagoPizzaStore)
 	store.createPizza = createChicagoPizza

@@ -8,7 +8,7 @@ type SimplePizzaFactory interface {
 // Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле
 type simpleNYPizzaFactory struct{}
 
-// Создать пиццу
+// Создать пиццу.
 func (s *simpleNYPizzaFactory) createPizza(pizzaType string) SimplePizza {
 	var pizza SimplePizza
 
@@ -32,7 +32,7 @@ func (s *simpleNYPizzaFactory) createPizza(pizzaType string) SimplePizza {
 	return pizza
 }
 
-// NewSimpleNYPizzaFactory Создать простую фабрику по изготовлению пиццы
+// NewSimpleNYPizzaFactory Создать простую фабрику по изготовлению пиццы в Нью-Йоркском стиле.
 func NewSimpleNYPizzaFactory() SimplePizzaFactory {
 	return new(simpleNYPizzaFactory)
 }
@@ -40,7 +40,7 @@ func NewSimpleNYPizzaFactory() SimplePizzaFactory {
 // Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле
 type simpleChicagoPizzaFactory struct{}
 
-// Создать пиццу
+// Создать пиццу.
 func (s *simpleChicagoPizzaFactory) createPizza(pizzaType string) SimplePizza {
 	var pizza SimplePizza
 
@@ -64,7 +64,7 @@ func (s *simpleChicagoPizzaFactory) createPizza(pizzaType string) SimplePizza {
 	return pizza
 }
 
-// NewSimpleChicagoPizzaFactory Создать простую фабрику по изготовлению пиццы
+// NewSimpleChicagoPizzaFactory Создать простую фабрику по изготовлению пиццы в Чикагском стиле.
 func NewSimpleChicagoPizzaFactory() SimplePizzaFactory {
 	return new(simpleChicagoPizzaFactory)
 }

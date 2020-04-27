@@ -35,27 +35,27 @@ type simpleAbstractPizza struct {
 	SimplePizzaProperties
 }
 
-// Приготовить пиццу
+// Приготовить пиццу.
 func (s *simpleAbstractPizza) prepare() {
 	s.IsPrepared = true
 }
 
-// Испечь пиццу
+// Испечь пиццу.
 func (s *simpleAbstractPizza) bake() {
 	s.IsBaked = true
 }
 
-// Разрезать пиццу
+// Разрезать пиццу.
 func (s *simpleAbstractPizza) cut() {
 	s.IsCutted = true
 }
 
-// Упаковать пиццу
+// Упаковать пиццу.
 func (s *simpleAbstractPizza) box() {
 	s.IsBoxed = true
 }
 
-// GetProperties Получить свойства пиццы
+// GetProperties Получить свойства пиццы.
 func (s *simpleAbstractPizza) GetProperties() SimplePizzaProperties {
 	return s.SimplePizzaProperties
 }

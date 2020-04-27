@@ -10,7 +10,7 @@ type abstractPizzaStore struct {
 	createPizza func(string) SimplePizza
 }
 
-// OrderPizza Заказать пиццу
+// OrderPizza Заказать пиццу.
 func (a *abstractPizzaStore) OrderPizza(pizzaType string) SimplePizza {
 	pizza := a.createPizza(pizzaType)
 

@@ -7,7 +7,7 @@ type simpleNYCheesePizza struct {
 	simpleAbstractPizza
 }
 
-// Создать сырную пиццу в Нью-Йоркском стиле
+// Создать сырную пиццу в Нью-Йоркском стиле.
 func newSimpleNYCheesePizza() SimplePizza {
 	pizza := new(simpleNYCheesePizza)
 	pizza.Name = "Сырная"
@@ -21,7 +21,7 @@ type simpleNYPepperoniPizza struct {
 	simpleAbstractPizza
 }
 
-// Создать пиццу "Пепперони" в Нью-Йоркском стиле
+// Создать пиццу "Пепперони" в Нью-Йоркском стиле.
 func newSimpleNYPepperoniPizza() SimplePizza {
 	pizza := new(simpleNYPepperoniPizza)
 	pizza.Name = "Пепперони"
@@ -35,7 +35,7 @@ type simpleNYClamPizza struct {
 	simpleAbstractPizza
 }
 
-// Создать пиццу с мидиями в Нью-Йоркском стиле
+// Создать пиццу с мидиями в Нью-Йоркском стиле.
 func newSimpleNYClamPizza() SimplePizza {
 	pizza := new(simpleNYClamPizza)
 	pizza.Name = "С мидиями"
@@ -49,7 +49,7 @@ type simpleNYVeggiePizza struct {
 	simpleAbstractPizza
 }
 
-// Создать вегетарианскую пиццу в Нью-Йоркском стиле
+// Создать вегетарианскую пиццу в Нью-Йоркском стиле.
 func newSimpleNYVeggiePizza() SimplePizza {
 	pizza := new(simpleNYVeggiePizza)
 	pizza.Name = "Вегетарианская"
