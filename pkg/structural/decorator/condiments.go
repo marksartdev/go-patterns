@@ -2,7 +2,7 @@ package decorator
 
 import "fmt"
 
-// Базовая структура декоратора
+// Базовая структура декоратора.
 type condimentDecorator struct {
 	beverage    Beverage
 	description string
@@ -29,7 +29,7 @@ func (c *condimentDecorator) SetSize(size int) {
 	c.beverage.SetSize(size)
 }
 
-// Молочная пена
+// Молочная пена.
 type milkDecorator struct {
 	condimentDecorator
 }
@@ -44,7 +44,7 @@ func NewMilkDecorator(beverage Beverage) Beverage {
 	return d
 }
 
-// Шоколад
+// Шоколад.
 type mochaDecorator struct {
 	condimentDecorator
 }
@@ -59,7 +59,7 @@ func NewMochaDecorator(beverage Beverage) Beverage {
 	return d
 }
 
-// Соя
+// Соя.
 type soyDecorator struct {
 	condimentDecorator
 }
@@ -74,7 +74,7 @@ func NewSoyDecorator(beverage Beverage) Beverage {
 	return d
 }
 
-// Взбитые сливки
+// Взбитые сливки.
 type whipDecorator struct {
 	condimentDecorator
 }

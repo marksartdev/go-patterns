@@ -1,6 +1,6 @@
 package factory
 
-// Пиццерия в Нью-Йоркском стиле
+// Пиццерия в Нью-Йоркском стиле.
 type nyPizzaStore struct {
 	abstractPizzaStore
 }
@@ -29,7 +29,7 @@ func NewNYPizzaStore() PizzaStore {
 	return store
 }
 
-// Пиццерия в Чикагском стиле
+// Пиццерия в Чикагском стиле.
 type chicagoPizzaStore struct {
 	abstractPizzaStore
 }

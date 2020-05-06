@@ -1,18 +1,18 @@
 package observer
 
-// Интерфейс работы с измерениями
+// Интерфейс работы с измерениями.
 type measurementsHandler interface {
 	MeasurementsChanged() string
 	SetMeasurements(float64, float64, float64) string
 }
 
-// WeatherDater Интерфейс источника метеоданных, способного быть субъектом
+// WeatherDater Интерфейс источника метеоданных, способного быть субъектом.
 type WeatherDater interface {
 	measurementsHandler
 	subject
 }
 
-// Источник метеоданных
+// Источник метеоданных.
 type weatherData struct {
 	changed     bool
 	observers   map[observer]struct{}

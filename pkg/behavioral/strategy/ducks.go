@@ -1,28 +1,28 @@
 package strategy
 
-// Интерфейс отображения
+// Интерфейс отображения.
 type displayer interface {
 	Display() string
 }
 
-// Интерфейс плавания
+// Интерфейс плавания.
 type swimmer interface {
 	Swim() string
 }
 
-// Интерфейс кряканья
+// Интерфейс кряканья.
 type quackPerformer interface {
 	PerformQuack(int) string
 	SetQuacker(Quacker)
 }
 
-// Интерфейс полетов
+// Интерфейс полетов.
 type flyPerformer interface {
 	PerformFly() string
 	SetFlyer(Flyer)
 }
 
-// Duck Интерфейс утки
+// Duck Интерфейс утки.
 type Duck interface {
 	displayer
 	swimmer
@@ -33,7 +33,7 @@ type Duck interface {
 /*
 Базовая структура утки
 quacker - Алгоритм кряканья
-flyer - Алгоритм полетов
+flyer - Алгоритм полетов.
 */
 type baseDuck struct {
 	quacker Quacker
@@ -65,7 +65,7 @@ func (b *baseDuck) SetFlyer(flyer Flyer) {
 	b.flyer = flyer
 }
 
-// Кряква
+// Кряква.
 type mallardDuck struct {
 	baseDuck
 }
@@ -84,7 +84,7 @@ func NewMallardDuck() Duck {
 	return duck
 }
 
-// Красноголовый нырок
+// Красноголовый нырок.
 type redheadDuck struct {
 	baseDuck
 }
@@ -103,7 +103,7 @@ func NewRedheadDuck() Duck {
 	return duck
 }
 
-// Резиновая уточка
+// Резиновая уточка.
 type rubberDuck struct {
 	baseDuck
 }
@@ -122,7 +122,7 @@ func NewRubberDuck() Duck {
 	return duck
 }
 
-// Деревянная утка
+// Деревянная утка.
 type decoyDuck struct {
 	baseDuck
 }
@@ -141,7 +141,7 @@ func NewDecoyDuck() Duck {
 	return duck
 }
 
-// Утка-приманка
+// Утка-приманка.
 type modelDuck struct {
 	baseDuck
 }

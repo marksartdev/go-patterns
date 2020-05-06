@@ -1,11 +1,11 @@
 package factory
 
-// PizzaStore Интерфейс пиццерии
+// PizzaStore Интерфейс пиццерии.
 type PizzaStore interface {
 	OrderPizza(string) SimplePizza
 }
 
-// Абстрактная пиццерия
+// Абстрактная пиццерия.
 type abstractPizzaStore struct {
 	createPizza func(string) SimplePizza
 }

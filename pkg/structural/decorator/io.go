@@ -5,7 +5,7 @@ import (
 	"io"
 )
 
-// Декоратор перевода букв в нижний регистр
+// Декоратор перевода букв в нижний регистр.
 type lowCaseReader struct {
 	reader io.Reader
 }

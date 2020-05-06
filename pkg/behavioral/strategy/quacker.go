@@ -5,12 +5,12 @@ import (
 	"unicode"
 )
 
-// Quacker Интерфейс способности крякать
+// Quacker Интерфейс способности крякать.
 type Quacker interface {
 	quack(count int) string
 }
 
-// MuteQuack Реализация для молчаливых уток
+// MuteQuack Реализация для молчаливых уток.
 type MuteQuack struct{}
 
 // Крякнуть.
@@ -18,7 +18,7 @@ func (m *MuteQuack) quack(_ int) string {
 	return "<< Silence >>"
 }
 
-// Quack Реализация для крякающих уток
+// Quack Реализация для крякающих уток.
 type Quack struct{}
 
 // Крякнуть.
@@ -34,7 +34,7 @@ func (q *Quack) quack(count int) string {
 	return string(runes)
 }
 
-// Squeak Реализация для пищащих уток
+// Squeak Реализация для пищащих уток.
 type Squeak struct{}
 
 // Крякнуть.

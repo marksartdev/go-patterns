@@ -1,6 +1,6 @@
 package observer
 
-// Интерфейс субъекта
+// Интерфейс субъекта.
 type subject interface {
 	RegisterObserver(observer)
 	RemoveObserver(observer)
@@ -13,12 +13,12 @@ type subject interface {
 	GetPressure() float64
 }
 
-// Интерфейс наблюдателя
+// Интерфейс наблюдателя.
 type observer interface {
 	Update(subject, *Measurements) string
 }
 
-// Measurements Измерения
+// Measurements Измерения.
 type Measurements struct {
 	Temperature float64
 	Humidity    float64

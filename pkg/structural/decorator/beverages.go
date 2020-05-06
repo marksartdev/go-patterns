@@ -1,38 +1,38 @@
 package decorator
 
-// Small Маленький стакан
+// Small Маленький стакан.
 const Small = 0
 
-// Medium Средний стакан
+// Medium Средний стакан.
 const Medium = 1
 
-// Large Большой стакан
+// Large Большой стакан.
 const Large = 2
 
-// Интерфейс описания напитка
+// Интерфейс описания напитка.
 type descriptor interface {
 	GetDescription() string
 }
 
-// Интерфейс стоимости напитка
+// Интерфейс стоимости напитка.
 type coster interface {
 	Cost() float64
 }
 
-// Интерфейс размеров стакана
+// Интерфейс размеров стакана.
 type sizer interface {
 	GetSize() int
 	SetSize(int)
 }
 
-// Beverage Интерфейс напитка
+// Beverage Интерфейс напитка.
 type Beverage interface {
 	descriptor
 	coster
 	sizer
 }
 
-// Базовая структура напитка
+// Базовая структура напитка.
 type beverage struct {
 	description string
 	cost        [3]float64
@@ -59,7 +59,7 @@ func (b *beverage) SetSize(size int) {
 	b.size = size
 }
 
-// Кофе "Домашняя смесь"
+// Кофе "Домашняя смесь".
 type houseBlend struct {
 	beverage
 }
@@ -74,7 +74,7 @@ func NewHouseBlend() Beverage {
 	return b
 }
 
-// Кофе "Темная обжарка"
+// Кофе "Темная обжарка".
 type darkRoast struct {
 	beverage
 }
@@ -89,7 +89,7 @@ func NewDarkRoast() Beverage {
 	return b
 }
 
-// Кофе "Без кофеина"
+// Кофе "Без кофеина".
 type decaf struct {
 	beverage
 }
@@ -104,7 +104,7 @@ func NewDecaf() Beverage {
 	return b
 }
 
-// Кофе "Эспрессо"
+// Кофе "Эспрессо".
 type espresso struct {
 	beverage
 }

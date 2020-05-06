@@ -11,7 +11,7 @@ const (
 	Veggie = "veggie"
 )
 
-// SimplePizzaProperties Свойства пиццы
+// SimplePizzaProperties Свойства пиццы.
 type SimplePizzaProperties struct {
 	Name       string
 	Style      string
@@ -21,7 +21,7 @@ type SimplePizzaProperties struct {
 	IsBoxed    bool
 }
 
-// SimplePizza Интерфейс пиццы
+// SimplePizza Интерфейс пиццы.
 type SimplePizza interface {
 	prepare()
 	bake()
@@ -30,7 +30,7 @@ type SimplePizza interface {
 	GetProperties() SimplePizzaProperties
 }
 
-// Абстрактная пицца
+// Абстрактная пицца.
 type simpleAbstractPizza struct {
 	SimplePizzaProperties
 }

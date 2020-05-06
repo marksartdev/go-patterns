@@ -1,11 +1,11 @@
 package factory
 
-// SimplePizzaFactory Интерфейс простой фабрики по изготовлению пиццы
+// SimplePizzaFactory Интерфейс простой фабрики по изготовлению пиццы.
 type SimplePizzaFactory interface {
 	createPizza(string) SimplePizza
 }
 
-// Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле
+// Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле.
 type simpleNYPizzaFactory struct{}
 
 // Создать пиццу.
@@ -37,7 +37,7 @@ func NewSimpleNYPizzaFactory() SimplePizzaFactory {
 	return new(simpleNYPizzaFactory)
 }
 
-// Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле
+// Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле.
 type simpleChicagoPizzaFactory struct{}
 
 // Создать пиццу.

@@ -2,7 +2,7 @@ package factory
 
 const nyPizzaStyle = "Нью-Йорк"
 
-// Сырная пицца в Нью-Йоркском стиле
+// Сырная пицца в Нью-Йоркском стиле.
 type simpleNYCheesePizza struct {
 	simpleAbstractPizza
 }
@@ -16,7 +16,7 @@ func newSimpleNYCheesePizza() SimplePizza {
 	return pizza
 }
 
-// Пицца "Пепперони" в Нью-Йоркском стиле
+// Пицца "Пепперони" в Нью-Йоркском стиле.
 type simpleNYPepperoniPizza struct {
 	simpleAbstractPizza
 }
@@ -30,7 +30,7 @@ func newSimpleNYPepperoniPizza() SimplePizza {
 	return pizza
 }
 
-// Пицца с мидиями в Нью-Йоркском стиле
+// Пицца с мидиями в Нью-Йоркском стиле.
 type simpleNYClamPizza struct {
 	simpleAbstractPizza
 }
@@ -44,7 +44,7 @@ func newSimpleNYClamPizza() SimplePizza {
 	return pizza
 }
 
-// Вегетарианская пицца в Нью-Йоркском стиле
+// Вегетарианская пицца в Нью-Йоркском стиле.
 type simpleNYVeggiePizza struct {
 	simpleAbstractPizza
 }

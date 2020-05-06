@@ -14,18 +14,18 @@ const (
 	minHeatIndexTemperature = 27
 )
 
-// Интерфейс визуального элемента
+// Интерфейс визуального элемента.
 type displayer interface {
 	Display() string
 }
 
-// DisplayElement Интерфейс визуального элемента, способного быть наблюдателем
+// DisplayElement Интерфейс визуального элемента, способного быть наблюдателем.
 type DisplayElement interface {
 	displayer
 	observer
 }
 
-// Визуальный элемент текущего состояния
+// Визуальный элемент текущего состояния.
 type currentConditionsDisplay struct {
 	temperature float64
 	humidity    float64
@@ -67,7 +67,7 @@ func NewCurrentConditionsDisplay(weatherData subject) DisplayElement {
 	return display
 }
 
-// Визуальный элемент статистики
+// Визуальный элемент статистики.
 type statisticsDisplay struct {
 	temperature []float64
 	humidity    []float64
@@ -137,7 +137,7 @@ func NewStatisticsDisplay(weatherData subject) DisplayElement {
 	return display
 }
 
-// Визуальный элемент прогноза
+// Визуальный элемент прогноза.
 type forecastDisplay struct {
 	temperature float64
 	humidity    float64
@@ -199,7 +199,7 @@ func NewForecastDisplay(weatherData subject) DisplayElement {
 	return display
 }
 
-// Визуальный элемент теплового индекса
+// Визуальный элемент теплового индекса.
 type heatIndexDisplay struct {
 	temperature float64
 	humidity    float64

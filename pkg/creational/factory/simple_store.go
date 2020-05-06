@@ -1,6 +1,6 @@
 package factory
 
-// Простая пиццерия
+// Простая пиццерия.
 type simplePizzaStore struct {
 	factory SimplePizzaFactory
 }
