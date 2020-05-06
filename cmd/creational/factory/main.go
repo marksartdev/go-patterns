@@ -36,21 +36,21 @@ func main() {
 	nyPizzaStore = factory.NewNYPizzaStore()
 	chicagoPizzaStore = factory.NewChicagoPizzaStore()
 
-	go startPizzaStore(ctx, wg, ch, simpleNYPizzaStore, "Нью-Йоркская пиццерия (простая)")
+	go startPizzaStore(ctx, wg, ch, simpleNYPizzaStore, "New-York (simple)")
 	cnt++
 
-	go startPizzaStore(ctx, wg, ch, simpleChicagoPizzaStore, "Чикагская пиццерия (простая)")
+	go startPizzaStore(ctx, wg, ch, simpleChicagoPizzaStore, "Chicago (simple)")
 	cnt++
 
-	go startPizzaStore(ctx, wg, ch, nyPizzaStore, "Нью-Йоркская пиццерия")
+	go startPizzaStore(ctx, wg, ch, nyPizzaStore, "New-York")
 	cnt++
 
-	go startPizzaStore(ctx, wg, ch, chicagoPizzaStore, "Чикагская пиццерия")
+	go startPizzaStore(ctx, wg, ch, chicagoPizzaStore, "Chicago")
 	cnt++
 
 	wg.Add(cnt)
 
-	for i := 0; i < 20; i++ {
+	for i := 0; i < 10; i++ {
 		pizzaType := pizzaTypes[random.Intn(len(pizzaTypes))]
 
 		ch <- pizzaType
@@ -58,7 +58,7 @@ func main() {
 
 	finish()
 	wg.Wait()
-	fmt.Println("Все пиццерии успешно закрылись!")
+	fmt.Println("All pizzaStores were closed!")
 }
 
 func startPizzaStore(
@@ -68,33 +68,26 @@ func startPizzaStore(
 	pizzaStore factory.PizzaStore,
 	pizzaStoreName string,
 ) {
-	var (
-		pizza           factory.SimplePizza
-		pizzaProperties factory.SimplePizzaProperties
-	)
+	var pizza factory.Pizza
 
 	for {
 		select {
 		case <-ctx.Done():
 			time.Sleep(time.Second)
-			fmt.Println("Пиццерия закрывается...")
+			fmt.Printf("%s pizzaStore is closing...\n", pizzaStoreName)
 			wg.Done()
 
 			return
 		case pizzaType := <-ch:
 			pizza = pizzaStore.OrderPizza(pizzaType)
-			pizzaProperties = pizza.GetProperties()
+			log := pizza.GetLog()
 
-			fmt.Printf(
-				"%-40s Стиль: %-12s Название: %-18s Приготовлена: %-8v Выпечена: %-8v Разрезана: %-8v Упакована: %-8v\n",
-				pizzaStoreName,
-				pizzaProperties.Style,
-				pizzaProperties.Name,
-				pizzaProperties.IsPrepared,
-				pizzaProperties.IsBaked,
-				pizzaProperties.IsCutted,
-				pizzaProperties.IsBoxed,
-			)
+			buffer := fmt.Sprintf("%s:\n", pizzaStoreName)
+			for _, step := range log {
+				buffer += fmt.Sprintf("\t\t%s\n", step)
+			}
+
+			fmt.Println(buffer)
 		}
 	}
 }

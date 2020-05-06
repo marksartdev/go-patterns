@@ -6,7 +6,7 @@ type simplePizzaStore struct {
 }
 
 // OrderPizza Заказать пиццу.
-func (p *simplePizzaStore) OrderPizza(pizzaType string) SimplePizza {
+func (p *simplePizzaStore) OrderPizza(pizzaType string) Pizza {
 	pizza := p.factory.createPizza(pizzaType)
 	pizza.prepare()
 	pizza.bake()

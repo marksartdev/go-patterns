@@ -2,25 +2,25 @@ package factory
 
 // SimplePizzaFactory Интерфейс простой фабрики по изготовлению пиццы.
 type SimplePizzaFactory interface {
-	createPizza(string) SimplePizza
+	createPizza(string) Pizza
 }
 
 // Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле.
 type simpleNYPizzaFactory struct{}
 
 // Создать пиццу.
-func (s *simpleNYPizzaFactory) createPizza(pizzaType string) SimplePizza {
-	var pizza SimplePizza
+func (s *simpleNYPizzaFactory) createPizza(pizzaType string) Pizza {
+	var pizza Pizza
 
 	switch pizzaType {
 	case Cheese:
-		pizza = newSimpleNYCheesePizza()
+		pizza = newNYCheesePizza()
 
 	case Pepperoni:
-		pizza = newSimpleNYPepperoniPizza()
+		pizza = newNYPepperoniPizza()
 
 	case Clam:
-		pizza = newSimpleNYClamPizza()
+		pizza = newNYClamPizza()
 
 	case Veggie:
 		pizza = newSimpleNYVeggiePizza()
@@ -41,21 +41,21 @@ func NewSimpleNYPizzaFactory() SimplePizzaFactory {
 type simpleChicagoPizzaFactory struct{}
 
 // Создать пиццу.
-func (s *simpleChicagoPizzaFactory) createPizza(pizzaType string) SimplePizza {
-	var pizza SimplePizza
+func (s *simpleChicagoPizzaFactory) createPizza(pizzaType string) Pizza {
+	var pizza Pizza
 
 	switch pizzaType {
 	case Cheese:
-		pizza = newSimpleChicagoCheesePizza()
+		pizza = newChicagoCheesePizza()
 
 	case Pepperoni:
-		pizza = newSimpleChicagoPepperoniPizza()
+		pizza = newChicagoPepperoniPizza()
 
 	case Clam:
-		pizza = newSimpleChicagoClamPizza()
+		pizza = newChicagoClamPizza()
 
 	case Veggie:
-		pizza = newSimpleChicagoVeggiePizza()
+		pizza = newChicagoVeggiePizza()
 
 	default:
 		pizza = nil

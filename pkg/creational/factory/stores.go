@@ -6,14 +6,14 @@ type nyPizzaStore struct {
 }
 
 // Создать пиццу в Нью-Йоркском стиле.
-func createNYPizza(pizzaType string) SimplePizza {
+func createNYPizza(pizzaType string) Pizza {
 	switch pizzaType {
 	case Cheese:
-		return newSimpleNYCheesePizza()
+		return newNYCheesePizza()
 	case Pepperoni:
-		return newSimpleNYPepperoniPizza()
+		return newNYPepperoniPizza()
 	case Clam:
-		return newSimpleNYClamPizza()
+		return newNYClamPizza()
 	case Veggie:
 		return newSimpleNYVeggiePizza()
 	}
@@ -35,16 +35,16 @@ type chicagoPizzaStore struct {
 }
 
 // Создать пиццу в Чикагском стиле.
-func createChicagoPizza(pizzaType string) SimplePizza {
+func createChicagoPizza(pizzaType string) Pizza {
 	switch pizzaType {
 	case Cheese:
-		return newSimpleChicagoCheesePizza()
+		return newChicagoCheesePizza()
 	case Pepperoni:
-		return newSimpleChicagoPepperoniPizza()
+		return newChicagoPepperoniPizza()
 	case Clam:
-		return newSimpleChicagoClamPizza()
+		return newChicagoClamPizza()
 	case Veggie:
-		return newSimpleChicagoVeggiePizza()
+		return newChicagoVeggiePizza()
 	}
 
 	return nil

@@ -2,16 +2,16 @@ package factory
 
 // PizzaStore Интерфейс пиццерии.
 type PizzaStore interface {
-	OrderPizza(string) SimplePizza
+	OrderPizza(string) Pizza
 }
 
 // Абстрактная пиццерия.
 type abstractPizzaStore struct {
-	createPizza func(string) SimplePizza
+	createPizza func(string) Pizza
 }
 
 // OrderPizza Заказать пиццу.
-func (a *abstractPizzaStore) OrderPizza(pizzaType string) SimplePizza {
+func (a *abstractPizzaStore) OrderPizza(pizzaType string) Pizza {
 	pizza := a.createPizza(pizzaType)
 
 	pizza.prepare()
