@@ -1,4 +1,4 @@
-package factory
+package simplefactory
 
 const (
 	chicagoDough     = "Extra Thick Crust Dough"

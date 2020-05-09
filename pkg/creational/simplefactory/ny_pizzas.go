@@ -1,4 +1,4 @@
-package factory
+package simplefactory
 
 const (
 	nyDough     = "Thin Crust Dough"
@@ -72,7 +72,7 @@ type nyVeggiePizza struct {
 }
 
 // Создать вегетарианскую пиццу в Нью-Йоркском стиле.
-func newSimpleNYVeggiePizza() Pizza {
+func newNYVeggiePizza() Pizza {
 	pizza := new(nyVeggiePizza)
 	pizza.name = "NY Style Sauce and Veggie Pizza"
 	pizza.dough = nyDough
