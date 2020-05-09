@@ -21,26 +21,12 @@ func main() {
 
 	cnt := 0
 
-	pizzaTypes := [4]string{factory.Cheese, factory.Pepperoni, factory.Clam, factory.Veggie}
+	pizzaTypes := [4]string{factory.CheesePizza, factory.PepperoniPizza, factory.ClamPizza, factory.VeggiePizza}
 
-	var (
-		simpleNYPizzaFactory, simpleChicagoPizzaFactory factory.SimplePizzaFactory
-		simpleNYPizzaStore, simpleChicagoPizzaStore     factory.PizzaStore
-		nyPizzaStore, chicagoPizzaStore                 factory.PizzaStore
-	)
+	var nyPizzaStore, chicagoPizzaStore factory.PizzaStore
 
-	simpleNYPizzaFactory = factory.NewSimpleNYPizzaFactory()
-	simpleNYPizzaStore = factory.NewSimplePizzaStore(simpleNYPizzaFactory)
-	simpleChicagoPizzaFactory = factory.NewSimpleChicagoPizzaFactory()
-	simpleChicagoPizzaStore = factory.NewSimplePizzaStore(simpleChicagoPizzaFactory)
 	nyPizzaStore = factory.NewNYPizzaStore()
 	chicagoPizzaStore = factory.NewChicagoPizzaStore()
-
-	go startPizzaStore(ctx, wg, ch, simpleNYPizzaStore, "New-York (simple)")
-	cnt++
-
-	go startPizzaStore(ctx, wg, ch, simpleChicagoPizzaStore, "Chicago (simple)")
-	cnt++
 
 	go startPizzaStore(ctx, wg, ch, nyPizzaStore, "New-York")
 	cnt++
