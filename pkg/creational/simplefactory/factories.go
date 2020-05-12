@@ -2,15 +2,18 @@ package simplefactory
 
 // PizzaFactory Интерфейс простой фабрики по изготовлению пиццы.
 type PizzaFactory interface {
-	createPizza(string) Pizza
+	createPizza(string) (Pizza, error)
 }
 
 // Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле.
 type nyPizzaFactory struct{}
 
 // Создать пиццу.
-func (s *nyPizzaFactory) createPizza(pizzaType string) Pizza {
-	var pizza Pizza
+func (s *nyPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
+	var (
+		pizza Pizza
+		err   error
+	)
 
 	switch pizzaType {
 	case CheesePizza:
@@ -26,10 +29,10 @@ func (s *nyPizzaFactory) createPizza(pizzaType string) Pizza {
 		pizza = newNYVeggiePizza()
 
 	default:
-		pizza = nil
+		err = newPizzaTypeError(pizzaType)
 	}
 
-	return pizza
+	return pizza, err
 }
 
 // NewNYPizzaFactory Создать простую фабрику по изготовлению пиццы в Нью-Йоркском стиле.
@@ -41,8 +44,11 @@ func NewNYPizzaFactory() PizzaFactory {
 type chicagoPizzaFactory struct{}
 
 // Создать пиццу.
-func (s *chicagoPizzaFactory) createPizza(pizzaType string) Pizza {
-	var pizza Pizza
+func (s *chicagoPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
+	var (
+		pizza Pizza
+		err   error
+	)
 
 	switch pizzaType {
 	case CheesePizza:
@@ -58,10 +64,10 @@ func (s *chicagoPizzaFactory) createPizza(pizzaType string) Pizza {
 		pizza = newChicagoVeggiePizza()
 
 	default:
-		pizza = nil
+		err = newPizzaTypeError(pizzaType)
 	}
 
-	return pizza
+	return pizza, err
 }
 
 // NewChicagoPizzaFactory Создать простую фабрику по изготовлению пиццы в Чикагском стиле.

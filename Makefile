@@ -17,6 +17,7 @@ endif
 run:
 	make build
 	./cmd/$(g)/$(p)/$(p)
+	make clean
 
 build:
 ifndef g

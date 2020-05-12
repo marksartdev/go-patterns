@@ -54,12 +54,12 @@ type nyClamPizza struct {
 // Создать пиццу с мидиями в Нью-Йоркском стиле.
 func newNYClamPizza() Pizza {
 	pizza := new(nyClamPizza)
-	pizza.name = "NY Style Sauce and Calm Pizza"
+	pizza.name = "NY Style Sauce and Clam Pizza"
 	pizza.dough = nyDough
 	pizza.sauce = nySauce
 
 	pizza.toppings = append(pizza.toppings, "Grated Reggiano Cheese")
-	pizza.toppings = append(pizza.toppings, "Calms")
+	pizza.toppings = append(pizza.toppings, "Clams")
 
 	pizza.sliceType = nySliceType
 

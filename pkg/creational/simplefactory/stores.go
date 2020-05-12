@@ -2,7 +2,7 @@ package simplefactory
 
 // PizzaStore Интерфейс пиццерии.
 type PizzaStore interface {
-	OrderPizza(string) Pizza
+	OrderPizza(string) (Pizza, error)
 }
 
 // Простая пиццерия.
@@ -11,14 +11,18 @@ type pizzaStore struct {
 }
 
 // OrderPizza Заказать пиццу.
-func (p *pizzaStore) OrderPizza(pizzaType string) Pizza {
-	pizza := p.factory.createPizza(pizzaType)
+func (p *pizzaStore) OrderPizza(pizzaType string) (Pizza, error) {
+	pizza, err := p.factory.createPizza(pizzaType)
+	if err != nil {
+		return nil, err
+	}
+
 	pizza.prepare()
 	pizza.bake()
 	pizza.cut()
 	pizza.box()
 
-	return pizza
+	return pizza, nil
 }
 
 // NewPizzaStore Создать пиццерию.

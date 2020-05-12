@@ -59,7 +59,7 @@ func newChicagoClamPizza() Pizza {
 	pizza.sauce = chicagoSauce
 
 	pizza.toppings = append(pizza.toppings, "Shredded Mozzarella Cheese")
-	pizza.toppings = append(pizza.toppings, "Calms")
+	pizza.toppings = append(pizza.toppings, "Clams")
 
 	pizza.sliceType = chicagoSliceType
 
