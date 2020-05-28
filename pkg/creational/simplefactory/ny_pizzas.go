@@ -13,16 +13,17 @@ type nyCheesePizza struct {
 
 // Создать сырную пиццу в Нью-Йоркском стиле.
 func newNYCheesePizza() Pizza {
-	pizza := new(nyCheesePizza)
-	pizza.name = "NY Style Sauce and Cheese Pizza"
-	pizza.dough = nyDough
-	pizza.sauce = nySauce
-
-	pizza.toppings = append(pizza.toppings, "Grated Reggiano Cheese")
-
-	pizza.sliceType = nySliceType
-
-	return pizza
+	return nyCheesePizza{
+		abstractPizza{
+			name:  "NY Style Sauce and Cheese Pizza",
+			dough: nyDough,
+			sauce: nySauce,
+			toppings: []string{
+				"Grated Reggiano Cheese",
+			},
+			sliceType: nySliceType,
+		},
+	}
 }
 
 // Пицца "Пепперони" в Нью-Йоркском стиле.
@@ -32,18 +33,19 @@ type nyPepperoniPizza struct {
 
 // Создать пиццу "Пепперони" в Нью-Йоркском стиле.
 func newNYPepperoniPizza() Pizza {
-	pizza := new(nyPepperoniPizza)
-	pizza.name = "NY Style Sauce and Pepperoni Pizza"
-	pizza.dough = nyDough
-	pizza.sauce = nySauce
-
-	pizza.toppings = append(pizza.toppings, "Grated Reggiano Cheese")
-	pizza.toppings = append(pizza.toppings, "Onions")
-	pizza.toppings = append(pizza.toppings, "Peppers")
-
-	pizza.sliceType = nySliceType
-
-	return pizza
+	return nyPepperoniPizza{
+		abstractPizza{
+			name:  "NY Style Sauce and Pepperoni Pizza",
+			dough: nyDough,
+			sauce: nySauce,
+			toppings: []string{
+				"Grated Reggiano Cheese",
+				"Onions",
+				"Peppers",
+			},
+			sliceType: nySliceType,
+		},
+	}
 }
 
 // Пицца с мидиями в Нью-Йоркском стиле.
@@ -53,17 +55,18 @@ type nyClamPizza struct {
 
 // Создать пиццу с мидиями в Нью-Йоркском стиле.
 func newNYClamPizza() Pizza {
-	pizza := new(nyClamPizza)
-	pizza.name = "NY Style Sauce and Clam Pizza"
-	pizza.dough = nyDough
-	pizza.sauce = nySauce
-
-	pizza.toppings = append(pizza.toppings, "Grated Reggiano Cheese")
-	pizza.toppings = append(pizza.toppings, "Clams")
-
-	pizza.sliceType = nySliceType
-
-	return pizza
+	return nyClamPizza{
+		abstractPizza{
+			name:  "NY Style Sauce and Clam Pizza",
+			dough: nyDough,
+			sauce: nySauce,
+			toppings: []string{
+				"Grated Reggiano Cheese",
+				"Clams",
+			},
+			sliceType: nySliceType,
+		},
+	}
 }
 
 // Вегетарианская пицца в Нью-Йоркском стиле.
@@ -73,16 +76,17 @@ type nyVeggiePizza struct {
 
 // Создать вегетарианскую пиццу в Нью-Йоркском стиле.
 func newNYVeggiePizza() Pizza {
-	pizza := new(nyVeggiePizza)
-	pizza.name = "NY Style Sauce and Veggie Pizza"
-	pizza.dough = nyDough
-	pizza.sauce = nySauce
-
-	pizza.toppings = append(pizza.toppings, "Grated Parmesan Cheese")
-	pizza.toppings = append(pizza.toppings, "Red Peppers")
-	pizza.toppings = append(pizza.toppings, "Dried Oregano")
-
-	pizza.sliceType = nySliceType
-
-	return pizza
+	return nyVeggiePizza{
+		abstractPizza{
+			name:  "NY Style Sauce and Veggie Pizza",
+			dough: nyDough,
+			sauce: nySauce,
+			toppings: []string{
+				"Grated Parmesan Cheese",
+				"Red Peppers",
+				"Dried Oregano",
+			},
+			sliceType: nySliceType,
+		},
+	}
 }

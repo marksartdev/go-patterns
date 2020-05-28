@@ -9,7 +9,7 @@ type PizzaFactory interface {
 type nyPizzaFactory struct{}
 
 // Создать пиццу.
-func (s *nyPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
+func (s nyPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
 	var (
 		pizza Pizza
 		err   error
@@ -37,14 +37,14 @@ func (s *nyPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
 
 // NewNYPizzaFactory Создать простую фабрику по изготовлению пиццы в Нью-Йоркском стиле.
 func NewNYPizzaFactory() PizzaFactory {
-	return new(nyPizzaFactory)
+	return nyPizzaFactory{}
 }
 
 // Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле.
 type chicagoPizzaFactory struct{}
 
 // Создать пиццу.
-func (s *chicagoPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
+func (s chicagoPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
 	var (
 		pizza Pizza
 		err   error
@@ -72,5 +72,5 @@ func (s *chicagoPizzaFactory) createPizza(pizzaType string) (Pizza, error) {
 
 // NewChicagoPizzaFactory Создать простую фабрику по изготовлению пиццы в Чикагском стиле.
 func NewChicagoPizzaFactory() PizzaFactory {
-	return new(chicagoPizzaFactory)
+	return chicagoPizzaFactory{}
 }

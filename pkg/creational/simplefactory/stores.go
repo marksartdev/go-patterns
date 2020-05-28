@@ -11,24 +11,23 @@ type pizzaStore struct {
 }
 
 // OrderPizza Заказать пиццу.
-func (p *pizzaStore) OrderPizza(pizzaType string) (Pizza, error) {
+func (p pizzaStore) OrderPizza(pizzaType string) (Pizza, error) {
 	pizza, err := p.factory.createPizza(pizzaType)
 	if err != nil {
 		return nil, err
 	}
 
-	pizza.prepare()
-	pizza.bake()
-	pizza.cut()
-	pizza.box()
+	pizza = pizza.prepare()
+	pizza = pizza.bake()
+	pizza = pizza.cut()
+	pizza = pizza.box()
 
 	return pizza, nil
 }
 
 // NewPizzaStore Создать пиццерию.
 func NewPizzaStore(factory PizzaFactory) PizzaStore {
-	store := new(pizzaStore)
-	store.factory = factory
+	store := pizzaStore{factory: factory}
 
 	return store
 }
