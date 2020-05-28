@@ -9,19 +9,21 @@ type cheesePizza struct {
 
 // Создать сырную пиццу.
 func newCheesePizza(ingredientFactory pizzaIngredientFactory, sliceType string) Pizza {
-	pizza := new(cheesePizza)
-	pizza.sliceType = sliceType
+	return cheesePizza{
+		abstractPizza{
+			sliceType: sliceType,
+			abstractPrepare: func(pizza abstractPizza) abstractPizza {
+				pizza.log = append(pizza.log, fmt.Sprintf("Preparing %s", pizza.name))
 
-	pizza.abstractPrepare = func(a *abstractPizza) {
-		a.log = append(a.log, fmt.Sprintf("Preparing %s", a.name))
+				pizza.dough = ingredientFactory.createDough()
+				pizza.sauce = ingredientFactory.createSauce()
+				pizza.cheese = ingredientFactory.createCheese()
+				pizza.veggies = ingredientFactory.createVeggies(CheesePizza)
 
-		a.dough = ingredientFactory.createDough()
-		a.sauce = ingredientFactory.createSauce()
-		a.cheese = ingredientFactory.createCheese()
-		a.veggies = ingredientFactory.createVeggies(CheesePizza)
+				return pizza
+			},
+		},
 	}
-
-	return pizza
 }
 
 // Пицца "Пепперони".
@@ -31,20 +33,22 @@ type pepperoniPizza struct {
 
 // Создать пиццу "Пепперони".
 func newPepperoniPizza(ingredientFactory pizzaIngredientFactory, sliceType string) Pizza {
-	pizza := new(pepperoniPizza)
-	pizza.sliceType = sliceType
+	return pepperoniPizza{
+		abstractPizza{
+			sliceType: sliceType,
+			abstractPrepare: func(pizza abstractPizza) abstractPizza {
+				pizza.log = append(pizza.log, fmt.Sprintf("Preparing %s", pizza.name))
 
-	pizza.abstractPrepare = func(a *abstractPizza) {
-		a.log = append(a.log, fmt.Sprintf("Preparing %s", a.name))
+				pizza.dough = ingredientFactory.createDough()
+				pizza.sauce = ingredientFactory.createSauce()
+				pizza.cheese = ingredientFactory.createCheese()
+				pizza.veggies = ingredientFactory.createVeggies(PepperoniPizza)
+				pizza.pepperoni = ingredientFactory.createPepperoni()
 
-		a.dough = ingredientFactory.createDough()
-		a.sauce = ingredientFactory.createSauce()
-		a.cheese = ingredientFactory.createCheese()
-		a.veggies = ingredientFactory.createVeggies(PepperoniPizza)
-		a.pepperoni = ingredientFactory.createPepperoni()
+				return pizza
+			},
+		},
 	}
-
-	return pizza
 }
 
 // Пицца с мидиями.
@@ -54,19 +58,21 @@ type clamPizza struct {
 
 // Создать пиццу с мидиями.
 func newClamPizza(ingredientFactory pizzaIngredientFactory, sliceType string) Pizza {
-	pizza := new(clamPizza)
-	pizza.sliceType = sliceType
+	return clamPizza{
+		abstractPizza{
+			sliceType: sliceType,
+			abstractPrepare: func(pizza abstractPizza) abstractPizza {
+				pizza.log = append(pizza.log, fmt.Sprintf("Preparing %s", pizza.name))
 
-	pizza.abstractPrepare = func(a *abstractPizza) {
-		a.log = append(a.log, fmt.Sprintf("Preparing %s", a.name))
+				pizza.dough = ingredientFactory.createDough()
+				pizza.sauce = ingredientFactory.createSauce()
+				pizza.cheese = ingredientFactory.createCheese()
+				pizza.clams = ingredientFactory.createClam()
 
-		a.dough = ingredientFactory.createDough()
-		a.sauce = ingredientFactory.createSauce()
-		a.cheese = ingredientFactory.createCheese()
-		a.clams = ingredientFactory.createClam()
+				return pizza
+			},
+		},
 	}
-
-	return pizza
 }
 
 // Вегетарианская пицца.
@@ -76,17 +82,19 @@ type veggiePizza struct {
 
 // Создать вегетарианскую пиццу.
 func newVeggiePizza(ingredientFactory pizzaIngredientFactory, sliceType string) Pizza {
-	pizza := new(veggiePizza)
-	pizza.sliceType = sliceType
+	return veggiePizza{
+		abstractPizza{
+			sliceType: sliceType,
+			abstractPrepare: func(pizza abstractPizza) abstractPizza {
+				pizza.log = append(pizza.log, fmt.Sprintf("Preparing %s", pizza.name))
 
-	pizza.abstractPrepare = func(a *abstractPizza) {
-		a.log = append(a.log, fmt.Sprintf("Preparing %s", a.name))
+				pizza.dough = ingredientFactory.createDough()
+				pizza.sauce = ingredientFactory.createSauce()
+				pizza.cheese = ingredientFactory.createCheese()
+				pizza.veggies = ingredientFactory.createVeggies(VeggiePizza)
 
-		a.dough = ingredientFactory.createDough()
-		a.sauce = ingredientFactory.createSauce()
-		a.cheese = ingredientFactory.createCheese()
-		a.veggies = ingredientFactory.createVeggies(VeggiePizza)
+				return pizza
+			},
+		},
 	}
-
-	return pizza
 }

@@ -2,7 +2,7 @@ package simplefactory
 
 // PizzaStore Интерфейс пиццерии.
 type PizzaStore interface {
-	OrderPizza(string) (Pizza, error)
+	OrderPizza(pizzaType string) (Pizza, error)
 }
 
 // Простая пиццерия.

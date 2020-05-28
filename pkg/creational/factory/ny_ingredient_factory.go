@@ -3,23 +3,23 @@ package factory
 // Нью-Йоркская фабрика ингредиентов.
 type nyPizzaIngredientFactory struct{}
 
-func (c *nyPizzaIngredientFactory) createDough() *dough {
+func (c nyPizzaIngredientFactory) createDough() dough {
 	return newThinCrustDough()
 }
 
-func (c *nyPizzaIngredientFactory) createSauce() *sauce {
+func (c nyPizzaIngredientFactory) createSauce() sauce {
 	return newMarinaraSauce()
 }
 
-func (c *nyPizzaIngredientFactory) createCheese() []*cheese {
-	cheeses := make([]*cheese, 0, 1)
+func (c nyPizzaIngredientFactory) createCheese() []cheese {
+	cheeses := make([]cheese, 0, 1)
 	cheeses = append(cheeses, newReggianoCheese())
 
 	return cheeses
 }
 
-func (c *nyPizzaIngredientFactory) createVeggies(pizzaType string) []*veggie {
-	veggies := make([]*veggie, 0)
+func (c nyPizzaIngredientFactory) createVeggies(pizzaType string) []veggie {
+	veggies := make([]veggie, 0, 3)
 
 	switch pizzaType {
 	case CheesePizza:
@@ -37,10 +37,10 @@ func (c *nyPizzaIngredientFactory) createVeggies(pizzaType string) []*veggie {
 	return veggies
 }
 
-func (c *nyPizzaIngredientFactory) createPepperoni() *pepperoni {
+func (c nyPizzaIngredientFactory) createPepperoni() pepperoni {
 	return newSlicedPepperoni()
 }
 
-func (c *nyPizzaIngredientFactory) createClam() *clams {
+func (c nyPizzaIngredientFactory) createClam() clams {
 	return newFreshClams()
 }

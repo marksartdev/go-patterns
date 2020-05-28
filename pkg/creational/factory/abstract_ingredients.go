@@ -5,7 +5,7 @@ type abstractIngredient struct {
 	name string
 }
 
-func (a *abstractIngredient) String() string {
+func (a abstractIngredient) String() string {
 	return a.name
 }
 

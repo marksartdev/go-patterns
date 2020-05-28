@@ -21,7 +21,12 @@ func main() {
 
 	cnt := 0
 
-	pizzaTypes := [4]string{factory.CheesePizza, factory.PepperoniPizza, factory.ClamPizza, factory.VeggiePizza}
+	pizzaTypes := [4]string{
+		factory.CheesePizza,
+		factory.PepperoniPizza,
+		factory.ClamPizza,
+		factory.VeggiePizza,
+	}
 
 	var nyPizzaStore, chicagoPizzaStore factory.PizzaStore
 
@@ -54,7 +59,10 @@ func startPizzaStore(
 	pizzaStore factory.PizzaStore,
 	pizzaStoreName string,
 ) {
-	var pizza factory.Pizza
+	var (
+		pizza factory.Pizza
+		err   error
+	)
 
 	for {
 		select {
@@ -65,10 +73,17 @@ func startPizzaStore(
 
 			return
 		case pizzaType := <-ch:
-			pizza = pizzaStore.OrderPizza(pizzaType)
-			log := pizza.GetLog()
-
 			buffer := fmt.Sprintf("%s:\n", pizzaStoreName)
+
+			pizza, err = pizzaStore.OrderPizza(pizzaType)
+			if err != nil {
+				buffer += fmt.Sprintf("\t\tError: %s\n", err)
+				fmt.Println(buffer)
+
+				continue
+			}
+
+			log := pizza.GetLog()
 			for _, step := range log {
 				buffer += fmt.Sprintf("\t\t%s\n", step)
 			}

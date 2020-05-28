@@ -2,7 +2,7 @@ package simplefactory
 
 // PizzaFactory Интерфейс простой фабрики по изготовлению пиццы.
 type PizzaFactory interface {
-	createPizza(string) (Pizza, error)
+	createPizza(pizzaType string) (Pizza, error)
 }
 
 // Простая фабрика по изготовлению пиццы в Нью-Йоркском стиле.

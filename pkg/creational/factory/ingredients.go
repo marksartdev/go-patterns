@@ -1,145 +1,163 @@
 package factory
 
 // Изготовить тонкое тесто.
-func newThinCrustDough() *dough {
-	ingredient := new(dough)
-	ingredient.name = "Thin Crust Dough"
-
-	return ingredient
+func newThinCrustDough() dough {
+	return dough{
+		abstractIngredient{
+			name: "Thin Crust Dough",
+		},
+	}
 }
 
 // Изготовить толстое тесто.
-func newThickCrustDough() *dough {
-	ingredient := new(dough)
-	ingredient.name = "Thick Crust Dough"
-
-	return ingredient
+func newThickCrustDough() dough {
+	return dough{
+		abstractIngredient{
+			name: "Thick Crust Dough",
+		},
+	}
 }
 
 // Изготовить соус "Маринара".
-func newMarinaraSauce() *sauce {
-	ingredient := new(sauce)
-	ingredient.name = "Marinara Sauce"
-
-	return ingredient
+func newMarinaraSauce() sauce {
+	return sauce{
+		abstractIngredient{
+			name: "Marinara Sauce",
+		},
+	}
 }
 
 // Изготовить томатный соус.
-func newPlumTomatoSauce() *sauce {
-	ingredient := new(sauce)
-	ingredient.name = "Plum Tomato Sauce"
-
-	return ingredient
+func newPlumTomatoSauce() sauce {
+	return sauce{
+		abstractIngredient{
+			name: "Plum Tomato Sauce",
+		},
+	}
 }
 
 // Изготовить сыр "Реджиано".
-func newReggianoCheese() *cheese {
-	ingredient := new(cheese)
-	ingredient.name = "Grated Reggiano Cheese"
-
-	return ingredient
+func newReggianoCheese() cheese {
+	return cheese{
+		abstractIngredient{
+			name: "Grated Reggiano Cheese",
+		},
+	}
 }
 
 // Изготовить сыр "Моцарелла".
-func newMozzarellaCheese() *cheese {
-	ingredient := new(cheese)
-	ingredient.name = "Shredded Mozzarella Cheese"
-
-	return ingredient
+func newMozzarellaCheese() cheese {
+	return cheese{
+		abstractIngredient{
+			name: "Shredded Mozzarella Cheese",
+		},
+	}
 }
 
 // Изготовить сыр "Пармезан".
-func newParmesanCheese() *cheese {
-	ingredient := new(cheese)
-	ingredient.name = "Parmesan Cheese"
-
-	return ingredient
+func newParmesanCheese() cheese {
+	return cheese{
+		abstractIngredient{
+			name: "Parmesan Cheese",
+		},
+	}
 }
 
 // Изготовить чеснок.
-func newGarlic() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "garlic"
-
-	return ingredient
+func newGarlic() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "garlic",
+		},
+	}
 }
 
 // Изготовить лук.
-func newOnion() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "onion"
-
-	return ingredient
+func newOnion() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "onion",
+		},
+	}
 }
 
 // Изготовить грибы.
-func newMushroom() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "mushroom"
-
-	return ingredient
+func newMushroom() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "mushroom",
+		},
+	}
 }
 
 // Изготовить красный перец.
-func newRedPepper() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "red pepper"
-
-	return ingredient
+func newRedPepper() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "red pepper",
+		},
+	}
 }
 
 // Изготовить орегано.
-func newOregano() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "oregano"
-
-	return ingredient
+func newOregano() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "oregano",
+		},
+	}
 }
 
 // Изготовить баклажан.
-func newEggplant() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "eggplant"
-
-	return ingredient
+func newEggplant() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "eggplant",
+		},
+	}
 }
 
 // Изготовить шпинат.
-func newSpinach() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "spinach"
-
-	return ingredient
+func newSpinach() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "spinach",
+		},
+	}
 }
 
 // Изготовить оливки.
-func newOlives() *veggie {
-	ingredient := new(veggie)
-	ingredient.name = "olives"
-
-	return ingredient
+func newOlives() veggie {
+	return veggie{
+		abstractIngredient{
+			name: "olives",
+		},
+	}
 }
 
 // Изготовить нарезанное пепперони.
-func newSlicedPepperoni() *pepperoni {
-	ingredient := new(pepperoni)
-	ingredient.name = "sliced pepperoni"
-
-	return ingredient
+func newSlicedPepperoni() pepperoni {
+	return pepperoni{
+		abstractIngredient{
+			name: "sliced pepperoni",
+		},
+	}
 }
 
 // Изготовить свежие мидии.
-func newFreshClams() *clams {
-	ingredient := new(clams)
-	ingredient.name = "fresh calms"
-
-	return ingredient
+func newFreshClams() clams {
+	return clams{
+		abstractIngredient{
+			name: "fresh calms",
+		},
+	}
 }
 
 // Изготовить замороженные мидии.
-func newFrozenClams() *clams {
-	ingredient := new(clams)
-	ingredient.name = "frozen calms"
-
-	return ingredient
+func newFrozenClams() clams {
+	return clams{
+		abstractIngredient{
+			name: "frozen calms",
+		},
+	}
 }

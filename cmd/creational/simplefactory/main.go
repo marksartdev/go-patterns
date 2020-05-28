@@ -83,7 +83,6 @@ func startPizzaStore(
 			pizza, err = pizzaStore.OrderPizza(pizzaType)
 			if err != nil {
 				buffer += fmt.Sprintf("\t\tError: %s\n", err)
-
 				fmt.Println(buffer)
 
 				continue

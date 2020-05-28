@@ -6,38 +6,43 @@ type nyPizzaStore struct {
 }
 
 // Создать пиццу в Нью-Йоркском стиле.
-func createNYPizza(pizzaType string) Pizza {
-	var pizza Pizza
-
-	ingredientFactory := new(nyPizzaIngredientFactory)
+func createNYPizza(pizzaType string) (Pizza, error) {
+	var (
+		pizza Pizza
+		err   error
+	)
 
 	switch pizzaType {
 	case CheesePizza:
-		pizza = newCheesePizza(ingredientFactory, "diagonal")
-		pizza.setName("New-York Style Cheese Pizza")
+		pizza = newCheesePizza(nyPizzaIngredientFactory{}, "diagonal")
+		pizza = pizza.setName("New-York Style Cheese Pizza")
 
 	case PepperoniPizza:
-		pizza = newPepperoniPizza(ingredientFactory, "diagonal")
-		pizza.setName("New-York Style Pepperoni Pizza")
+		pizza = newPepperoniPizza(nyPizzaIngredientFactory{}, "diagonal")
+		pizza = pizza.setName("New-York Style Pepperoni Pizza")
 
 	case ClamPizza:
-		pizza = newClamPizza(ingredientFactory, "diagonal")
-		pizza.setName("New-York Style Clam Pizza")
+		pizza = newClamPizza(nyPizzaIngredientFactory{}, "diagonal")
+		pizza = pizza.setName("New-York Style Clam Pizza")
 
 	case VeggiePizza:
-		pizza = newVeggiePizza(ingredientFactory, "diagonal")
-		pizza.setName("New-York Style Cheese Pizza")
+		pizza = newVeggiePizza(nyPizzaIngredientFactory{}, "diagonal")
+		pizza = pizza.setName("New-York Style Cheese Pizza")
+
+	default:
+		err = newPizzaTypeError(pizzaType)
 	}
 
-	return pizza
+	return pizza, err
 }
 
 // NewNYPizzaStore Создать пиццерию в Нью-Йоркском стиле.
 func NewNYPizzaStore() PizzaStore {
-	store := new(nyPizzaStore)
-	store.createPizza = createNYPizza
-
-	return store
+	return nyPizzaStore{
+		abstractPizzaStore{
+			createPizza: createNYPizza,
+		},
+	}
 }
 
 // Пиццерия в Чикагском стиле.
@@ -46,36 +51,41 @@ type chicagoPizzaStore struct {
 }
 
 // Создать пиццу в Чикагском стиле.
-func createChicagoPizza(pizzaType string) Pizza {
-	var pizza Pizza
-
-	ingredientFactory := new(chicagoPizzaIngredientFactory)
+func createChicagoPizza(pizzaType string) (Pizza, error) {
+	var (
+		pizza Pizza
+		err   error
+	)
 
 	switch pizzaType {
 	case CheesePizza:
-		pizza = newCheesePizza(ingredientFactory, "square")
-		pizza.setName("Chicago Style Cheese Pizza")
+		pizza = newCheesePizza(chicagoPizzaIngredientFactory{}, "square")
+		pizza = pizza.setName("Chicago Style Cheese Pizza")
 
 	case PepperoniPizza:
-		pizza = newPepperoniPizza(ingredientFactory, "square")
-		pizza.setName("Chicago Style Pepperoni Pizza")
+		pizza = newPepperoniPizza(chicagoPizzaIngredientFactory{}, "square")
+		pizza = pizza.setName("Chicago Style Pepperoni Pizza")
 
 	case ClamPizza:
-		pizza = newClamPizza(ingredientFactory, "square")
-		pizza.setName("Chicago Style Clam Pizza")
+		pizza = newClamPizza(chicagoPizzaIngredientFactory{}, "square")
+		pizza = pizza.setName("Chicago Style Clam Pizza")
 
 	case VeggiePizza:
-		pizza = newVeggiePizza(ingredientFactory, "square")
-		pizza.setName("Chicago Style Cheese Pizza")
+		pizza = newVeggiePizza(chicagoPizzaIngredientFactory{}, "square")
+		pizza = pizza.setName("Chicago Style Cheese Pizza")
+
+	default:
+		err = newPizzaTypeError(pizzaType)
 	}
 
-	return pizza
+	return pizza, err
 }
 
 // NewChicagoPizzaStore Создать пиццерию в Чикагском стиле.
 func NewChicagoPizzaStore() PizzaStore {
-	store := new(chicagoPizzaStore)
-	store.createPizza = createChicagoPizza
-
-	return store
+	return chicagoPizzaStore{
+		abstractPizzaStore{
+			createPizza: createChicagoPizza,
+		},
+	}
 }
