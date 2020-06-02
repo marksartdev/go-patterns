@@ -9,3 +9,4 @@
 1. [Декоратор](cmd/structural/decorator/README.md)
 ## Порождающие
 1. [Простая фабрика (не паттерн)](cmd/creational/simplefactory/README.md)
+1. [Фабричный метод / Абстрактная фабрика](cmd/creational/factory/README.md)
