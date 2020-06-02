@@ -148,7 +148,7 @@ func newSlicedPepperoni() pepperoni {
 func newFreshClams() clams {
 	return clams{
 		abstractIngredient{
-			name: "fresh calms",
+			name: "fresh clams",
 		},
 	}
 }
@@ -157,7 +157,7 @@ func newFreshClams() clams {
 func newFrozenClams() clams {
 	return clams{
 		abstractIngredient{
-			name: "frozen calms",
+			name: "frozen clams",
 		},
 	}
 }

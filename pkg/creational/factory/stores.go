@@ -27,7 +27,7 @@ func createNYPizza(pizzaType string) (Pizza, error) {
 
 	case VeggiePizza:
 		pizza = newVeggiePizza(nyPizzaIngredientFactory{}, "diagonal")
-		pizza = pizza.setName("New-York Style Cheese Pizza")
+		pizza = pizza.setName("New-York Style Veggie Pizza")
 
 	default:
 		err = newPizzaTypeError(pizzaType)
@@ -72,7 +72,7 @@ func createChicagoPizza(pizzaType string) (Pizza, error) {
 
 	case VeggiePizza:
 		pizza = newVeggiePizza(chicagoPizzaIngredientFactory{}, "square")
-		pizza = pizza.setName("Chicago Style Cheese Pizza")
+		pizza = pizza.setName("Chicago Style Veggie Pizza")
 
 	default:
 		err = newPizzaTypeError(pizzaType)
