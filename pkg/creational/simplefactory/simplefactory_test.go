@@ -9,19 +9,23 @@ import (
 )
 
 type testCase struct {
-	factory   simplefactory.PizzaFactory
 	pizzaType string
 	name      string
 	logs      []string
 	err       string
 }
 
-func TestPizzaStore_OrderPizza_NY_CheesePepperoni(t *testing.T) {
+func TestPizzaStore_OrderPizza_NY(t *testing.T) {
 	pizzaFactory := simplefactory.NewNYPizzaFactory()
+	cases := getNYTestCases1()
+	cases = append(cases, getNYTestCases2()...)
 
-	cases := []testCase{
+	testCases(t, pizzaFactory, cases)
+}
+
+func getNYTestCases1() []testCase {
+	return []testCase{
 		{
-			pizzaFactory,
 			simplefactory.CheesePizza,
 			"NY Style Sauce and Cheese Pizza",
 			[]string{
@@ -37,7 +41,6 @@ func TestPizzaStore_OrderPizza_NY_CheesePepperoni(t *testing.T) {
 			"",
 		},
 		{
-			pizzaFactory,
 			simplefactory.PepperoniPizza,
 			"NY Style Sauce and Pepperoni Pizza",
 			[]string{
@@ -55,16 +58,11 @@ func TestPizzaStore_OrderPizza_NY_CheesePepperoni(t *testing.T) {
 			"",
 		},
 	}
-
-	testCases(t, cases)
 }
 
-func TestPizzaStore_OrderPizza_NY_ClamVeggie(t *testing.T) {
-	pizzaFactory := simplefactory.NewNYPizzaFactory()
-
-	cases := []testCase{
+func getNYTestCases2() []testCase {
+	return []testCase{
 		{
-			pizzaFactory,
 			simplefactory.ClamPizza,
 			"NY Style Sauce and Clam Pizza",
 			[]string{
@@ -81,7 +79,6 @@ func TestPizzaStore_OrderPizza_NY_ClamVeggie(t *testing.T) {
 			"",
 		},
 		{
-			pizzaFactory,
 			simplefactory.VeggiePizza,
 			"NY Style Sauce and Veggie Pizza",
 			[]string{
@@ -99,16 +96,19 @@ func TestPizzaStore_OrderPizza_NY_ClamVeggie(t *testing.T) {
 			"",
 		},
 	}
-
-	testCases(t, cases)
 }
 
-func TestPizzaStore_OrderPizza_Chicago_CheesePepperoni(t *testing.T) {
+func TestPizzaStore_OrderPizza_Chicago(t *testing.T) {
 	pizzaFactory := simplefactory.NewChicagoPizzaFactory()
+	cases := getChicagoTestCases1()
+	cases = append(cases, getChicagoTestCases2()...)
 
-	cases := []testCase{
+	testCases(t, pizzaFactory, cases)
+}
+
+func getChicagoTestCases1() []testCase {
+	return []testCase{
 		{
-			pizzaFactory,
 			simplefactory.CheesePizza,
 			"Chicago Style Deep Dish Cheese Pizza",
 			[]string{
@@ -124,7 +124,6 @@ func TestPizzaStore_OrderPizza_Chicago_CheesePepperoni(t *testing.T) {
 			"",
 		},
 		{
-			pizzaFactory,
 			simplefactory.PepperoniPizza,
 			"Chicago Style Deep Dish Pepperoni Pizza",
 			[]string{
@@ -142,16 +141,11 @@ func TestPizzaStore_OrderPizza_Chicago_CheesePepperoni(t *testing.T) {
 			"",
 		},
 	}
-
-	testCases(t, cases)
 }
 
-func TestPizzaStore_OrderPizza_Chicago_ClamVeggie(t *testing.T) {
-	pizzaFactory := simplefactory.NewChicagoPizzaFactory()
-
-	cases := []testCase{
+func getChicagoTestCases2() []testCase {
+	return []testCase{
 		{
-			pizzaFactory,
 			simplefactory.ClamPizza,
 			"Chicago Style Deep Dish Clam Pizza",
 			[]string{
@@ -168,7 +162,6 @@ func TestPizzaStore_OrderPizza_Chicago_ClamVeggie(t *testing.T) {
 			"",
 		},
 		{
-			pizzaFactory,
 			simplefactory.VeggiePizza,
 			"Chicago Style Deep Dish Veggie Pizza",
 			[]string{
@@ -187,21 +180,24 @@ func TestPizzaStore_OrderPizza_Chicago_ClamVeggie(t *testing.T) {
 			"",
 		},
 	}
-
-	testCases(t, cases)
 }
 
 func TestPizzaStore_OrderPizza_Error(t *testing.T) {
+	pizzaFactory := simplefactory.NewNYPizzaFactory()
 	cases := []testCase{
 		{
-			simplefactory.NewNYPizzaFactory(),
 			"New-York",
 			"",
 			nil,
 			"this factory can't create New-York pizza",
 		},
+	}
+
+	testCases(t, pizzaFactory, cases)
+
+	pizzaFactory = simplefactory.NewChicagoPizzaFactory()
+	cases = []testCase{
 		{
-			simplefactory.NewChicagoPizzaFactory(),
 			"Chicago",
 			"",
 			nil,
@@ -209,12 +205,12 @@ func TestPizzaStore_OrderPizza_Error(t *testing.T) {
 		},
 	}
 
-	testCases(t, cases)
+	testCases(t, pizzaFactory, cases)
 }
 
-func testCases(t *testing.T, cases []testCase) {
+func testCases(t *testing.T, pizzaFactory simplefactory.PizzaFactory, cases []testCase) {
 	for i, item := range cases {
-		pizzaStore := simplefactory.NewPizzaStore(item.factory)
+		pizzaStore := simplefactory.NewPizzaStore(pizzaFactory)
 		pizza, err := pizzaStore.OrderPizza(item.pizzaType)
 
 		if err != nil {
