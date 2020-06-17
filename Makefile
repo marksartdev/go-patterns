@@ -1,4 +1,4 @@
-.PHONY: run build lint test clean all
+.PHONY: run build lint test bench clean all
 
 .DEFAULT_GOAL := run
 
@@ -35,6 +35,9 @@ lint:
 
 test:
 	go test -v -cover ./pkg/$(path)
+
+bench:
+	go test -bench . -benchmem ./pkg/$(path)
 
 clean:
 	go clean -r ./cmd/$(path)

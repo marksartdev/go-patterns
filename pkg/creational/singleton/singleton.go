@@ -23,7 +23,7 @@ func GetFullInstance() ChocolateBoiler {
 	defer mu.Unlock()
 
 	if _, ok := instances["full"]; !ok {
-		instances["full"] = &chocolateBoiler{}
+		instances["full"] = &chocolateBoiler{empty: true}
 	}
 
 	return instances["full"]
@@ -40,7 +40,7 @@ func GetConditionalInstance() ChocolateBoiler {
 		defer mu.Unlock()
 
 		if instances["conditional"] == nil {
-			instances["conditional"] = &chocolateBoiler{}
+			instances["conditional"] = &chocolateBoiler{empty: true}
 		}
 	}
 
@@ -58,7 +58,7 @@ func GetAtomicInstance() ChocolateBoiler {
 		defer mu.Unlock()
 
 		if initialized == 0 {
-			instances["atomic"] = &chocolateBoiler{}
+			instances["atomic"] = &chocolateBoiler{empty: true}
 
 			atomic.StoreUint32(&initialized, 1)
 		}
@@ -110,7 +110,7 @@ func GetAtomicInstance() ChocolateBoiler {
 // }.
 func GetOnceInstance() ChocolateBoiler {
 	once.Do(func() {
-		instances["once"] = &chocolateBoiler{}
+		instances["once"] = &chocolateBoiler{empty: true}
 	})
 
 	return instances["once"]
