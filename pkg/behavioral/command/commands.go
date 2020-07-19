@@ -5,6 +5,15 @@ type Command interface {
 	Execute() string
 }
 
+// NoCommand Пустая команда.
+type NoCommand struct {
+}
+
+// Execute Выполняет команду.
+func (c NoCommand) Execute() string {
+	return ""
+}
+
 // Команда "Включить свет".
 type lightOnCommand struct {
 	light Light
