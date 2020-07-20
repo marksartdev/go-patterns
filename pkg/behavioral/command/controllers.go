@@ -5,6 +5,23 @@ import (
 	"fmt"
 )
 
+const (
+	// Slot1 Ячейка 1.
+	Slot1 = iota + 1
+	// Slot2 Ячейка 2.
+	Slot2
+	// Slot3 Ячейка 3.
+	Slot3
+	// Slot4 Ячейка 4.
+	Slot4
+	// Slot5 Ячейка 5.
+	Slot5
+	// Slot6 Ячейка 6.
+	Slot6
+	// Slot7 Ячейка 7.
+	Slot7
+)
+
 // RemoteController Интерфейс пульта дистанционного управления.
 type RemoteController interface {
 	SetCommand(slot int, onCommand, offCommand Command)
@@ -37,6 +54,7 @@ func (r *remoteControl) OffButtonWasPushed(slot int) string {
 func (r *remoteControl) String() string {
 	buffer := bytes.NewBuffer(make([]byte, 0, 10))
 	buffer.WriteString("\n------- Remote Control -------\n")
+
 	for i := 0; i < len(r.onCommands); i++ {
 		buffer.WriteString(fmt.Sprintf("[slot %d] %-30T %T\n", i, r.onCommands[i], r.offCommands[i]))
 	}
