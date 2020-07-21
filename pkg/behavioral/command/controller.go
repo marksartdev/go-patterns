@@ -7,7 +7,7 @@ import (
 
 const (
 	// Slot1 Ячейка 1.
-	Slot1 = iota + 1
+	Slot1 = iota
 	// Slot2 Ячейка 2.
 	Slot2
 	// Slot3 Ячейка 3.
@@ -27,12 +27,14 @@ type RemoteController interface {
 	SetCommand(slot int, onCommand, offCommand Command)
 	OnButtonWasPushed(slot int) string
 	OffButtonWasPushed(slot int) string
+	UndoButtonWasPushed() string
 }
 
 // Пульт дистанционного управления.
 type remoteControl struct {
 	onCommands  [7]Command
 	offCommands [7]Command
+	undoCommand Command
 }
 
 // SetCommand Устанавливает команду в слот пульта.
@@ -43,12 +45,26 @@ func (r *remoteControl) SetCommand(slot int, onCommand, offCommand Command) {
 
 // OnButtonWasPushed Имитирует нажатие кнопки вкл.
 func (r *remoteControl) OnButtonWasPushed(slot int) string {
-	return r.onCommands[slot].Execute()
+	result := r.onCommands[slot].Execute()
+	r.undoCommand = r.onCommands[slot]
+
+	return result
 }
 
 // OffButtonWasPushed Имитирует нажатие кнопки выкл.
 func (r *remoteControl) OffButtonWasPushed(slot int) string {
-	return r.offCommands[slot].Execute()
+	result := r.offCommands[slot].Execute()
+	r.undoCommand = r.offCommands[slot]
+
+	return result
+}
+
+// UndoButtonWasPushed Имитирует нажатие кнопки отмены.
+func (r *remoteControl) UndoButtonWasPushed() string {
+	result := r.undoCommand.Undo()
+	r.undoCommand = noCommand{}
+
+	return result
 }
 
 func (r *remoteControl) String() string {
@@ -59,6 +75,8 @@ func (r *remoteControl) String() string {
 		buffer.WriteString(fmt.Sprintf("[slot %d] %-30T %T\n", i, r.onCommands[i], r.offCommands[i]))
 	}
 
+	buffer.WriteString(fmt.Sprintf("[undo]   %T\n", r.undoCommand))
+
 	return buffer.String()
 }
 
@@ -67,9 +85,11 @@ func NewRemoteControl() RemoteController {
 	controller := &remoteControl{}
 
 	for i := 0; i < 7; i++ {
-		controller.onCommands[i] = NoCommand{}
-		controller.offCommands[i] = NoCommand{}
+		controller.onCommands[i] = noCommand{}
+		controller.offCommands[i] = noCommand{}
 	}
+
+	controller.undoCommand = noCommand{}
 
 	return controller
 }
