@@ -73,7 +73,6 @@ func (s *Stereo) setCd() string {
 // Устанавливает уровень громкости.
 func (s *Stereo) setVolume(volume int) string {
 	s.volume = volume
-
 	return fmt.Sprintf("%s stereo volume set to %d", s.Location, s.volume)
 }
 
@@ -110,4 +109,34 @@ func (c *CeilingFan) off() string {
 // Возвращает текущую скорость.
 func (c *CeilingFan) getSpeed() int {
 	return c.speed
+}
+
+// TV Телевизор.
+type TV struct {
+	Location string
+}
+
+// Включает телевизор.
+func (t *TV) on() string {
+	return fmt.Sprintf("%s TV is on", t.Location)
+}
+
+// Выключает телевизор.
+func (t *TV) off() string {
+	return fmt.Sprintf("%s TV is off", t.Location)
+}
+
+// HotTub Джакузи.
+type HotTub struct {
+	Location string
+}
+
+// Включает джакузи.
+func (h *HotTub) on() string {
+	return fmt.Sprintf("%s HotTub is on", h.Location)
+}
+
+// Выключает джакузи.
+func (h *HotTub) off() string {
+	return fmt.Sprintf("%s HotTub is off", h.Location)
 }

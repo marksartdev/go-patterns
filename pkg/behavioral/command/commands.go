@@ -1,11 +1,43 @@
 package command
 
-import "bytes"
+import "strings"
 
 // Command Интерфейс команды.
 type Command interface {
 	Execute() string
 	Undo() string
+}
+
+// Макрокоманда.
+type macroCommand struct {
+	commands []Command
+}
+
+// Execute Выполняет команду.
+func (m macroCommand) Execute() string {
+	log := make([]string, 0, 2)
+
+	for i := range m.commands {
+		log = append(log, m.commands[i].Execute())
+	}
+
+	return strings.Join(log, "\n")
+}
+
+// Undo Отменяет команду.
+func (m macroCommand) Undo() string {
+	log := make([]string, 0, 2)
+
+	for i := range m.commands {
+		log = append(log, m.commands[i].Undo())
+	}
+
+	return strings.Join(log, "\n")
+}
+
+// NewMacroCommand Создает макрокоманду.
+func NewMacroCommand(commands []Command) Command {
+	return macroCommand{commands}
 }
 
 // Пустая команда.
@@ -68,24 +100,20 @@ type garageDoorUpCommand struct {
 
 // Execute Выполняет команду.
 func (c garageDoorUpCommand) Execute() string {
-	log := bytes.NewBuffer(make([]byte, 10))
+	log := make([]string, 0, 2)
+	log = append(log, c.garageDoor.up())
+	log = append(log, c.garageDoor.lightOn())
 
-	log.WriteString(c.garageDoor.up())
-	log.WriteString("\n")
-	log.WriteString(c.garageDoor.lightOn())
-
-	return log.String()
+	return strings.Join(log, "\n")
 }
 
 // Undo Отменяет команду.
 func (c garageDoorUpCommand) Undo() string {
-	log := bytes.NewBuffer(make([]byte, 10))
+	log := make([]string, 0, 2)
+	log = append(log, c.garageDoor.lightOff())
+	log = append(log, c.garageDoor.down())
 
-	log.WriteString(c.garageDoor.lightOff())
-	log.WriteString("\n")
-	log.WriteString(c.garageDoor.down())
-
-	return log.String()
+	return strings.Join(log, "\n")
 }
 
 // NewGarageDoorUpCommand Создает команду "Открыть дверь гаража".
@@ -100,24 +128,20 @@ type garageDoorDownCommand struct {
 
 // Execute Выполняет команду.
 func (c garageDoorDownCommand) Execute() string {
-	log := bytes.NewBuffer(make([]byte, 10))
+	log := make([]string, 0, 2)
+	log = append(log, c.garageDoor.lightOff())
+	log = append(log, c.garageDoor.down())
 
-	log.WriteString(c.garageDoor.lightOff())
-	log.WriteString("\n")
-	log.WriteString(c.garageDoor.down())
-
-	return log.String()
+	return strings.Join(log, "\n")
 }
 
 // Undo Отменяет команду.
 func (c garageDoorDownCommand) Undo() string {
-	log := bytes.NewBuffer(make([]byte, 10))
+	log := make([]string, 0, 2)
+	log = append(log, c.garageDoor.up())
+	log = append(log, c.garageDoor.lightOn())
 
-	log.WriteString(c.garageDoor.up())
-	log.WriteString("\n")
-	log.WriteString(c.garageDoor.lightOn())
-
-	return log.String()
+	return strings.Join(log, "\n")
 }
 
 // NewGarageDoorDownCommand Создать команду "Закрыть дверь гаража".
@@ -132,14 +156,12 @@ type stereoOnWithCDCommand struct {
 
 // Execute Выполняет команду.
 func (c stereoOnWithCDCommand) Execute() string {
-	log := bytes.NewBuffer(make([]byte, 10))
-	log.WriteString(c.stereo.on())
-	log.WriteString("\n")
-	log.WriteString(c.stereo.setCd())
-	log.WriteString("\n")
-	log.WriteString(c.stereo.setVolume(stereoDefaultVolume))
+	log := make([]string, 0, 3)
+	log = append(log, c.stereo.on())
+	log = append(log, c.stereo.setCd())
+	log = append(log, c.stereo.setVolume(stereoDefaultVolume))
 
-	return log.String()
+	return strings.Join(log, "\n")
 }
 
 // Undo Отменяет команду.
@@ -164,14 +186,12 @@ func (c stereoOffCommand) Execute() string {
 
 // Undo Отменяет команду.
 func (c stereoOffCommand) Undo() string {
-	log := bytes.NewBuffer(make([]byte, 10))
-	log.WriteString(c.stereo.on())
-	log.WriteString("\n")
-	log.WriteString(c.stereo.setCd())
-	log.WriteString("\n")
-	log.WriteString(c.stereo.setVolume(stereoDefaultVolume))
+	log := make([]string, 0, 3)
+	log = append(log, c.stereo.on())
+	log = append(log, c.stereo.setCd())
+	log = append(log, c.stereo.setVolume(stereoDefaultVolume))
 
-	return log.String()
+	return strings.Join(log, "\n")
 }
 
 // NewStereoOffCommand Создает команду "Выключить стереосистему".
@@ -309,4 +329,84 @@ func (c *ceilingFanOffCommand) Undo() string {
 // NewCeilingFanOffCommand Создает команду "Выключить вентилятор".
 func NewCeilingFanOffCommand(ceilingFan *CeilingFan) Command {
 	return &ceilingFanOffCommand{ceilingFan, ceilingFanOff}
+}
+
+// Команда "Включить телевизор".
+type tvOnCommand struct {
+	tv *TV
+}
+
+// Execute Выполняет команду.
+func (t tvOnCommand) Execute() string {
+	return t.tv.on()
+}
+
+// Undo Отменяет команду.
+func (t tvOnCommand) Undo() string {
+	return t.tv.off()
+}
+
+// NewTVOnCommand Создает команду "Включить телевизор".
+func NewTVOnCommand(tv *TV) Command {
+	return tvOnCommand{tv}
+}
+
+// Команда "Выключить телевизор".
+type tvOffCommand struct {
+	tv *TV
+}
+
+// Execute Выполняет команду.
+func (t tvOffCommand) Execute() string {
+	return t.tv.off()
+}
+
+// Undo Отменяет команду.
+func (t tvOffCommand) Undo() string {
+	return t.tv.on()
+}
+
+// NewTVOffCommand Создает команду "Выключить телевизор".
+func NewTVOffCommand(tv *TV) Command {
+	return tvOffCommand{tv}
+}
+
+// Команда "Включить джакузи".
+type hotTubeOnCommand struct {
+	hotTube *HotTub
+}
+
+// Execute Выполняет команду.
+func (t hotTubeOnCommand) Execute() string {
+	return t.hotTube.on()
+}
+
+// Undo Отменяет команду.
+func (t hotTubeOnCommand) Undo() string {
+	return t.hotTube.off()
+}
+
+// NewHotTubeOnCommand Создает команду "Включить джакузи".
+func NewHotTubeOnCommand(hotTube *HotTub) Command {
+	return hotTubeOnCommand{hotTube}
+}
+
+// Команда "Выключить джакузи".
+type hotTubeOffCommand struct {
+	hotTube *HotTub
+}
+
+// Execute Выполняет команду.
+func (t hotTubeOffCommand) Execute() string {
+	return t.hotTube.off()
+}
+
+// Undo Отменяет команду.
+func (t hotTubeOffCommand) Undo() string {
+	return t.hotTube.on()
+}
+
+// NewHotTubeOffCommand Создает команду "Выключить джакузи".
+func NewHotTubeOffCommand(hotTube *HotTub) Command {
+	return hotTubeOffCommand{hotTube}
 }
