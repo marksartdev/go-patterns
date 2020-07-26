@@ -13,12 +13,12 @@ func main() {
 	garageDoor := &command.GarageDoor{}
 	stereo := &command.Stereo{Location: "Living Room"}
 	tv := &command.TV{Location: "Living Room"}
-	hotTube := &command.HotTub{Location: "Beth Room"}
+	hotTub := &command.HotTub{Location: "Bath Room"}
 
 	test0(livingRoomLight, kitchenLight, ceilingFan, garageDoor, stereo)
 	test1(livingRoomLight)
 	test2(ceilingFan)
-	test3(livingRoomLight, tv, stereo, hotTube)
+	test3(livingRoomLight, tv, stereo, hotTub)
 }
 
 func test0(
@@ -105,18 +105,18 @@ func test2(ceilingFan *command.CeilingFan) {
 	fmt.Println(remoteControl.UndoButtonWasPushed())
 }
 
-func test3(light *command.Light, tv *command.TV, stereo *command.Stereo, hotTube *command.HotTub) {
+func test3(light *command.Light, tv *command.TV, stereo *command.Stereo, hotTub *command.HotTub) {
 	lightOn := command.NewLightOnCommand(light)
 	lightOff := command.NewLightOffCommand(light)
 	stereoOn := command.NewStereoOnWithCDCommand(stereo)
 	stereoOff := command.NewStereoOffCommand(stereo)
 	tvOn := command.NewTVOnCommand(tv)
 	tvOff := command.NewTVOffCommand(tv)
-	hotTubeOn := command.NewHotTubeOnCommand(hotTube)
-	hotTubeOff := command.NewHotTubeOffCommand(hotTube)
+	hotTubOn := command.NewHotTubOnCommand(hotTub)
+	hotTubOff := command.NewHotTubOffCommand(hotTub)
 
-	partyOn := []command.Command{lightOn, stereoOn, tvOn, hotTubeOn}
-	partyOff := []command.Command{lightOff, stereoOff, tvOff, hotTubeOff}
+	partyOn := []command.Command{lightOn, stereoOn, tvOn, hotTubOn}
+	partyOff := []command.Command{lightOff, stereoOff, tvOff, hotTubOff}
 
 	partyOnMacro := command.NewMacroCommand(partyOn)
 	partyOffMacro := command.NewMacroCommand(partyOff)

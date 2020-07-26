@@ -133,10 +133,10 @@ type HotTub struct {
 
 // Включает джакузи.
 func (h *HotTub) on() string {
-	return fmt.Sprintf("%s HotTub is on", h.Location)
+	return fmt.Sprintf("%s hot tub is on", h.Location)
 }
 
 // Выключает джакузи.
 func (h *HotTub) off() string {
-	return fmt.Sprintf("%s HotTub is off", h.Location)
+	return fmt.Sprintf("%s hot tub is off", h.Location)
 }

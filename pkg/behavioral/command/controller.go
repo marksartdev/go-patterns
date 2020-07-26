@@ -62,7 +62,7 @@ func (r *remoteControl) OffButtonWasPushed(slot int) string {
 // UndoButtonWasPushed Имитирует нажатие кнопки отмены.
 func (r *remoteControl) UndoButtonWasPushed() string {
 	result := r.undoCommand.Undo()
-	r.undoCommand = noCommand{}
+	r.undoCommand = NoCommand{}
 
 	return result
 }
@@ -72,7 +72,7 @@ func (r *remoteControl) String() string {
 	buffer.WriteString("\n------- Remote Control -------\n")
 
 	for i := 0; i < len(r.onCommands); i++ {
-		buffer.WriteString(fmt.Sprintf("[slot %d] %-30T %T\n", i, r.onCommands[i], r.offCommands[i]))
+		buffer.WriteString(fmt.Sprintf("[slot %d] %-35T %T\n", i, r.onCommands[i], r.offCommands[i]))
 	}
 
 	buffer.WriteString(fmt.Sprintf("[undo]   %T\n", r.undoCommand))
@@ -85,11 +85,11 @@ func NewRemoteControl() RemoteController {
 	controller := &remoteControl{}
 
 	for i := 0; i < 7; i++ {
-		controller.onCommands[i] = noCommand{}
-		controller.offCommands[i] = noCommand{}
+		controller.onCommands[i] = NoCommand{}
+		controller.offCommands[i] = NoCommand{}
 	}
 
-	controller.undoCommand = noCommand{}
+	controller.undoCommand = NoCommand{}
 
 	return controller
 }

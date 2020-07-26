@@ -40,16 +40,16 @@ func NewMacroCommand(commands []Command) Command {
 	return macroCommand{commands}
 }
 
-// Пустая команда.
-type noCommand struct{}
+// NoCommand Пустая команда.
+type NoCommand struct{}
 
 // Execute Выполняет команду.
-func (c noCommand) Execute() string {
+func (c NoCommand) Execute() string {
 	return ""
 }
 
 // Undo Отменяет команду.
-func (c noCommand) Undo() string {
+func (c NoCommand) Undo() string {
 	return ""
 }
 
@@ -372,41 +372,41 @@ func NewTVOffCommand(tv *TV) Command {
 }
 
 // Команда "Включить джакузи".
-type hotTubeOnCommand struct {
-	hotTube *HotTub
+type hotTubOnCommand struct {
+	hotTub *HotTub
 }
 
 // Execute Выполняет команду.
-func (t hotTubeOnCommand) Execute() string {
-	return t.hotTube.on()
+func (t hotTubOnCommand) Execute() string {
+	return t.hotTub.on()
 }
 
 // Undo Отменяет команду.
-func (t hotTubeOnCommand) Undo() string {
-	return t.hotTube.off()
+func (t hotTubOnCommand) Undo() string {
+	return t.hotTub.off()
 }
 
-// NewHotTubeOnCommand Создает команду "Включить джакузи".
-func NewHotTubeOnCommand(hotTube *HotTub) Command {
-	return hotTubeOnCommand{hotTube}
+// NewHotTubOnCommand Создает команду "Включить джакузи".
+func NewHotTubOnCommand(hotTub *HotTub) Command {
+	return hotTubOnCommand{hotTub}
 }
 
 // Команда "Выключить джакузи".
-type hotTubeOffCommand struct {
-	hotTube *HotTub
+type hotTubOffCommand struct {
+	hotTub *HotTub
 }
 
 // Execute Выполняет команду.
-func (t hotTubeOffCommand) Execute() string {
-	return t.hotTube.off()
+func (t hotTubOffCommand) Execute() string {
+	return t.hotTub.off()
 }
 
 // Undo Отменяет команду.
-func (t hotTubeOffCommand) Undo() string {
-	return t.hotTube.on()
+func (t hotTubOffCommand) Undo() string {
+	return t.hotTub.on()
 }
 
-// NewHotTubeOffCommand Создает команду "Выключить джакузи".
-func NewHotTubeOffCommand(hotTube *HotTub) Command {
-	return hotTubeOffCommand{hotTube}
+// NewHotTubOffCommand Создает команду "Выключить джакузи".
+func NewHotTubOffCommand(hotTub *HotTub) Command {
+	return hotTubOffCommand{hotTub}
 }
