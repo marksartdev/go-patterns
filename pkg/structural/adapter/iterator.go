@@ -55,7 +55,7 @@ func (s *SimpleIterator) Next() interface{} {
 func (s *SimpleIterator) Remove() error {
 	if s.index < len(s.Elements)-1 {
 		copy(s.Elements[s.index:], s.Elements[s.index+1:])
-		copy(s.Elements, s.Elements[:len(s.Elements)-1])
+		s.Elements[len(s.Elements)-1] = struct{}{}
 	}
 
 	s.Elements = s.Elements[:len(s.Elements)-1]

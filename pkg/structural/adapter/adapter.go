@@ -85,8 +85,8 @@ func (e *enumerationIterator) Remove() error {
 }
 
 // NewEnumerationIterator Создает адаптер итератора для перечисления.
-func NewEnumerationIterator(enum Enumeration) Iterator {
-	return &enumerationIterator{enum}
+func NewEnumerationIterator(enumeration Enumeration) Iterator {
+	return &enumerationIterator{enumeration}
 }
 
 // Адаптер перечисления для итератора.
@@ -105,6 +105,6 @@ func (i *iteratorEnumeration) NextElement() interface{} {
 }
 
 // NewIteratorEnumeration Создает адаптер перечисления для итератора.
-func NewIteratorEnumeration(iter Iterator) Enumeration {
-	return &iteratorEnumeration{iter}
+func NewIteratorEnumeration(iterator Iterator) Enumeration {
+	return &iteratorEnumeration{iterator}
 }
