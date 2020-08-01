@@ -30,6 +30,30 @@ func main() {
 	fmt.Println("\nThe DuckAdapter says...")
 	testTurkey(duckAdapter)
 
+	elements := []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+	var (
+		iterator     adapter.Iterator    = &adapter.SimpleIterator{Elements: elements}
+		iterator2    adapter.Iterator    = &adapter.SimpleIterator{Elements: elements}
+		enumeration  adapter.Enumeration = &adapter.SimpleEnumeration{Elements: elements}
+		enumeration2 adapter.Enumeration = &adapter.SimpleEnumeration{Elements: elements}
+	)
+
+	fmt.Println("\nTest iterator")
+	testIterator(iterator)
+
+	fmt.Println("\nTest enumeration")
+	testEnumeration(enumeration)
+
+	enumerationIterator := adapter.NewEnumerationIterator(enumeration2)
+	iteratorEnumeration := adapter.NewIteratorEnumeration(iterator2)
+
+	fmt.Println("\nTest enumeration as iterator")
+	testIterator(enumerationIterator)
+
+	fmt.Println("\nTest iterator as enumeration")
+	testEnumeration(iteratorEnumeration)
+
 	fmt.Println()
 }
 
@@ -44,4 +68,20 @@ func testTurkey(turkey adapter.Turkey) {
 	if result := turkey.Fly(); result != "" {
 		fmt.Println(result)
 	}
+}
+
+func testIterator(iterator adapter.Iterator) {
+	for iterator.HasNext() {
+		fmt.Printf("%d\t", iterator.Next())
+	}
+
+	fmt.Println()
+}
+
+func testEnumeration(enumeration adapter.Enumeration) {
+	for enumeration.HasMoreElements() {
+		fmt.Printf("%d\t", enumeration.NextElement())
+	}
+
+	fmt.Println()
 }
