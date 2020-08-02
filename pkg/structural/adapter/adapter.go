@@ -79,7 +79,7 @@ func (e *enumerationIterator) Next() interface{} {
 
 // Remove Удаляет текущий элемент.
 func (e *enumerationIterator) Remove() error {
-	// nolint
+	// nolint:goerr113
 	// Быстрое, но плохое решение. Ошибки должны быть отдельными типами.
 	return errors.New("UnsupportedOperationException")
 }
