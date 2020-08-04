@@ -1,4 +1,4 @@
-.PHONY: run build lint test cover bench clean all
+.PHONY: run build lint test cover bench clean full fast
 
 .DEFAULT_GOAL := run
 
@@ -27,7 +27,7 @@ ifndef p
 	@false
 endif
 
-	go build -v -o ./cmd/$(g)/$(p) ./cmd/$(g)/$(p)
+	go build -v -o ./cmd/$(path) ./cmd/$(path)
 
 lint:
 	golangci-lint run --enable-all ./cmd/$(path)
@@ -47,13 +47,6 @@ bench:
 clean:
 	go clean -r ./cmd/$(path)
 
-all:
-ifdef g
-ifdef p
-	make build
-endif
-endif
+full: build lint test clean
 
-	make lint
-	make test
-	make clean
+fast: lint test

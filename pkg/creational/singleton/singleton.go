@@ -5,6 +5,7 @@ import (
 	"sync/atomic"
 )
 
+// nolint:gochecknoglobals
 var (
 	mu          sync.Mutex
 	initialized uint32
