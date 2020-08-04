@@ -34,16 +34,7 @@ func (TheaterLights) Off() string {
 }
 
 // Dim Устанавливает уровень освещения.
-// nolint:gomnd
 func (TheaterLights) Dim(level int) string {
-	if level > 100 {
-		level = 100
-	}
-
-	if level < 0 {
-		level = 0
-	}
-
 	return fmt.Sprintf("Theater Ceiling Lights dimming to %d%%", level)
 }
 
