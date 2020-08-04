@@ -9,6 +9,7 @@
 ## Структурные
 1. [Декоратор](pkg/structural/decorator/README.md)
 1. [Адаптер](pkg/structural/adapter/README.md)
+1. [Фасад](pkg/structural/facade/README.md)
 ## Порождающие
 1. [Простая фабрика (не паттерн)](pkg/creational/simplefactory/README.md)
 1. [Фабричный метод / Абстрактная фабрика](pkg/creational/factory/README.md)
