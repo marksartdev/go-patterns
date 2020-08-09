@@ -6,6 +6,7 @@
 1. [Стратегия](pkg/behavioral/strategy/README.md)
 1. [Наблюдатель](pkg/behavioral/observer/README.md)
 1. [Команда](pkg/behavioral/command/README.md)
+1. [Шаблонный метод](pkg/behavioral/templatemethod/README.md)
 ## Структурные
 1. [Декоратор](pkg/structural/decorator/README.md)
 1. [Адаптер](pkg/structural/adapter/README.md)
