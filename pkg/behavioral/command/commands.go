@@ -208,6 +208,7 @@ type ceilingFanHighCommand struct {
 // Execute Выполняет команду.
 func (c *ceilingFanHighCommand) Execute() string {
 	c.prevSpeed = c.ceilingFan.getSpeed()
+
 	return c.ceilingFan.high()
 }
 
@@ -241,6 +242,7 @@ type ceilingFanMediumCommand struct {
 // Execute Выполняет команду.
 func (c *ceilingFanMediumCommand) Execute() string {
 	c.prevSpeed = c.ceilingFan.getSpeed()
+
 	return c.ceilingFan.medium()
 }
 
@@ -274,6 +276,7 @@ type ceilingFanLowCommand struct {
 // Execute Выполняет команду.
 func (c *ceilingFanLowCommand) Execute() string {
 	c.prevSpeed = c.ceilingFan.getSpeed()
+
 	return c.ceilingFan.low()
 }
 
@@ -307,6 +310,7 @@ type ceilingFanOffCommand struct {
 // Execute Выполняет команду.
 func (c *ceilingFanOffCommand) Execute() string {
 	c.prevSpeed = c.ceilingFan.getSpeed()
+
 	return c.ceilingFan.off()
 }
 

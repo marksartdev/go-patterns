@@ -3,13 +3,13 @@ package factory
 import "fmt"
 
 const (
-	// CheesePizza Сырная пицца
+	// CheesePizza Сырная пицца.
 	CheesePizza = "cheese"
-	// PepperoniPizza Пицца "Пепперони"
+	// PepperoniPizza Пицца "Пепперони".
 	PepperoniPizza = "pepperoni"
-	// ClamPizza Пицца с мидиями
+	// ClamPizza Пицца с мидиями.
 	ClamPizza = "clam"
-	// VeggiePizza Вегетарианская пицца
+	// VeggiePizza Вегетарианская пицца.
 	VeggiePizza = "veggie"
 )
 
@@ -69,24 +69,28 @@ func (a abstractPizza) prepare() abstractPizza {
 // Испечь пиццу.
 func (a abstractPizza) bake() abstractPizza {
 	a.log = append(a.log, "Bake for 25 minutes at 350")
+
 	return a
 }
 
 // Разрезать пиццу.
 func (a abstractPizza) cut() abstractPizza {
 	a.log = append(a.log, fmt.Sprintf("Cutting the pizza into %s slices", a.sliceType))
+
 	return a
 }
 
 // Упаковать пиццу.
 func (a abstractPizza) box() abstractPizza {
 	a.log = append(a.log, "Place pizza in official PizzaStore box")
+
 	return a
 }
 
 // Установить название пиццы.
 func (a abstractPizza) setName(name string) abstractPizza {
 	a.name = name
+
 	return a
 }
 

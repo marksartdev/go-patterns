@@ -74,6 +74,7 @@ func (d *DvdPlayer) Eject() string {
 // Play Воспроизводит фильм.
 func (d *DvdPlayer) Play(movie string) string {
 	d.movie = movie
+
 	return fmt.Sprintf("DVD Player playing %q", d.movie)
 }
 
@@ -100,6 +101,7 @@ func (p *Projector) Off() string {
 // SetInput Устанавливает источник сигнала.
 func (p *Projector) SetInput(dvdPlayer *DvdPlayer) string {
 	p.dvdPlayer = dvdPlayer
+
 	return "Projector setting DVD Player to input"
 }
 
@@ -126,6 +128,7 @@ func (a *Amplifier) Off() string {
 // SetDvd Устанавливает источник сигнала.
 func (a *Amplifier) SetDvd(dvdPlayer *DvdPlayer) string {
 	a.dvdPlayer = dvdPlayer
+
 	return "Amplifier setting DVD Player to input"
 }
 

@@ -34,19 +34,18 @@ ChanLoop:
 	}
 }
 
-// nolint:gomnd
 func makeChocolate(chocolateBoiler singleton.ChocolateBoiler, ch chan string, cancel chan struct{}) {
 	for i := 0; i < 3; i++ {
 		ch <- chocolateBoiler.Fill()
-
+		// nolint:gomnd
 		time.Sleep(500 * time.Millisecond)
 
 		ch <- chocolateBoiler.Boil()
-
+		// nolint:gomnd
 		time.Sleep(500 * time.Millisecond)
 
 		ch <- chocolateBoiler.Drain()
-
+		// nolint:gomnd
 		time.Sleep(500 * time.Millisecond)
 	}
 

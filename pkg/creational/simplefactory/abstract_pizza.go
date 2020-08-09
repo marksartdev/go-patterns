@@ -3,13 +3,13 @@ package simplefactory
 import "fmt"
 
 const (
-	// CheesePizza Сырная пицца
+	// CheesePizza Сырная пицца.
 	CheesePizza = "cheese"
-	// PepperoniPizza Пицца "Пепперони"
+	// PepperoniPizza Пицца "Пепперони".
 	PepperoniPizza = "pepperoni"
-	// ClamPizza Пицца с мидиями
+	// ClamPizza Пицца с мидиями.
 	ClamPizza = "clam"
-	// VeggiePizza Вегетарианская пицца
+	// VeggiePizza Вегетарианская пицца.
 	VeggiePizza = "veggie"
 )
 

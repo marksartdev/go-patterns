@@ -73,6 +73,7 @@ func (s *Stereo) setCd() string {
 // Устанавливает уровень громкости.
 func (s *Stereo) setVolume(volume int) string {
 	s.volume = volume
+
 	return fmt.Sprintf("%s stereo volume set to %d", s.Location, s.volume)
 }
 
@@ -85,24 +86,28 @@ type CeilingFan struct {
 // Включает вентилятор на высокую скорость.
 func (c *CeilingFan) high() string {
 	c.speed = ceilingFanHigh
+
 	return fmt.Sprintf("%s ceiling fan is on high", c.Location)
 }
 
 // Включает вентилятор на среднюю скорость.
 func (c *CeilingFan) medium() string {
 	c.speed = ceilingFanMedium
+
 	return fmt.Sprintf("%s ceiling fan is on medium", c.Location)
 }
 
 // Включает вентилятор на низкую скорость.
 func (c *CeilingFan) low() string {
 	c.speed = ceilingFanLow
+
 	return fmt.Sprintf("%s ceiling fan is on low", c.Location)
 }
 
 // Выключает вентилятор.
 func (c *CeilingFan) off() string {
 	c.speed = ceilingFanOff
+
 	return fmt.Sprintf("%s ceiling fan is off", c.Location)
 }
 

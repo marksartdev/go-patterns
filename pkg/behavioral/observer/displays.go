@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	// RandSeed Индекс для генератора случайных чисел
+	// RandSeed Индекс для генератора случайных чисел.
 	RandSeed                = 512
 	minHeatIndexTemperature = 27
 )
@@ -186,6 +186,7 @@ func (f *forecastDisplay) makeForecast() {
 
 // Получить коэффициент для прогноза.
 func (f *forecastDisplay) getCoefficient() float64 {
+	// nolint:gosec
 	return 0.7 + rand.Float64()*(1.3-0.7)
 }
 

@@ -12,6 +12,7 @@ import (
 func TestDuckAdapter(t *testing.T) {
 	seed := time.Now().Unix()
 	source := rand.NewSource(seed)
+	// nolint:gosec
 	random := rand.New(source)
 
 	duck := adapter.MallardDuck{}

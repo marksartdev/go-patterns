@@ -22,12 +22,12 @@ type homeTheaterFacade struct {
 }
 
 // WatchMovie Подготавливает домашний кинотеатр к просмотру фильма.
-// nolint:gomnd
 func (h homeTheaterFacade) WatchMovie(movie string) string {
 	log := make([]string, 0, 14)
 	log = append(log, "Get ready to watch a movie ...\n")
 	log = append(log, h.popper.On())
 	log = append(log, fmt.Sprintln(h.popper.Pop()))
+	// nolint:gomnd
 	log = append(log, fmt.Sprintln(h.lights.Dim(10)))
 	log = append(log, fmt.Sprintln(h.screen.Down()))
 	log = append(log, h.projector.On())
@@ -36,6 +36,7 @@ func (h homeTheaterFacade) WatchMovie(movie string) string {
 	log = append(log, h.amp.On())
 	log = append(log, h.amp.SetDvd(h.dvd))
 	log = append(log, h.amp.SetSurroundSound())
+	// nolint:gomnd
 	log = append(log, fmt.Sprintln(h.amp.SetVolume(5)))
 	log = append(log, h.dvd.On())
 	log = append(log, h.dvd.Play(movie))

@@ -57,6 +57,7 @@ func (d duckAdapter) Fly() string {
 // NewDuckAdapter Создает индюшачий адаптер для утки.
 func NewDuckAdapter(duck Duck, seed int64) Turkey {
 	source := rand.NewSource(seed)
+	// nolint:gosec
 	random := rand.New(source)
 
 	return duckAdapter{duck, random}

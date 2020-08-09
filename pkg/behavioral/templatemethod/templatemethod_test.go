@@ -15,7 +15,6 @@ func TestNewTea(t *testing.T) {
 	t.Run("withoutCondiments", testNewTeaWithoutCondiments(tea))
 }
 
-// nolint:goconst
 func testNewTeaWithCondiments(tea templatemethod.CaffeineBeverage) func(t *testing.T) {
 	return func(t *testing.T) {
 		reader := bytes.NewBufferString("y\n")
@@ -24,8 +23,10 @@ func testNewTeaWithCondiments(tea templatemethod.CaffeineBeverage) func(t *testi
 		tea.SetReader(reader)
 		tea.SetWriter(writer)
 
+		// nolint:goconst
 		expected := "Boiling water\n"
 		expected += "Steeping the tea\n"
+		// nolint:goconst
 		expected += "Pouring into cup\n"
 		expected += "Would you like lemon with your tea (y/n)? Adding Lemon\n"
 

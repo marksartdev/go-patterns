@@ -29,6 +29,7 @@ func (c *chocolateBoiler) Fill() string {
 func (c *chocolateBoiler) Drain() string {
 	if !c.empty && c.boiled {
 		c.empty = true
+
 		return "Draining ..."
 	}
 
@@ -39,6 +40,7 @@ func (c *chocolateBoiler) Drain() string {
 func (c *chocolateBoiler) Boil() string {
 	if !c.empty && !c.boiled {
 		c.boiled = true
+
 		return "Boiling ..."
 	}
 

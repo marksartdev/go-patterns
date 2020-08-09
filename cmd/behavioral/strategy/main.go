@@ -28,6 +28,7 @@ func main() {
 	ducks = append(ducks, strategy.NewModelDuck())
 
 	for num, duck := range ducks {
+		// nolint:gosec
 		quackCount := rand.Intn(maxQuacks) + 1
 
 		fmt.Printf("Duck %d\n", num)
@@ -36,7 +37,9 @@ func main() {
 		fmt.Printf("Quack: %s\n", duck.PerformQuack(quackCount))
 		fmt.Printf("Fly: %s\n", duck.PerformFly())
 
+		// nolint:gosec
 		duck.SetQuacker(quackers[rand.Intn(len(quackers))])
+		// nolint:gosec
 		duck.SetFlyer(flyers[rand.Intn(len(flyers))])
 
 		fmt.Printf("New quack:  %s\n", duck.PerformQuack(quackCount))
