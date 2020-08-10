@@ -2,6 +2,8 @@ package templatemethod_test
 
 import (
 	"bytes"
+	"fmt"
+	"sort"
 	"testing"
 
 	"github.com/Mark-Sart/go-patterns/pkg/behavioral/templatemethod"
@@ -98,4 +100,37 @@ func testNewCoffeeWithoutCondiments(coffee templatemethod.CaffeineBeverage) func
 
 		assert.Equal(t, expected, writer.String())
 	}
+}
+
+func TestSortDucks(t *testing.T) {
+	ducks := templatemethod.Ducks{Ducks: []templatemethod.Duck{
+		{Name: "Daffy", Wright: 8},
+		{Name: "Dewey", Wright: 2},
+		{Name: "Howard", Wright: 7},
+		{Name: "Louie", Wright: 2},
+		{Name: "Donald", Wright: 10},
+		{Name: "Huey", Wright: 2},
+	}}
+
+	expected := "Daffy weighs 8\n"
+	expected += "Dewey weighs 2\n"
+	expected += "Howard weighs 7\n"
+	expected += "Louie weighs 2\n"
+	expected += "Donald weighs 10\n"
+	expected += "Huey weighs 2"
+
+	actual := fmt.Sprint(ducks)
+	assert.Equal(t, expected, actual)
+
+	sort.Sort(ducks)
+
+	expected = "Dewey weighs 2\n"
+	expected += "Louie weighs 2\n"
+	expected += "Huey weighs 2\n"
+	expected += "Howard weighs 7\n"
+	expected += "Daffy weighs 8\n"
+	expected += "Donald weighs 10"
+
+	actual = fmt.Sprint(ducks)
+	assert.Equal(t, expected, actual)
 }
