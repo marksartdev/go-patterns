@@ -32,7 +32,7 @@ func main() {
 
 	sort.Sort(ducks)
 
-	fmt.Println("\nAfter sorting")
+	fmt.Println("\nAfter sorting:")
 	fmt.Println(ducks)
 
 	fmt.Println()
