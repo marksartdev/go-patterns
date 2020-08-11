@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/Mark-Sart/go-patterns/pkg/structural/adapter"
+	"github.com/marksartdev/go-patterns/pkg/structural/adapter"
 	"github.com/stretchr/testify/assert"
 )
 

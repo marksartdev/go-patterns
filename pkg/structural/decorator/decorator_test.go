@@ -3,8 +3,8 @@ package decorator_test
 import (
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/structural/decorator"
 	"github.com/gonum/floats"
+	"github.com/marksartdev/go-patterns/pkg/structural/decorator"
 )
 
 const (

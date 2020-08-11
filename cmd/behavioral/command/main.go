@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Mark-Sart/go-patterns/pkg/behavioral/command"
+	"github.com/marksartdev/go-patterns/pkg/behavioral/command"
 )
 
 func main() {

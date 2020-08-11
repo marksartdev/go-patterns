@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/structural/facade"
+	"github.com/marksartdev/go-patterns/pkg/structural/facade"
 	"github.com/stretchr/testify/assert"
 )
 

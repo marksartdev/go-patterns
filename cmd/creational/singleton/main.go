@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/Mark-Sart/go-patterns/pkg/creational/singleton"
+	"github.com/marksartdev/go-patterns/pkg/creational/singleton"
 )
 
 func main() {

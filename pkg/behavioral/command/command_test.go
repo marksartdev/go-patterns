@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/behavioral/command"
+	"github.com/marksartdev/go-patterns/pkg/behavioral/command"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/Mark-Sart/go-patterns/pkg/behavioral/strategy"
+	"github.com/marksartdev/go-patterns/pkg/behavioral/strategy"
 )
 
 const maxQuacks = 5

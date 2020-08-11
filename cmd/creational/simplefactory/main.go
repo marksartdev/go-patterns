@@ -7,7 +7,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/Mark-Sart/go-patterns/pkg/creational/simplefactory"
+	"github.com/marksartdev/go-patterns/pkg/creational/simplefactory"
 )
 
 func main() {

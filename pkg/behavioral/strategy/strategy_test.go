@@ -3,7 +3,7 @@ package strategy_test
 import (
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/behavioral/strategy"
+	"github.com/marksartdev/go-patterns/pkg/behavioral/strategy"
 )
 
 const errString = "Некорректный результат. Ожидалось %q, получено %q."

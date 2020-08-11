@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/Mark-Sart/go-patterns/pkg/behavioral/templatemethod"
+	"github.com/marksartdev/go-patterns/pkg/behavioral/templatemethod"
 )
 
 func main() {

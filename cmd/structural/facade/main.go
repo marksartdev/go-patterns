@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/Mark-Sart/go-patterns/pkg/structural/facade"
+	"github.com/marksartdev/go-patterns/pkg/structural/facade"
 )
 
 func main() {

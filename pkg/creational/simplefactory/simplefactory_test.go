@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/creational/simplefactory"
+	"github.com/marksartdev/go-patterns/pkg/creational/simplefactory"
 	"github.com/stretchr/testify/assert"
 )
 

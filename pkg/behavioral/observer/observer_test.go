@@ -5,7 +5,7 @@ import (
 	"math/rand"
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/behavioral/observer"
+	"github.com/marksartdev/go-patterns/pkg/behavioral/observer"
 )
 
 const (

@@ -8,7 +8,7 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/Mark-Sart/go-patterns/pkg/structural/decorator"
+	"github.com/marksartdev/go-patterns/pkg/structural/decorator"
 )
 
 func main() {

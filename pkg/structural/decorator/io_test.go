@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Mark-Sart/go-patterns/pkg/structural/decorator"
+	"github.com/marksartdev/go-patterns/pkg/structural/decorator"
 )
 
 func TestNewLowCaseReader(t *testing.T) {
