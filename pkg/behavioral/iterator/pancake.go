@@ -2,11 +2,6 @@ package iterator
 
 import "github.com/marksartdev/go-patterns/pkg/common"
 
-// PancakeHouseMenu Интерфейс меню блинной.
-type PancakeHouseMenu interface {
-	GetMenuItems() common.ArrayList
-}
-
 // Меню блинной.
 type pancakeHouseMenu struct {
 	menuItems common.ArrayList
@@ -18,13 +13,13 @@ func (p pancakeHouseMenu) addItem(name, description string, vegetarian bool, pri
 	p.menuItems.Add(item)
 }
 
-// GetMenuItems Возвращает список блюд.
-func (p pancakeHouseMenu) GetMenuItems() common.ArrayList {
-	return p.menuItems
+// CreateIterator Создает итератор для меню.
+func (p pancakeHouseMenu) CreateIterator() Iterator {
+	return NewPancakeHouseMenuIterator(p.menuItems)
 }
 
 // NewPancakeHouseMenu Создает меню блинно.
-func NewPancakeHouseMenu() PancakeHouseMenu {
+func NewPancakeHouseMenu() Menu {
 	menu := pancakeHouseMenu{}
 	menu.menuItems = common.NewArrayList()
 	menu.addItem("K&B's Pancake Breakfast", "Pancakes with scrambled eggs, and toast", true, 2.99)

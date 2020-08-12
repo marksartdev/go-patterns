@@ -4,11 +4,6 @@ import "fmt"
 
 const maxItems = 6
 
-// DinerMenu Интерфейс меню закусочной.
-type DinerMenu interface {
-	GetMenuItems() [maxItems]MenuItem
-}
-
 // Меню закусочной.
 type dinerMenu struct {
 	numberOfItems int
@@ -29,13 +24,13 @@ func (d *dinerMenu) addItem(name, description string, vegetarian bool, price flo
 	d.numberOfItems++
 }
 
-// GetMenuItems Возвращает список блюд.
-func (d *dinerMenu) GetMenuItems() [maxItems]MenuItem {
-	return d.menuItems
+// CreateIterator Создает итератор для меню.
+func (d *dinerMenu) CreateIterator() Iterator {
+	return NewDinerMenuIterator(d.menuItems)
 }
 
 // NewDinerMenu Создает меню закусочной.
-func NewDinerMenu() DinerMenu {
+func NewDinerMenu() Menu {
 	menu := &dinerMenu{}
 	menu.addItem("Vegetarian BLT", "(Faking) Bacon with lettuce & tomato on whole wheat", true, 2.99)
 	menu.addItem("BLT", "Bacon with lettuce & tomato on whole wheat", false, 2.99)
