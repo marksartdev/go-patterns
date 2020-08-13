@@ -14,8 +14,8 @@ func (p pancakeHouseMenu) addItem(name, description string, vegetarian bool, pri
 }
 
 // CreateIterator Создает итератор для меню.
-func (p pancakeHouseMenu) CreateIterator() Iterator {
-	return NewPancakeHouseMenuIterator(p.menuItems)
+func (p pancakeHouseMenu) CreateIterator() common.Iterator {
+	return p.menuItems.Iterator()
 }
 
 // NewPancakeHouseMenu Создает меню блинно.

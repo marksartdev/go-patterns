@@ -4,13 +4,7 @@ import "github.com/marksartdev/go-patterns/pkg/common"
 
 // Menu Интерфейс меню.
 type Menu interface {
-	CreateIterator() Iterator
-}
-
-// Iterator Интерфейс итератора.
-type Iterator interface {
-	HasNext() bool
-	Next() interface{}
+	CreateIterator() common.Iterator
 }
 
 // Итератор для меню закусочной.
@@ -32,31 +26,24 @@ func (d *dinerMenuIterator) Next() interface{} {
 	return item
 }
 
+// Remove Удаляет текущий элемент.
+func (d *dinerMenuIterator) Remove() error {
+	if d.position <= 0 {
+		return common.IllegalStateError{}
+	}
+
+	if d.items[d.position-1] != nil {
+		for i := d.position - 1; i < len(d.items)-1; i++ {
+			d.items[i] = d.items[i+1]
+		}
+
+		d.items[len(d.items)-1] = nil
+	}
+
+	return nil
+}
+
 // NewDinerMenuIterator Создает итератор для меню закусочной.
-func NewDinerMenuIterator(items [maxItems]MenuItem) Iterator {
+func NewDinerMenuIterator(items [maxItems]MenuItem) common.Iterator {
 	return &dinerMenuIterator{items, 0}
-}
-
-// Итератор для меню блинной.
-type pancakeHouseMenuIterator struct {
-	items    common.ArrayList
-	position int
-}
-
-// HasNext Проверяет, есть ли еще элемент в коллекции.
-func (p *pancakeHouseMenuIterator) HasNext() bool {
-	return p.position < p.items.Size()
-}
-
-// Next Возвращает следующий элемент.
-func (p *pancakeHouseMenuIterator) Next() interface{} {
-	item := p.items.Get(p.position)
-	p.position++
-
-	return item
-}
-
-// NewPancakeHouseMenuIterator Создает итератор для меню блинной.
-func NewPancakeHouseMenuIterator(items common.ArrayList) Iterator {
-	return &pancakeHouseMenuIterator{items, 0}
 }

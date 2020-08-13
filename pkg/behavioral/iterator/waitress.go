@@ -5,6 +5,8 @@ import (
 	"io"
 	"log"
 	"os"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
 )
 
 // Waitress Интерфейс официантки.
@@ -36,7 +38,7 @@ func (w *waitress) SetWriter(writer io.Writer) {
 }
 
 // Печатает меню из итератора.
-func (w *waitress) printMenu(iterator Iterator) {
+func (w *waitress) printMenu(iterator common.Iterator) {
 	for iterator.HasNext() {
 		if item, ok := iterator.Next().(MenuItem); ok {
 			msg := fmt.Sprintf("%s, %0.2f -- %s", item.GetName(), item.GetPrice(), item.GetDescription())

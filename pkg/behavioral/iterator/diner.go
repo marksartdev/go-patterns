@@ -1,6 +1,10 @@
 package iterator
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
+)
 
 const maxItems = 6
 
@@ -25,7 +29,7 @@ func (d *dinerMenu) addItem(name, description string, vegetarian bool, price flo
 }
 
 // CreateIterator Создает итератор для меню.
-func (d *dinerMenu) CreateIterator() Iterator {
+func (d *dinerMenu) CreateIterator() common.Iterator {
 	return NewDinerMenuIterator(d.menuItems)
 }
 
