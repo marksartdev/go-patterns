@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/marksartdev/go-patterns/pkg/common"
 	"github.com/marksartdev/go-patterns/pkg/structural/adapter"
 )
 
@@ -33,8 +34,8 @@ func main() {
 	elements := []interface{}{1, 2, 3, 4, 5, 6, 7, 8, 9}
 
 	var (
-		iterator     adapter.Iterator    = &adapter.SimpleIterator{Elements: elements}
-		iterator2    adapter.Iterator    = &adapter.SimpleIterator{Elements: elements}
+		iterator     common.Iterator     = &adapter.SimpleIterator{Elements: elements}
+		iterator2    common.Iterator     = &adapter.SimpleIterator{Elements: elements}
 		enumeration  adapter.Enumeration = &adapter.SimpleEnumeration{Elements: elements}
 		enumeration2 adapter.Enumeration = &adapter.SimpleEnumeration{Elements: elements}
 	)
@@ -70,7 +71,7 @@ func testTurkey(turkey adapter.Turkey) {
 	}
 }
 
-func testIterator(iterator adapter.Iterator) {
+func testIterator(iterator common.Iterator) {
 	for iterator.HasNext() {
 		fmt.Printf("%d\t", iterator.Next())
 	}

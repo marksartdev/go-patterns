@@ -5,6 +5,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/marksartdev/go-patterns/pkg/common"
 	"github.com/marksartdev/go-patterns/pkg/structural/adapter"
 	"github.com/stretchr/testify/assert"
 )
@@ -66,7 +67,7 @@ func TestEnumerationIterator(t *testing.T) {
 	enumerationIterator := adapter.NewEnumerationIterator(enumeration)
 
 	for _, elem := range elements {
-		assert.Error(t, enumerationIterator.Remove())
+		assert.EqualError(t, enumerationIterator.Remove(), common.UnsupportedOperationError{}.Error())
 		assert.True(t, enumerationIterator.HasNext())
 		assert.Equal(t, elem, enumerationIterator.Next())
 	}

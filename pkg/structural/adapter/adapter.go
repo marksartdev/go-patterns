@@ -1,9 +1,10 @@
 package adapter
 
 import (
-	"errors"
 	"math/rand"
 	"strings"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
 )
 
 const flyConverter = 3
@@ -80,19 +81,17 @@ func (e *enumerationIterator) Next() interface{} {
 
 // Remove Удаляет текущий элемент.
 func (e *enumerationIterator) Remove() error {
-	// nolint:goerr113
-	// Быстрое, но плохое решение. Ошибки должны быть отдельными типами.
-	return errors.New("UnsupportedOperationException")
+	return common.UnsupportedOperationError{}
 }
 
 // NewEnumerationIterator Создает адаптер итератора для перечисления.
-func NewEnumerationIterator(enumeration Enumeration) Iterator {
+func NewEnumerationIterator(enumeration Enumeration) common.Iterator {
 	return &enumerationIterator{enumeration}
 }
 
 // Адаптер перечисления для итератора.
 type iteratorEnumeration struct {
-	iterator Iterator
+	iterator common.Iterator
 }
 
 // HasMoreElements Проверяет наличие следующего элемента.
@@ -106,6 +105,6 @@ func (i *iteratorEnumeration) NextElement() interface{} {
 }
 
 // NewIteratorEnumeration Создает адаптер перечисления для итератора.
-func NewIteratorEnumeration(iterator Iterator) Enumeration {
+func NewIteratorEnumeration(iterator common.Iterator) Enumeration {
 	return &iteratorEnumeration{iterator}
 }

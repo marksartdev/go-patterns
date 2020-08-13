@@ -25,13 +25,6 @@ func (s *SimpleEnumeration) NextElement() interface{} {
 	return current
 }
 
-// Iterator Интерфейс итератора.
-type Iterator interface {
-	HasNext() bool
-	Next() interface{}
-	Remove() error
-}
-
 // SimpleIterator Простой итератор.
 type SimpleIterator struct {
 	Elements []interface{}
