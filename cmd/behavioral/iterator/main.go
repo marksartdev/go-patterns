@@ -9,8 +9,9 @@ import (
 func main() {
 	pancakeHouseMenu := iterator.NewPancakeHouseMenu()
 	dinerMenu := iterator.NewDinerMenu()
+	cafeMenu := iterator.NewCafeMenu()
 
-	waitress := iterator.NewWaitress(pancakeHouseMenu, dinerMenu)
+	waitress := iterator.NewWaitress(pancakeHouseMenu, dinerMenu, cafeMenu)
 
 	fmt.Println()
 	waitress.PrintMenu()

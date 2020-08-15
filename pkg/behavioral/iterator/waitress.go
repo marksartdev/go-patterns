@@ -19,6 +19,7 @@ type Waitress interface {
 type waitress struct {
 	pancakeHouseMenu Menu
 	dinerMenu        Menu
+	cafeMenu         Menu
 	writer           io.Writer
 }
 
@@ -26,10 +27,13 @@ type waitress struct {
 func (w *waitress) PrintMenu() {
 	pancakeIterator := w.pancakeHouseMenu.CreateIterator()
 	dinerIterator := w.dinerMenu.CreateIterator()
+	cafeIterator := w.cafeMenu.CreateIterator()
 	w.write("MENU\n----\nBREAKFAST")
 	w.printMenu(pancakeIterator)
 	w.write("\nLUNCH")
 	w.printMenu(dinerIterator)
+	w.write("\nDINNER")
+	w.printMenu(cafeIterator)
 }
 
 // SetWriter Устанавливает writer.
@@ -56,6 +60,6 @@ func (w *waitress) write(msg string) {
 }
 
 // NewWaitress Создает официантку.
-func NewWaitress(pancakeHouseMenu, dinerMenu Menu) Waitress {
-	return &waitress{pancakeHouseMenu, dinerMenu, os.Stdout}
+func NewWaitress(pancakeHouseMenu, dinerMenu, cafeMenu Menu) Waitress {
+	return &waitress{pancakeHouseMenu, dinerMenu, cafeMenu, os.Stdout}
 }
