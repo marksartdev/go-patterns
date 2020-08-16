@@ -30,7 +30,7 @@ func (d *dinerMenu) addItem(name, description string, vegetarian bool, price flo
 
 // CreateIterator Создает итератор для меню.
 func (d *dinerMenu) CreateIterator() common.Iterator {
-	return NewDinerMenuIterator(d.menuItems)
+	return newAlternatingDinerMenuIterator(d.menuItems)
 }
 
 // NewDinerMenu Создает меню закусочной.

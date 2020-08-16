@@ -1,6 +1,10 @@
 package iterator
 
-import "github.com/marksartdev/go-patterns/pkg/common"
+import (
+	"time"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
+)
 
 // Menu Интерфейс меню.
 type Menu interface {
@@ -8,6 +12,7 @@ type Menu interface {
 }
 
 // Итератор для меню закусочной.
+// nolint:unused
 type dinerMenuIterator struct {
 	items    [maxItems]MenuItem
 	position int
@@ -43,7 +48,42 @@ func (d *dinerMenuIterator) Remove() error {
 	return nil
 }
 
-// NewDinerMenuIterator Создает итератор для меню закусочной.
-func NewDinerMenuIterator(items [maxItems]MenuItem) common.Iterator {
+// Создает итератор для меню закусочной.
+// nolint:unused,deadcode
+func newDinerMenuIterator(items [maxItems]MenuItem) common.Iterator {
 	return &dinerMenuIterator{items, 0}
+}
+
+// Альтернативный итератор для меню закусочной.
+type alternatingDinerMenuIterator struct {
+	items    [maxItems]MenuItem
+	position int
+}
+
+// HasNext Проверяет, есть ли еще элемент в коллекции.
+func (a *alternatingDinerMenuIterator) HasNext() bool {
+	return a.position < len(a.items) && a.items[a.position] != nil
+}
+
+// Next Возвращает следующий элемент.
+func (a *alternatingDinerMenuIterator) Next() interface{} {
+	item := a.items[a.position]
+	a.position += 2
+
+	return item
+}
+
+// Remove Удаляет текущий элемент.
+func (a *alternatingDinerMenuIterator) Remove() error {
+	return common.UnsupportedOperationError{}
+}
+
+// Создает альтернативный итератор для меню закусочной.
+func newAlternatingDinerMenuIterator(items [maxItems]MenuItem) common.Iterator {
+	menuIterator := &alternatingDinerMenuIterator{items, 0}
+	weekday := int(time.Now().Weekday())
+	// nolint:gomnd
+	menuIterator.position = weekday % 2
+
+	return menuIterator
 }
