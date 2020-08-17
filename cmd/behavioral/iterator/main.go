@@ -4,14 +4,16 @@ import (
 	"fmt"
 
 	"github.com/marksartdev/go-patterns/pkg/behavioral/iterator"
+	"github.com/marksartdev/go-patterns/pkg/common"
 )
 
 func main() {
-	pancakeHouseMenu := iterator.NewPancakeHouseMenu()
-	dinerMenu := iterator.NewDinerMenu()
-	cafeMenu := iterator.NewCafeMenu()
+	menus := common.NewArrayList()
+	menus.Add(iterator.NewPancakeHouseMenu())
+	menus.Add(iterator.NewDinerMenu())
+	menus.Add(iterator.NewCafeMenu())
 
-	waitress := iterator.NewWaitress(pancakeHouseMenu, dinerMenu, cafeMenu)
+	waitress := iterator.NewWaitress(menus)
 
 	fmt.Println()
 	waitress.PrintMenu()
