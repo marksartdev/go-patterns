@@ -37,11 +37,7 @@ func (a *arrayList) Remove(i int) {
 
 // Iterator Создает итератор списка элементов.
 func (a *arrayList) Iterator() Iterator {
-	cp := &arrayList{}
-	cp.items = make([]interface{}, a.Size())
-	copy(cp.items, a.items)
-
-	return &arrayListIterator{cp, 0}
+	return &arrayListIterator{a, 0}
 }
 
 // NewArrayList Создает список элементов.

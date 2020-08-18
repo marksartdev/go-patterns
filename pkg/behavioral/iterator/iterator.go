@@ -14,7 +14,7 @@ type Menu interface {
 // Итератор для меню закусочной.
 // nolint:unused
 type dinerMenuIterator struct {
-	items    [maxItems]MenuItem
+	items    []MenuItem
 	position int
 }
 
@@ -50,13 +50,13 @@ func (d *dinerMenuIterator) Remove() error {
 
 // Создает итератор для меню закусочной.
 // nolint:unused,deadcode
-func newDinerMenuIterator(items [maxItems]MenuItem) common.Iterator {
+func newDinerMenuIterator(items []MenuItem) common.Iterator {
 	return &dinerMenuIterator{items, 0}
 }
 
 // Альтернативный итератор для меню закусочной.
 type alternatingDinerMenuIterator struct {
-	items    [maxItems]MenuItem
+	items    []MenuItem
 	position int
 }
 
@@ -79,7 +79,7 @@ func (a *alternatingDinerMenuIterator) Remove() error {
 }
 
 // Создает альтернативный итератор для меню закусочной.
-func newAlternatingDinerMenuIterator(items [maxItems]MenuItem) common.Iterator {
+func newAlternatingDinerMenuIterator(items []MenuItem) common.Iterator {
 	menuIterator := &alternatingDinerMenuIterator{items, 0}
 	weekday := int(time.Now().Weekday())
 	// nolint:gomnd
