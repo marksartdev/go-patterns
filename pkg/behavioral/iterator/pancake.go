@@ -25,7 +25,7 @@ func NewPancakeHouseMenu() Menu {
 	menu.addItem("K&B's Pancake Breakfast", "Pancakes with scrambled eggs, and toast", true, 2.99)
 	menu.addItem("Regular Pancake Breakfast", "Pancakes with fried eggs, sausage", false, 2.99)
 	menu.addItem("Blueberry Pancakes", "Pancakes made with fresh blueberries", true, 3.49)
-	menu.addItem("Waffles", "Waffles with your choice of blueberries or strawberries", true, 3.59)
+	menu.addItem("Waffles", "Waffles, with your choice of blueberries or strawberries", true, 3.59)
 
 	return menu
 }

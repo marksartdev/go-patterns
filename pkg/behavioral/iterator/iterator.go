@@ -12,7 +12,6 @@ type Menu interface {
 }
 
 // Итератор для меню закусочной.
-// nolint:unused
 type dinerMenuIterator struct {
 	items    []MenuItem
 	position int
@@ -49,7 +48,6 @@ func (d *dinerMenuIterator) Remove() error {
 }
 
 // Создает итератор для меню закусочной.
-// nolint:unused,deadcode
 func newDinerMenuIterator(items []MenuItem) common.Iterator {
 	return &dinerMenuIterator{items, 0}
 }

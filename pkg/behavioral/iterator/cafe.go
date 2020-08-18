@@ -28,14 +28,14 @@ func (c *cafeMenu) CreateIterator() common.Iterator {
 func NewCafeMenu() Menu {
 	menu := &cafeMenu{}
 	menu.menuItems = make(map[string]MenuItem)
+	menu.addItem("Soup of the day", "A cup of the soup of the day, with a side salad", false, 3.69)
+	menu.addItem("Burrito", "A large burrito, with whole pinto beans, salad, guacamole", true, 4.29)
 	menu.addItem(
 		"Veggie Burger and Air Fries",
-		"Veggie burger ob a whole wheat bun, lettuce, tomato, and fries",
+		"Veggie burger on a whole wheat bun, lettuce, tomato, and fries",
 		true,
 		3.99,
 	)
-	menu.addItem("Soup of the day", "A cup of the soup of the day, with a side salad", false, 3.69)
-	menu.addItem("Burrito", "A large burrito, with whole pinto beans, salad, guacamole", true, 4.29)
 
 	return menu
 }
