@@ -25,7 +25,9 @@ func main() {
 
 	waitress := composite.NewWaitress(allMenus)
 	errorHandle(waitress.PrintMenu())
+	fmt.Println()
 
+	errorHandle(waitress.PrintVegetarianMenu())
 	fmt.Println()
 }
 

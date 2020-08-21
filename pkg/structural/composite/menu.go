@@ -1,37 +1,41 @@
 package composite
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
+)
 
 // Меню.
 type menu struct {
 	menuComponent
-	menuComponents []MenuComponent
+	menuComponents common.ArrayList
 	name           string
 	description    string
+	iterator       common.Iterator
 }
 
 // Add Добавляет дочерний компонент.
 func (m *menu) Add(component MenuComponent) error {
-	m.menuComponents = append(m.menuComponents, component)
+	m.menuComponents.Add(component)
 
 	return nil
 }
 
 // Remove Удаляет дочерний компонент.
-func (m *menu) Remove(component MenuComponent) error {
-	for i, item := range m.menuComponents {
-		if item == component {
-			copy(m.menuComponents[i:], m.menuComponents[i+1:])
-			m.menuComponents = m.menuComponents[:len(m.menuComponents)-1]
-		}
-	}
+func (m *menu) Remove(i int) error {
+	m.menuComponents.Remove(i)
 
 	return nil
 }
 
 // GetChild Возвращает дочерние компоненты.
 func (m *menu) GetChild(i int) (MenuComponent, error) {
-	return m.menuComponents[i], nil
+	if item, ok := m.menuComponents.Get(i).(MenuComponent); ok {
+		return item, nil
+	}
+
+	return nil, nil
 }
 
 // GetName Возвращает название меню.
@@ -53,17 +57,29 @@ func (m *menu) Print() error {
 		return err
 	}
 
-	for _, component := range m.menuComponents {
-		err = component.Print()
-		if err != nil {
-			return err
+	iterator := m.menuComponents.Iterator()
+	for iterator.HasNext() {
+		if component, ok := iterator.Next().(MenuComponent); ok {
+			err = component.Print()
+			if err != nil {
+				return err
+			}
 		}
 	}
 
 	return nil
 }
 
+// CreateIterator Создает итератор для компонента меню.
+func (m *menu) CreateIterator() common.Iterator {
+	if m.iterator == nil {
+		m.iterator = newCompositeIterator(m.menuComponents.Iterator())
+	}
+
+	return m.iterator
+}
+
 // NewMenu Создает меню.
 func NewMenu(name, description string) MenuComponent {
-	return &menu{newMenuComponent(), nil, name, description}
+	return &menu{newMenuComponent(), common.NewArrayList(), name, description, nil}
 }

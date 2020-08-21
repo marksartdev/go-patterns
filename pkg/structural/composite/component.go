@@ -11,13 +11,14 @@ import (
 // MenuComponent Интерфейс компонента меню.
 type MenuComponent interface {
 	Add(component MenuComponent) error
-	Remove(component MenuComponent) error
+	Remove(i int) error
 	GetChild(i int) (MenuComponent, error)
 	GetName() (string, error)
 	GetDescription() (string, error)
 	GetPrice() (float64, error)
 	IsVegetarian() (bool, error)
 	Print() error
+	CreateIterator() common.Iterator
 	SetWriter(writer io.Writer)
 }
 
@@ -32,7 +33,7 @@ func (m *menuComponent) Add(component MenuComponent) error {
 }
 
 // Remove Удаляет дочерний компонент.
-func (m *menuComponent) Remove(component MenuComponent) error {
+func (m *menuComponent) Remove(i int) error {
 	return common.UnsupportedOperationError{}
 }
 
@@ -64,6 +65,11 @@ func (m *menuComponent) IsVegetarian() (bool, error) {
 // Print Печатает компонент.
 func (m *menuComponent) Print() error {
 	return common.UnsupportedOperationError{}
+}
+
+// CreateIterator Возвращает итератор компонента.
+func (m *menuComponent) CreateIterator() common.Iterator {
+	return common.NewNullIterator()
 }
 
 // SetWriter Устанавливает writer.

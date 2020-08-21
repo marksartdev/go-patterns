@@ -64,3 +64,10 @@ func TestArrayList_Iterator(t *testing.T) {
 		}
 	}
 }
+
+func TestNewNullIterator(t *testing.T) {
+	iterator := common.NewNullIterator()
+	assert.False(t, iterator.HasNext())
+	assert.Nil(t, iterator.Next())
+	assert.EqualError(t, common.UnsupportedOperationError{}, iterator.Remove().Error())
+}

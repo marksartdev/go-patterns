@@ -7,6 +7,29 @@ type Iterator interface {
 	Remove() error
 }
 
+// Пустой итератор.
+type nullIterator struct{}
+
+// HasNext Проверяет, есть ли еще элемент в коллекции.
+func (n nullIterator) HasNext() bool {
+	return false
+}
+
+// Next Возвращает следующий элемент.
+func (n nullIterator) Next() interface{} {
+	return nil
+}
+
+// Remove Удаляет текущий элемент.
+func (n nullIterator) Remove() error {
+	return UnsupportedOperationError{}
+}
+
+// NewNullIterator Создает пустой итератор.
+func NewNullIterator() Iterator {
+	return nullIterator{}
+}
+
 // UnsupportedOperationError Ошибка при неподдерживаемой операции.
 type UnsupportedOperationError struct{}
 

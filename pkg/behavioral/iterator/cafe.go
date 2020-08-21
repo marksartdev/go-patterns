@@ -1,6 +1,10 @@
 package iterator
 
-import "github.com/marksartdev/go-patterns/pkg/common"
+import (
+	"sort"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
+)
 
 // Меню кафе.
 type cafeMenu struct {
@@ -17,8 +21,16 @@ func (c *cafeMenu) addItem(name, description string, vegetarian bool, price floa
 func (c *cafeMenu) CreateIterator() common.Iterator {
 	menuList := common.NewArrayList()
 
-	for _, item := range c.menuItems {
-		menuList.Add(item)
+	keys := make([]string, 0, len(c.menuItems))
+
+	for key := range c.menuItems {
+		keys = append(keys, key)
+	}
+
+	sort.Strings(keys)
+
+	for _, key := range keys {
+		menuList.Add(c.menuItems[key])
 	}
 
 	return menuList.Iterator()
