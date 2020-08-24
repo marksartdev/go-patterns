@@ -8,83 +8,83 @@ import (
 	"github.com/marksartdev/go-patterns/pkg/common"
 )
 
-// MenuComponent Интерфейс компонента меню.
-type MenuComponent interface {
-	Add(component MenuComponent) error
-	Remove(i int) error
-	GetChild(i int) (MenuComponent, error)
-	GetName() (string, error)
-	GetDescription() (string, error)
-	GetPrice() (float64, error)
-	IsVegetarian() (bool, error)
-	Print() error
-	CreateIterator() common.Iterator
-	SetWriter(writer io.Writer)
+// Интерфейс компонента меню.
+type menuComponent interface {
+	add(component menuComponent) error
+	remove(i int) error
+	getChild(i int) (menuComponent, error)
+	getName() (string, error)
+	getDescription() (string, error)
+	getPrice() (float64, error)
+	isVegetarian() (bool, error)
+	print() error
+	createIterator() common.Iterator
+	setWriter(writer io.Writer)
 }
 
 // Компонент меню.
-type menuComponent struct {
+type component struct {
 	writer io.Writer
 }
 
-// Add Добавляет дочерний компонент.
-func (m *menuComponent) Add(component MenuComponent) error {
+// Добавляет дочерний компонент.
+func (m *component) add(menuComponent) error {
 	return common.UnsupportedOperationError{}
 }
 
-// Remove Удаляет дочерний компонент.
-func (m *menuComponent) Remove(i int) error {
+// Удаляет дочерний компонент.
+func (m *component) remove(int) error {
 	return common.UnsupportedOperationError{}
 }
 
-// GetChild Возвращает дочерние компоненты.
-func (m *menuComponent) GetChild(i int) (MenuComponent, error) {
+// Возвращает дочерние компоненты.
+func (m *component) getChild(int) (menuComponent, error) {
 	return nil, common.UnsupportedOperationError{}
 }
 
-// GetName Возвращает название.
-func (m *menuComponent) GetName() (string, error) {
+// Возвращает название.
+func (m *component) getName() (string, error) {
 	return "", common.UnsupportedOperationError{}
 }
 
-// GetDescription Возвращает описание.
-func (m *menuComponent) GetDescription() (string, error) {
+// Возвращает описание.
+func (m *component) getDescription() (string, error) {
 	return "", common.UnsupportedOperationError{}
 }
 
-// GetPrice Возвращает стоимость.
-func (m *menuComponent) GetPrice() (float64, error) {
+// Возвращает стоимость.
+func (m *component) getPrice() (float64, error) {
 	return 0, common.UnsupportedOperationError{}
 }
 
-// IsVegetarian Проверяет, является ли блюдо вегетарианским.
-func (m *menuComponent) IsVegetarian() (bool, error) {
+// Проверяет, является ли блюдо вегетарианским.
+func (m *component) isVegetarian() (bool, error) {
 	return false, common.UnsupportedOperationError{}
 }
 
-// Print Печатает компонент.
-func (m *menuComponent) Print() error {
+// Печатает компонент.
+func (m *component) print() error {
 	return common.UnsupportedOperationError{}
 }
 
-// CreateIterator Возвращает итератор компонента.
-func (m *menuComponent) CreateIterator() common.Iterator {
+// Возвращает итератор компонента.
+func (m *component) createIterator() common.Iterator {
 	return common.NewNullIterator()
 }
 
-// SetWriter Устанавливает writer.
-func (m *menuComponent) SetWriter(writer io.Writer) {
+// Устанавливает writer.
+func (m *component) setWriter(writer io.Writer) {
 	m.writer = writer
 }
 
 // Печатает.
-func (m *menuComponent) write(msg string) error {
+func (m *component) write(msg string) error {
 	_, err := fmt.Fprintln(m.writer, msg)
 
 	return err
 }
 
 // Создает базовую реализацию компонента меню.
-func newMenuComponent() menuComponent {
-	return menuComponent{os.Stdout}
+func newMenuComponent() component {
+	return component{os.Stdout}
 }

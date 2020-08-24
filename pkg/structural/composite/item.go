@@ -4,35 +4,35 @@ import "fmt"
 
 // Блюдо.
 type menuItem struct {
-	menuComponent
+	component
 	name        string
 	description string
 	vegetarian  bool
 	price       float64
 }
 
-// GetName Возвращает название блюда.
-func (m *menuItem) GetName() (string, error) {
+// Возвращает название блюда.
+func (m *menuItem) getName() (string, error) {
 	return m.name, nil
 }
 
-// GetDescription Возвращает описание блюда.
-func (m *menuItem) GetDescription() (string, error) {
+// Возвращает описание блюда.
+func (m *menuItem) getDescription() (string, error) {
 	return m.description, nil
 }
 
-// GetPrice Возвращает стоимость блюда.
-func (m *menuItem) GetPrice() (float64, error) {
+// Возвращает стоимость блюда.
+func (m *menuItem) getPrice() (float64, error) {
 	return m.price, nil
 }
 
-// IsVegetarian Проверяет, является ли блюдо вегетарианским.
-func (m *menuItem) IsVegetarian() (bool, error) {
+// Проверяет, является ли блюдо вегетарианским.
+func (m *menuItem) isVegetarian() (bool, error) {
 	return m.vegetarian, nil
 }
 
-// Print Печатает блюдо.
-func (m *menuItem) Print() error {
+// Печатает блюдо.
+func (m *menuItem) print() error {
 	msg := fmt.Sprintf("   %s", m.name)
 	if m.vegetarian {
 		msg += "(v)"
@@ -43,7 +43,7 @@ func (m *menuItem) Print() error {
 	return m.write(msg)
 }
 
-// NewMenuItem Создает блюдо.
-func NewMenuItem(name, description string, vegetarian bool, price float64) MenuComponent {
+// Создает блюдо.
+func newMenuItem(name, description string, vegetarian bool, price float64) menuComponent {
 	return &menuItem{newMenuComponent(), name, description, vegetarian, price}
 }

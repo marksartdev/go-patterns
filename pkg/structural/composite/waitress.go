@@ -15,13 +15,13 @@ type Waitress interface {
 
 // Официантка.
 type waitress struct {
-	allMenu MenuComponent
+	allMenu menuComponent
 	writer  io.Writer
 }
 
 // PrintMenu Печатает меню.
 func (w *waitress) PrintMenu() error {
-	return w.allMenu.Print()
+	return w.allMenu.print()
 }
 
 // PrintVegetarianMenu Печатает вегетарианское меню.
@@ -30,11 +30,11 @@ func (w *waitress) PrintVegetarianMenu() error {
 		return err
 	}
 
-	iterator := w.allMenu.CreateIterator()
+	iterator := w.allMenu.createIterator()
 	for iterator.HasNext() {
-		if component, ok := iterator.Next().(MenuComponent); ok {
-			if isVegetarian, err := component.IsVegetarian(); err == nil && isVegetarian {
-				if err = component.Print(); err != nil {
+		if next, ok := iterator.Next().(menuComponent); ok {
+			if isVegetarian, err := next.isVegetarian(); err == nil && isVegetarian {
+				if err = next.print(); err != nil {
 					return err
 				}
 			}
@@ -47,9 +47,10 @@ func (w *waitress) PrintVegetarianMenu() error {
 // SetWriter Устанавливает writer.
 func (w *waitress) SetWriter(writer io.Writer) {
 	w.writer = writer
+	w.allMenu.setWriter(writer)
 }
 
-// NewWaitress Создает официантку.
-func NewWaitress(allMenu MenuComponent) Waitress {
+// newWaitress Создает официантку.
+func newWaitress(allMenu menuComponent) Waitress {
 	return &waitress{allMenu, os.Stdout}
 }

@@ -31,12 +31,12 @@ func (c *compositeIterator) Next() interface{} {
 		n := len(c.stack) - 1
 		iterator := c.stack[n]
 
-		component := iterator.Next()
-		if m, ok := component.(*menu); ok {
-			c.stack = append(c.stack, m.CreateIterator())
+		next := iterator.Next()
+		if m, ok := next.(*menu); ok {
+			c.stack = append(c.stack, m.createIterator())
 		}
 
-		return component
+		return next
 	}
 
 	return nil
