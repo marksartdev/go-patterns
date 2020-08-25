@@ -1,6 +1,6 @@
-.PHONY: run build lint test cover bench clean full fast
+.PHONY: default run build lint test cover bench clean full fast
 
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL := default
 
 ifdef g
 	path := $(g)
@@ -12,6 +12,13 @@ ifdef g
 	endif
 else
 	path := ...
+endif
+
+default:
+ifdef p
+	make run
+else
+	make fast
 endif
 
 run:
