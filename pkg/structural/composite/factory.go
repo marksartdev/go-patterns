@@ -51,7 +51,7 @@ func fillPancakeHouseMenu(menu menuComponent) error {
 		return err
 	}
 
-	item = newMenuItem("Blueberry Pancakes", "Pancakes made with fresh blueberries", true, 3.49)
+	item = newMenuItem("Blueberry Pancakes", "Pancakes made with fresh blueberries, and blueberry syrup", true, 3.49)
 	if err := menu.add(item); err != nil {
 		return err
 	}
@@ -76,7 +76,7 @@ func fillDinerMenu(menu, dessertMenu menuComponent) error {
 		return err
 	}
 
-	item = newMenuItem("Soup of the day", "Soup of the day, with a side of potato salad", false, 3.29)
+	item = newMenuItem("Soup of the day", "A bowl of the soup of the day, with a side of potato salad", false, 3.29)
 	if err := menu.add(item); err != nil {
 		return err
 	}
@@ -125,22 +125,22 @@ func fillDessertMenu(menu menuComponent) error {
 
 // Заполняет меню кафе.
 func fillCafeMenu(menu menuComponent) error {
-	item := newMenuItem("Soup of the day", "A cup of the soup of the day, with a side salad", false, 3.69)
-	if err := menu.add(item); err != nil {
-		return err
-	}
-
-	item = newMenuItem("Burrito", "A large burrito, with whole pinto beans, salad, guacamole", true, 4.29)
-	if err := menu.add(item); err != nil {
-		return err
-	}
-
-	item = newMenuItem(
+	item := newMenuItem(
 		"Veggie Burger and Air Fries",
 		"Veggie burger on a whole wheat bun, lettuce, tomato, and fries",
 		true,
 		3.99,
 	)
+	if err := menu.add(item); err != nil {
+		return err
+	}
+
+	item = newMenuItem("Soup of the day", "A cup of the soup of the day, with a side salad", false, 3.69)
+	if err := menu.add(item); err != nil {
+		return err
+	}
+
+	item = newMenuItem("Burrito", "A large burrito, with whole pinto beans, salad, guacamole", true, 4.29)
 	if err := menu.add(item); err != nil {
 		return err
 	}
