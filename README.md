@@ -7,6 +7,7 @@
 1. [Наблюдатель](pkg/behavioral/observer/README.md)
 1. [Команда](pkg/behavioral/command/README.md)
 1. [Шаблонный метод](pkg/behavioral/templatemethod/README.md)
+1. [Итератор](pkg/behavioral/iterator/README.md)
 ## Структурные
 1. [Декоратор](pkg/structural/decorator/README.md)
 1. [Адаптер](pkg/structural/adapter/README.md)
