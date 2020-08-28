@@ -34,7 +34,7 @@ func (t tea) customerWantsCondiments() bool {
 		answer = "no"
 	}
 
-	return strings.ToLower(string(answer[0])) == "y"
+	return strings.EqualFold(string(answer[0]), "y")
 }
 
 // NewTea Создает чай.
@@ -77,7 +77,7 @@ func (c coffee) customerWantsCondiments() bool {
 		answer = "no"
 	}
 
-	return strings.ToLower(string(answer[0])) == "y"
+	return strings.EqualFold(string(answer[0]), "y")
 }
 
 // NewCoffee Создает кофе.

@@ -124,7 +124,7 @@ func TestNewForecastDisplay(t *testing.T) {
 }
 
 func getCoefficient() float64 {
-	// nolint:gosec
+	// nolint:gosec // Example
 	return 0.7 + rand.Float64()*(1.3-0.7)
 }
 

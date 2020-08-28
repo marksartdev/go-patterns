@@ -1,3 +1,4 @@
+// Package observer Паттерн "Наблюдатель".
 package observer
 
 // Интерфейс субъекта.

@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/marksartdev/go-patterns/pkg/behavioral/command"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/behavioral/command"
 )
 
 func TestNoCommand(t *testing.T) {

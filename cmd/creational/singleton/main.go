@@ -18,6 +18,10 @@ func main() {
 		go makeChocolate(chocolateBoiler, ch, cancel)
 	}
 
+	check(countGoroutines, ch, cancel)
+}
+
+func check(countGoroutines int, ch chan string, cancel chan struct{}) {
 ChanLoop:
 	for {
 		select {
@@ -37,15 +41,15 @@ ChanLoop:
 func makeChocolate(chocolateBoiler singleton.ChocolateBoiler, ch chan string, cancel chan struct{}) {
 	for i := 0; i < 3; i++ {
 		ch <- chocolateBoiler.Fill()
-		// nolint:gomnd
+		// nolint:gomnd // Example
 		time.Sleep(500 * time.Millisecond)
 
 		ch <- chocolateBoiler.Boil()
-		// nolint:gomnd
+		// nolint:gomnd // Example
 		time.Sleep(500 * time.Millisecond)
 
 		ch <- chocolateBoiler.Drain()
-		// nolint:gomnd
+		// nolint:gomnd // Example
 		time.Sleep(500 * time.Millisecond)
 	}
 

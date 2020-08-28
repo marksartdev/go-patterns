@@ -1,3 +1,4 @@
+// Package decorator Паттерн "Декоратор".
 package decorator
 
 // Small Маленький стакан.

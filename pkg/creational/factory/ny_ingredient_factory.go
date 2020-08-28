@@ -12,29 +12,20 @@ func (c nyPizzaIngredientFactory) createSauce() sauce {
 }
 
 func (c nyPizzaIngredientFactory) createCheese() []cheese {
-	cheeses := make([]cheese, 0, 1)
-	cheeses = append(cheeses, newReggianoCheese())
-
-	return cheeses
+	return []cheese{newReggianoCheese()}
 }
 
 func (c nyPizzaIngredientFactory) createVeggies(pizzaType string) []veggie {
-	veggies := make([]veggie, 0, 3)
-
 	switch pizzaType {
 	case CheesePizza:
-		veggies = append(veggies, newGarlic())
+		return []veggie{newGarlic()}
 	case PepperoniPizza:
-		veggies = append(veggies, newMushroom())
-		veggies = append(veggies, newOnion())
-		veggies = append(veggies, newRedPepper())
+		return []veggie{newMushroom(), newOnion(), newRedPepper()}
 	case VeggiePizza:
-		veggies = append(veggies, newMushroom())
-		veggies = append(veggies, newOnion())
-		veggies = append(veggies, newRedPepper())
+		return []veggie{newMushroom(), newOnion(), newRedPepper()}
+	default:
+		return []veggie{}
 	}
-
-	return veggies
 }
 
 func (c nyPizzaIngredientFactory) createPepperoni() pepperoni {

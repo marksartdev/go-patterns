@@ -15,19 +15,19 @@ func createNYPizza(pizzaType string) (Pizza, error) {
 	switch pizzaType {
 	case CheesePizza:
 		pizza = newCheesePizza(nyPizzaIngredientFactory{}, "diagonal")
-		pizza = pizza.setName("New-York Style Cheese Pizza")
+		pizza.setName("New-York Style Cheese Pizza")
 
 	case PepperoniPizza:
 		pizza = newPepperoniPizza(nyPizzaIngredientFactory{}, "diagonal")
-		pizza = pizza.setName("New-York Style Pepperoni Pizza")
+		pizza.setName("New-York Style Pepperoni Pizza")
 
 	case ClamPizza:
 		pizza = newClamPizza(nyPizzaIngredientFactory{}, "diagonal")
-		pizza = pizza.setName("New-York Style Clam Pizza")
+		pizza.setName("New-York Style Clam Pizza")
 
 	case VeggiePizza:
 		pizza = newVeggiePizza(nyPizzaIngredientFactory{}, "diagonal")
-		pizza = pizza.setName("New-York Style Veggie Pizza")
+		pizza.setName("New-York Style Veggie Pizza")
 
 	default:
 		err = newPizzaTypeError(pizzaType)
@@ -60,19 +60,19 @@ func createChicagoPizza(pizzaType string) (Pizza, error) {
 	switch pizzaType {
 	case CheesePizza:
 		pizza = newCheesePizza(chicagoPizzaIngredientFactory{}, "square")
-		pizza = pizza.setName("Chicago Style Cheese Pizza")
+		pizza.setName("Chicago Style Cheese Pizza")
 
 	case PepperoniPizza:
 		pizza = newPepperoniPizza(chicagoPizzaIngredientFactory{}, "square")
-		pizza = pizza.setName("Chicago Style Pepperoni Pizza")
+		pizza.setName("Chicago Style Pepperoni Pizza")
 
 	case ClamPizza:
 		pizza = newClamPizza(chicagoPizzaIngredientFactory{}, "square")
-		pizza = pizza.setName("Chicago Style Clam Pizza")
+		pizza.setName("Chicago Style Clam Pizza")
 
 	case VeggiePizza:
 		pizza = newVeggiePizza(chicagoPizzaIngredientFactory{}, "square")
-		pizza = pizza.setName("Chicago Style Veggie Pizza")
+		pizza.setName("Chicago Style Veggie Pizza")
 
 	default:
 		err = newPizzaTypeError(pizzaType)

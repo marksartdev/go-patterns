@@ -148,13 +148,13 @@ func compareResults(expected *testDuck, duck strategy.Duck, t *testing.T, quackC
 	compareFlyBehaviorResult(expected.performFly, result.performFly, t)
 }
 
-func compareQuackBehaviorResult(expected string, result string, t *testing.T) {
+func compareQuackBehaviorResult(expected, result string, t *testing.T) {
 	if expected != result {
 		t.Errorf(errString, expected, result)
 	}
 }
 
-func compareFlyBehaviorResult(expected string, result string, t *testing.T) {
+func compareFlyBehaviorResult(expected, result string, t *testing.T) {
 	if expected != result {
 		t.Errorf(errString, expected, result)
 	}

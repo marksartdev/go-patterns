@@ -72,6 +72,6 @@ func getPressure() float64 {
 }
 
 func getRand(min, max float64) float64 {
-	// nolint:gosec
+	// nolint:gosec // Example
 	return min + rand.Float64()*(max-min)
 }

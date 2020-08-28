@@ -1,3 +1,4 @@
+// Package common Пакет с общим функционалом.
 package common
 
 // ArrayList Интерфейс списка элементов.

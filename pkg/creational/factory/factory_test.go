@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/marksartdev/go-patterns/pkg/creational/factory"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/creational/factory"
 )
 
 type testCase struct {
@@ -228,14 +229,14 @@ func TestPizzaStore_OrderPizza_Error(t *testing.T) {
 }
 
 func testCases(t *testing.T, pizzaStore factory.PizzaStore, cases []testCase) {
-	for i, item := range cases {
-		pizza, err := pizzaStore.OrderPizza(item.pizzaType)
+	for i := range cases {
+		pizza, err := pizzaStore.OrderPizza(cases[i].pizzaType)
 
 		if err != nil {
-			assert.Equal(t, item.err, err.Error(), fmt.Sprintf("case %d", i))
+			assert.Equal(t, cases[i].err, err.Error(), fmt.Sprintf("case %d", i))
 		} else {
-			assert.Equal(t, item.name, pizza.GetName(), fmt.Sprintf("case %d", i))
-			assert.Equal(t, item.logs, pizza.GetLog(), fmt.Sprintf("case %d", i))
+			assert.Equal(t, cases[i].name, pizza.GetName(), fmt.Sprintf("case %d", i))
+			assert.Equal(t, cases[i].logs, pizza.GetLog(), fmt.Sprintf("case %d", i))
 		}
 	}
 }

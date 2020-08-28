@@ -5,15 +5,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/marksartdev/go-patterns/pkg/common"
 	"github.com/marksartdev/go-patterns/pkg/structural/adapter"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestDuckAdapter(t *testing.T) {
 	seed := time.Now().Unix()
 	source := rand.NewSource(seed)
-	// nolint:gosec
+	// nolint:gosec // Tests
 	random := rand.New(source)
 
 	duck := adapter.MallardDuck{}

@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	// nolint:gomnd
+	// nolint:gomnd // Example
 	gumballMachine := state.NewGumballMachine(5)
 
 	fmt.Println(gumballMachine)

@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/gonum/floats"
+
 	"github.com/marksartdev/go-patterns/pkg/structural/decorator"
 )
 

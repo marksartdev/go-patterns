@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/marksartdev/go-patterns/pkg/structural/facade"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/structural/facade"
 )
 
 func TestHomeTheaterFacade(t *testing.T) {

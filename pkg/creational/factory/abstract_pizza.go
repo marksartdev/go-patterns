@@ -15,11 +15,11 @@ const (
 
 // Pizza Интерфейс пиццы.
 type Pizza interface {
-	prepare() abstractPizza
-	bake() abstractPizza
-	cut() abstractPizza
-	box() abstractPizza
-	setName(name string) abstractPizza
+	prepare()
+	bake()
+	cut()
+	box()
+	setName(name string)
 	GetName() string
 	GetLog() []string
 }
@@ -34,72 +34,64 @@ type abstractPizza struct {
 	pepperoni       pepperoni
 	clams           clams
 	sliceType       string
-	abstractPrepare func(abstractPizza) abstractPizza
+	abstractPrepare func(pizza *abstractPizza)
 	log             []string
 }
 
 // Приготовить пиццу.
-func (a abstractPizza) prepare() abstractPizza {
-	newA := a.abstractPrepare(a)
+func (a *abstractPizza) prepare() {
+	a.abstractPrepare(a)
 
-	newA.log = append(newA.log, fmt.Sprintf("Tossing %s", newA.dough))
-	newA.log = append(newA.log, fmt.Sprintf("Adding %s", newA.sauce))
+	a.log = append(a.log,
+		fmt.Sprintf("Tossing %s", a.dough),
+		fmt.Sprintf("Adding %s", a.sauce),
+		"Adding cheese:",
+	)
 
-	newA.log = append(newA.log, "Adding cheese:")
-	for _, item := range newA.cheese {
-		newA.log = append(newA.log, fmt.Sprintf("    %s", item))
+	for _, item := range a.cheese {
+		a.log = append(a.log, fmt.Sprintf("    %s", item))
 	}
 
-	newA.log = append(newA.log, "Adding toppings:")
-	for _, item := range newA.veggies {
-		newA.log = append(newA.log, fmt.Sprintf("    %s", item))
+	a.log = append(a.log, "Adding toppings:")
+	for _, item := range a.veggies {
+		a.log = append(a.log, fmt.Sprintf("    %s", item))
 	}
 
-	if newA.pepperoni != (pepperoni{}) {
-		newA.log = append(newA.log, fmt.Sprintf("    %s", newA.pepperoni))
+	if a.pepperoni != (pepperoni{}) {
+		a.log = append(a.log, fmt.Sprintf("    %s", a.pepperoni))
 	}
 
-	if newA.clams != (clams{}) {
-		newA.log = append(newA.log, fmt.Sprintf("    %s", newA.clams))
+	if a.clams != (clams{}) {
+		a.log = append(a.log, fmt.Sprintf("    %s", a.clams))
 	}
-
-	return newA
 }
 
 // Испечь пиццу.
-func (a abstractPizza) bake() abstractPizza {
+func (a *abstractPizza) bake() {
 	a.log = append(a.log, "Bake for 25 minutes at 350")
-
-	return a
 }
 
 // Разрезать пиццу.
-func (a abstractPizza) cut() abstractPizza {
+func (a *abstractPizza) cut() {
 	a.log = append(a.log, fmt.Sprintf("Cutting the pizza into %s slices", a.sliceType))
-
-	return a
 }
 
 // Упаковать пиццу.
-func (a abstractPizza) box() abstractPizza {
+func (a *abstractPizza) box() {
 	a.log = append(a.log, "Place pizza in official PizzaStore box")
-
-	return a
 }
 
 // Установить название пиццы.
-func (a abstractPizza) setName(name string) abstractPizza {
+func (a *abstractPizza) setName(name string) {
 	a.name = name
-
-	return a
 }
 
 // GetName Получить название пиццы.
-func (a abstractPizza) GetName() string {
+func (a *abstractPizza) GetName() string {
 	return a.name
 }
 
 // GetLog Получить лог приготовления пиццы.
-func (a abstractPizza) GetLog() []string {
+func (a *abstractPizza) GetLog() []string {
 	return a.log
 }

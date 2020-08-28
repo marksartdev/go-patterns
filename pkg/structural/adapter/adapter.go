@@ -1,3 +1,4 @@
+// Package adapter Паттерн "Адаптер".
 package adapter
 
 import (
@@ -58,7 +59,7 @@ func (d duckAdapter) Fly() string {
 // NewDuckAdapter Создает индюшачий адаптер для утки.
 func NewDuckAdapter(duck Duck, seed int64) Turkey {
 	source := rand.NewSource(seed)
-	// nolint:gosec
+	// nolint:gosec // Example
 	random := rand.New(source)
 
 	return duckAdapter{duck, random}

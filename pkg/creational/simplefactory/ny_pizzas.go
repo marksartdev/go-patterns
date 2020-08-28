@@ -13,7 +13,7 @@ type nyCheesePizza struct {
 
 // Создать сырную пиццу в Нью-Йоркском стиле.
 func newNYCheesePizza() Pizza {
-	return nyCheesePizza{
+	return &nyCheesePizza{
 		abstractPizza{
 			name:  "NY Style Sauce and Cheese Pizza",
 			dough: nyDough,
@@ -33,7 +33,7 @@ type nyPepperoniPizza struct {
 
 // Создать пиццу "Пепперони" в Нью-Йоркском стиле.
 func newNYPepperoniPizza() Pizza {
-	return nyPepperoniPizza{
+	return &nyPepperoniPizza{
 		abstractPizza{
 			name:  "NY Style Sauce and Pepperoni Pizza",
 			dough: nyDough,
@@ -55,7 +55,7 @@ type nyClamPizza struct {
 
 // Создать пиццу с мидиями в Нью-Йоркском стиле.
 func newNYClamPizza() Pizza {
-	return nyClamPizza{
+	return &nyClamPizza{
 		abstractPizza{
 			name:  "NY Style Sauce and Clam Pizza",
 			dough: nyDough,
@@ -76,7 +76,7 @@ type nyVeggiePizza struct {
 
 // Создать вегетарианскую пиццу в Нью-Йоркском стиле.
 func newNYVeggiePizza() Pizza {
-	return nyVeggiePizza{
+	return &nyVeggiePizza{
 		abstractPizza{
 			name:  "NY Style Sauce and Veggie Pizza",
 			dough: nyDough,

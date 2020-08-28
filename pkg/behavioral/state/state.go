@@ -1,3 +1,4 @@
+// Package state Паттерн "Состояние".
 package state
 
 import (
@@ -18,7 +19,7 @@ type state interface {
 
 // Базовая структура состояния.
 type baseState struct {
-	// nolint:structcheck
+	// nolint:structcheck // machine is used in sub-structs.
 	machine GumballMachine
 	writer  io.Writer
 }

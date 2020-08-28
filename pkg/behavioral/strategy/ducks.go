@@ -1,3 +1,4 @@
+// Package strategy Паттерн "Стратегия".
 package strategy
 
 // Интерфейс отображения.

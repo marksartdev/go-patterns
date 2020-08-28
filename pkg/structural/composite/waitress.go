@@ -33,11 +33,21 @@ func (w *waitress) PrintVegetarianMenu() error {
 	iterator := w.allMenu.createIterator()
 	for iterator.HasNext() {
 		if next, ok := iterator.Next().(menuComponent); ok {
-			if isVegetarian, err := next.isVegetarian(); err == nil && isVegetarian {
-				if err = next.print(); err != nil {
-					return err
-				}
+			if err := printIfVegetarian(next); err != nil {
+				return err
 			}
+		}
+	}
+
+	return nil
+}
+
+// Печатает блюдо, если оно вегетарианское.
+func printIfVegetarian(next menuComponent) error {
+	if isVegetarian, err := next.isVegetarian(); err == nil && isVegetarian {
+		err = next.print()
+		if err != nil {
+			return err
 		}
 	}
 

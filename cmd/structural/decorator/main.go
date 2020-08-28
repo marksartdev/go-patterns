@@ -29,7 +29,7 @@ func main() {
 	sizes := [3]int{decorator.Small, decorator.Medium, decorator.Large}
 
 	source := rand.NewSource(time.Now().UnixNano())
-	// nolint:gosec
+	// nolint:gosec // Example
 	random := rand.New(source)
 
 	for i := 0; i < 10; i++ {

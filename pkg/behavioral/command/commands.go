@@ -1,3 +1,4 @@
+// Package command Паттерн "Команда".
 package command
 
 import "strings"
@@ -100,18 +101,14 @@ type garageDoorUpCommand struct {
 
 // Execute Выполняет команду.
 func (c garageDoorUpCommand) Execute() string {
-	log := make([]string, 0, 2)
-	log = append(log, c.garageDoor.up())
-	log = append(log, c.garageDoor.lightOn())
+	log := []string{c.garageDoor.up(), c.garageDoor.lightOn()}
 
 	return strings.Join(log, "\n")
 }
 
 // Undo Отменяет команду.
 func (c garageDoorUpCommand) Undo() string {
-	log := make([]string, 0, 2)
-	log = append(log, c.garageDoor.lightOff())
-	log = append(log, c.garageDoor.down())
+	log := []string{c.garageDoor.lightOff(), c.garageDoor.down()}
 
 	return strings.Join(log, "\n")
 }
@@ -128,18 +125,14 @@ type garageDoorDownCommand struct {
 
 // Execute Выполняет команду.
 func (c garageDoorDownCommand) Execute() string {
-	log := make([]string, 0, 2)
-	log = append(log, c.garageDoor.lightOff())
-	log = append(log, c.garageDoor.down())
+	log := []string{c.garageDoor.lightOff(), c.garageDoor.down()}
 
 	return strings.Join(log, "\n")
 }
 
 // Undo Отменяет команду.
 func (c garageDoorDownCommand) Undo() string {
-	log := make([]string, 0, 2)
-	log = append(log, c.garageDoor.up())
-	log = append(log, c.garageDoor.lightOn())
+	log := []string{c.garageDoor.up(), c.garageDoor.lightOn()}
 
 	return strings.Join(log, "\n")
 }
@@ -156,10 +149,7 @@ type stereoOnWithCDCommand struct {
 
 // Execute Выполняет команду.
 func (c stereoOnWithCDCommand) Execute() string {
-	log := make([]string, 0, 3)
-	log = append(log, c.stereo.on())
-	log = append(log, c.stereo.setCd())
-	log = append(log, c.stereo.setVolume(stereoDefaultVolume))
+	log := []string{c.stereo.on(), c.stereo.setCd(), c.stereo.setVolume(stereoDefaultVolume)}
 
 	return strings.Join(log, "\n")
 }
@@ -186,10 +176,7 @@ func (c stereoOffCommand) Execute() string {
 
 // Undo Отменяет команду.
 func (c stereoOffCommand) Undo() string {
-	log := make([]string, 0, 3)
-	log = append(log, c.stereo.on())
-	log = append(log, c.stereo.setCd())
-	log = append(log, c.stereo.setVolume(stereoDefaultVolume))
+	log := []string{c.stereo.on(), c.stereo.setCd(), c.stereo.setVolume(stereoDefaultVolume)}
 
 	return strings.Join(log, "\n")
 }

@@ -6,8 +6,9 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/marksartdev/go-patterns/pkg/behavioral/templatemethod"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/behavioral/templatemethod"
 )
 
 func TestNewTea(t *testing.T) {
@@ -25,10 +26,8 @@ func testNewTeaWithCondiments(tea templatemethod.CaffeineBeverage) func(t *testi
 		tea.SetReader(reader)
 		tea.SetWriter(writer)
 
-		// nolint:goconst
 		expected := "Boiling water\n"
 		expected += "Steeping the tea\n"
-		// nolint:goconst
 		expected += "Pouring into cup\n"
 		expected += "Would you like lemon with your tea (y/n)? Adding Lemon\n"
 

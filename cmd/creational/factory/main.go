@@ -12,7 +12,7 @@ import (
 
 func main() {
 	source := rand.NewSource(time.Now().UnixNano())
-	// nolint:gosec
+	// nolint:gosec // Example
 	random := rand.New(source)
 
 	ch := make(chan string)

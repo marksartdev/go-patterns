@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/marksartdev/go-patterns/pkg/structural/composite"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/structural/composite"
 )
 
 const delimiter = "--------------------\n"

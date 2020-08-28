@@ -10,25 +10,18 @@ import (
 const maxQuacks = 5
 
 func main() {
-	var quackers []strategy.Quacker
-	quackers = append(quackers, new(strategy.MuteQuack))
-	quackers = append(quackers, new(strategy.Quack))
-	quackers = append(quackers, new(strategy.Squeak))
-
-	var flyers []strategy.Flyer
-	flyers = append(flyers, new(strategy.FlyNoWay))
-	flyers = append(flyers, new(strategy.FlyWithWings))
-	flyers = append(flyers, new(strategy.FlyRocketPowered))
-
-	var ducks []strategy.Duck
-	ducks = append(ducks, strategy.NewMallardDuck())
-	ducks = append(ducks, strategy.NewRedheadDuck())
-	ducks = append(ducks, strategy.NewRubberDuck())
-	ducks = append(ducks, strategy.NewDecoyDuck())
-	ducks = append(ducks, strategy.NewModelDuck())
+	quackers := []strategy.Quacker{new(strategy.MuteQuack), new(strategy.Quack), new(strategy.Squeak)}
+	flyers := []strategy.Flyer{new(strategy.FlyNoWay), new(strategy.FlyWithWings), new(strategy.FlyRocketPowered)}
+	ducks := []strategy.Duck{
+		strategy.NewMallardDuck(),
+		strategy.NewRedheadDuck(),
+		strategy.NewRubberDuck(),
+		strategy.NewDecoyDuck(),
+		strategy.NewModelDuck(),
+	}
 
 	for num, duck := range ducks {
-		// nolint:gosec
+		// nolint:gosec // Example
 		quackCount := rand.Intn(maxQuacks) + 1
 
 		fmt.Printf("Duck %d\n", num)
@@ -37,9 +30,9 @@ func main() {
 		fmt.Printf("Quack: %s\n", duck.PerformQuack(quackCount))
 		fmt.Printf("Fly: %s\n", duck.PerformFly())
 
-		// nolint:gosec
+		// nolint:gosec // Example
 		duck.SetQuacker(quackers[rand.Intn(len(quackers))])
-		// nolint:gosec
+		// nolint:gosec // Example
 		duck.SetFlyer(flyers[rand.Intn(len(flyers))])
 
 		fmt.Printf("New quack:  %s\n", duck.PerformQuack(quackCount))

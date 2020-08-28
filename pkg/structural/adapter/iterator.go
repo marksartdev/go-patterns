@@ -45,6 +45,7 @@ func (s *SimpleIterator) Next() interface{} {
 }
 
 // Remove Удаляет текущий элемент.
+// nolint:unparam // Implement interface.
 func (s *SimpleIterator) Remove() error {
 	if s.index < len(s.Elements)-1 {
 		copy(s.Elements[s.index:], s.Elements[s.index+1:])

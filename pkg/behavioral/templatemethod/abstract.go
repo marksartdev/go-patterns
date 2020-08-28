@@ -1,3 +1,4 @@
+// Package templatemethod Паттерн "Шаблонный метод".
 package templatemethod
 
 import (

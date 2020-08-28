@@ -1,3 +1,4 @@
+// Package composite Паттерн "Компоновщик".
 package composite
 
 // CreateWaitress Создает официантку и меню.
@@ -131,6 +132,7 @@ func fillCafeMenu(menu menuComponent) error {
 		true,
 		3.99,
 	)
+
 	if err := menu.add(item); err != nil {
 		return err
 	}

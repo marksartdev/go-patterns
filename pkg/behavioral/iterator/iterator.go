@@ -1,3 +1,4 @@
+// Package iterator Паттерн "Итератор".
 package iterator
 
 import (
@@ -80,7 +81,7 @@ func (a *alternatingDinerMenuIterator) Remove() error {
 func newAlternatingDinerMenuIterator(items []MenuItem) common.Iterator {
 	menuIterator := &alternatingDinerMenuIterator{items, 0}
 	weekday := int(time.Now().Weekday())
-	// nolint:gomnd
+	// nolint:gomnd // Example
 	menuIterator.position = weekday % 2
 
 	return menuIterator

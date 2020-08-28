@@ -42,7 +42,5 @@ func (d Ducks) Less(i, j int) bool {
 
 // Swap Меняет утки местами.
 func (d Ducks) Swap(i, j int) {
-	tmp := d.Ducks[j]
-	d.Ducks[j] = d.Ducks[i]
-	d.Ducks[i] = tmp
+	d.Ducks[i], d.Ducks[j] = d.Ducks[j], d.Ducks[i]
 }

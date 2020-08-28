@@ -4,9 +4,10 @@ import (
 	"bytes"
 	"testing"
 
+	"github.com/stretchr/testify/assert"
+
 	"github.com/marksartdev/go-patterns/pkg/behavioral/iterator"
 	"github.com/marksartdev/go-patterns/pkg/common"
-	"github.com/stretchr/testify/assert"
 )
 
 func TestWaitress(t *testing.T) {

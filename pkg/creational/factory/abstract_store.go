@@ -1,3 +1,4 @@
+// Package factory Паттерны "Фабричный метод и Абстрактная фабрика".
 package factory
 
 // PizzaStore Интерфейс пиццерии.
@@ -17,10 +18,10 @@ func (a abstractPizzaStore) OrderPizza(pizzaType string) (Pizza, error) {
 		return pizza, err
 	}
 
-	pizza = pizza.prepare()
-	pizza = pizza.bake()
-	pizza = pizza.cut()
-	pizza = pizza.box()
+	pizza.prepare()
+	pizza.bake()
+	pizza.cut()
+	pizza.box()
 
 	return pizza, nil
 }

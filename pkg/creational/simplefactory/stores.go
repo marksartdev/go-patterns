@@ -17,10 +17,10 @@ func (p pizzaStore) OrderPizza(pizzaType string) (Pizza, error) {
 		return nil, err
 	}
 
-	pizza = pizza.prepare()
-	pizza = pizza.bake()
-	pizza = pizza.cut()
-	pizza = pizza.box()
+	pizza.prepare()
+	pizza.bake()
+	pizza.cut()
+	pizza.box()
 
 	return pizza, nil
 }

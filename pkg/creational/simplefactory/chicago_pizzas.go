@@ -13,7 +13,7 @@ type chicagoCheesePizza struct {
 
 // Создать сырную пиццу в Чикагском стиле.
 func newChicagoCheesePizza() Pizza {
-	return chicagoCheesePizza{
+	return &chicagoCheesePizza{
 		abstractPizza{
 			name:  "Chicago Style Deep Dish Cheese Pizza",
 			dough: chicagoDough,
@@ -33,7 +33,7 @@ type chicagoPepperoniPizza struct {
 
 // Создать пиццу "Пепперони" в Чикагском стиле.
 func newChicagoPepperoniPizza() Pizza {
-	return chicagoPepperoniPizza{
+	return &chicagoPepperoniPizza{
 		abstractPizza{
 			name:  "Chicago Style Deep Dish Pepperoni Pizza",
 			dough: chicagoDough,
@@ -55,7 +55,7 @@ type chicagoClamPizza struct {
 
 // Создать пиццу с мидиями в Чикагском стиле.
 func newChicagoClamPizza() Pizza {
-	return chicagoClamPizza{
+	return &chicagoClamPizza{
 		abstractPizza{
 			name:  "Chicago Style Deep Dish Clam Pizza",
 			dough: chicagoDough,
@@ -76,7 +76,7 @@ type chicagoVeggiePizza struct {
 
 // Создать вегетарианскую пиццу в Чикагском стиле.
 func newChicagoVeggiePizza() Pizza {
-	return chicagoVeggiePizza{
+	return &chicagoVeggiePizza{
 		abstractPizza{
 			name:  "Chicago Style Deep Dish Veggie Pizza",
 			dough: chicagoDough,

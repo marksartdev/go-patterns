@@ -3,8 +3,9 @@ package singleton_test
 import (
 	"testing"
 
-	"github.com/marksartdev/go-patterns/pkg/creational/singleton"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/creational/singleton"
 )
 
 func BenchmarkGetFullInstance(b *testing.B) {

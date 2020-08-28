@@ -17,7 +17,7 @@ func main() {
 	fmt.Println("\nMaking coffee...")
 	coffee.PrepareRecipe()
 
-	// nolint:gomnd
+	// nolint:gomnd // Example
 	ducks := templatemethod.Ducks{Ducks: []templatemethod.Duck{
 		{Name: "Daffy", Wright: 8},
 		{Name: "Dewey", Wright: 2},

@@ -1,3 +1,4 @@
+// Package singleton Паттерн "Одиночка".
 package singleton
 
 import (
@@ -5,7 +6,7 @@ import (
 	"sync/atomic"
 )
 
-// nolint:gochecknoglobals
+// nolint:gochecknoglobals // Singleton
 var (
 	mu          sync.Mutex
 	initialized uint32

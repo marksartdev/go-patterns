@@ -4,12 +4,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/marksartdev/go-patterns/pkg/common"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
 )
 
 func TestCafeMenu(t *testing.T) {
-	menu := NewDinerMenu().(*dinerMenu)
+	menu, ok := NewDinerMenu().(*dinerMenu)
+	assert.True(t, ok)
+
 	expected := getExpected()
 
 	for i, item := range expected {
@@ -24,7 +27,9 @@ func TestCafeMenu(t *testing.T) {
 }
 
 func TestDinerMenuIterator(t *testing.T) {
-	menu := NewDinerMenu().(*dinerMenu)
+	menu, ok := NewDinerMenu().(*dinerMenu)
+	assert.True(t, ok)
+
 	dinerIterator := newDinerMenuIterator(menu.menuItems[:])
 
 	assert.EqualError(t, common.IllegalStateError{}, dinerIterator.Remove().Error())
@@ -53,7 +58,9 @@ func TestDinerMenuIterator(t *testing.T) {
 }
 
 func TestAlternatingDinerMenuIterator(t *testing.T) {
-	menu := NewDinerMenu().(*dinerMenu)
+	menu, ok := NewDinerMenu().(*dinerMenu)
+	assert.True(t, ok)
+
 	dinerIterator := newAlternatingDinerMenuIterator(menu.menuItems[:])
 
 	expected := getExpected()
