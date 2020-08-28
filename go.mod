@@ -1,6 +1,6 @@
 module github.com/marksartdev/go-patterns
 
-go 1.14
+go 1.15
 
 require (
 	github.com/gonum/floats v0.0.0-20181209220543-c233463c7e82
