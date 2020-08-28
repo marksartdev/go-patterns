@@ -37,8 +37,8 @@ endif
 	go build -v -o ./cmd/$(path) ./cmd/$(path)
 
 lint:
-	golangci-lint run --enable-all ./cmd/$(path)
-	golangci-lint run --enable-all ./pkg/$(path)
+	golangci-lint run --fix ./cmd/$(path)
+	golangci-lint run --fix ./pkg/$(path)
 
 test:
 	go test -v -cover ./pkg/$(path)
