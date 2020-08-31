@@ -24,7 +24,7 @@ func (h *hasQuarterState) turnCrank() bool {
 	h.write("You terned...")
 
 	winner := h.rand.Intn(coefficient)
-	if winner == 0 && h.machine.getCount() > 1 {
+	if winner == 0 && h.machine.GetCount() > 1 {
 		h.machine.setState(h.machine.getWinnerState())
 	} else {
 		h.machine.setState(h.machine.getSoldState())
@@ -34,7 +34,7 @@ func (h *hasQuarterState) turnCrank() bool {
 }
 
 // Создать состояние.
-func newHasQuarterState(machine gumballMachine, seed int64) state {
+func newHasQuarterState(machine gumballMachine, seed int64) State {
 	s := &hasQuarterState{}
 	s.machine = machine
 	s.writer = os.Stdout

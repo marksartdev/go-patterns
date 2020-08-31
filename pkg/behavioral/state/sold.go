@@ -11,7 +11,7 @@ type soldState struct {
 func (s *soldState) dispense() {
 	s.machine.releaseBall()
 
-	if s.machine.getCount() > 0 {
+	if s.machine.GetCount() > 0 {
 		s.machine.setState(s.machine.getNoQuarterState())
 	} else {
 		s.write("Oops, out of gumballs!")
@@ -20,7 +20,7 @@ func (s *soldState) dispense() {
 }
 
 // Создать состояние.
-func newSoldState(machine gumballMachine) state {
+func newSoldState(machine gumballMachine) State {
 	s := &soldState{}
 	s.machine = machine
 	s.writer = os.Stdout

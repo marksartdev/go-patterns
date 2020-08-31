@@ -10,6 +10,8 @@ type GumballMachine interface {
 	InsertQuarter()
 	EjectQuarter()
 	TurnCrank()
+	GetCount() int
+	GetState() State
 	SetWriter(writer io.Writer)
 }
 
@@ -17,23 +19,22 @@ type GumballMachine interface {
 type gumballMachine interface {
 	GumballMachine
 	releaseBall()
-	getCount() int
-	setState(state state)
-	getNoQuarterState() state
-	getHasQuarterState() state
-	getSoldState() state
-	getSoldOutState() state
-	getWinnerState() state
+	setState(state State)
+	getNoQuarterState() State
+	getHasQuarterState() State
+	getSoldState() State
+	getSoldOutState() State
+	getWinnerState() State
 }
 
 // Автомат с жвачкой.
 type machine struct {
-	noQuarterState  state
-	hasQuarterState state
-	soldState       state
-	soldOutState    state
-	winnerState     state
-	state           state
+	noQuarterState  State
+	hasQuarterState State
+	soldState       State
+	soldOutState    State
+	winnerState     State
+	state           State
 	count           int
 }
 
@@ -72,38 +73,43 @@ func (m *machine) releaseBall() {
 	}
 }
 
-// Получить количество оставшихся шариков.
-func (m *machine) getCount() int {
+// GetCount Получить количество оставшихся шариков.
+func (m *machine) GetCount() int {
 	return m.count
 }
 
+// GetState Получить текущее состояние.
+func (m *machine) GetState() State {
+	return m.state
+}
+
 // Установить состояние.
-func (m *machine) setState(state state) {
+func (m *machine) setState(state State) {
 	m.state = state
 }
 
 // Вернуть состояние "Нет монетки".
-func (m *machine) getNoQuarterState() state {
+func (m *machine) getNoQuarterState() State {
 	return m.noQuarterState
 }
 
 // Вернуть состояние "Есть монетка".
-func (m *machine) getHasQuarterState() state {
+func (m *machine) getHasQuarterState() State {
 	return m.hasQuarterState
 }
 
 // Вернуть состояние "Шарик продан".
-func (m *machine) getSoldState() state {
+func (m *machine) getSoldState() State {
 	return m.soldState
 }
 
 // Вернуть состояние "Нет шариков".
-func (m *machine) getSoldOutState() state {
+func (m *machine) getSoldOutState() State {
 	return m.soldOutState
 }
 
 // Вернуть состояние "Победа".
-func (m *machine) getWinnerState() state {
+func (m *machine) getWinnerState() State {
 	return m.winnerState
 }
 

@@ -11,12 +11,12 @@ func (w *winnerState) dispense() {
 	w.write("YOU'RE A WINNER! You get two gumballs for your quarter")
 	w.machine.releaseBall()
 
-	if w.machine.getCount() == 0 {
+	if w.machine.GetCount() == 0 {
 		w.machine.setState(w.machine.getSoldOutState())
 	} else {
 		w.machine.releaseBall()
 
-		if w.machine.getCount() > 0 {
+		if w.machine.GetCount() > 0 {
 			w.machine.setState(w.machine.getNoQuarterState())
 		} else {
 			w.write("Oops, out of gumballs!")
@@ -26,7 +26,7 @@ func (w *winnerState) dispense() {
 }
 
 // Создать состояние.
-func newWinnerState(machine gumballMachine) state {
+func newWinnerState(machine gumballMachine) State {
 	s := &winnerState{}
 	s.machine = machine
 	s.writer = os.Stdout

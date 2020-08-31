@@ -18,7 +18,7 @@ func (n *noQuarterState) String() string {
 }
 
 // Создать состояние.
-func newNoQuarterState(machine gumballMachine) state {
+func newNoQuarterState(machine gumballMachine) State {
 	s := &noQuarterState{}
 	s.machine = machine
 	s.writer = os.Stdout

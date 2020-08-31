@@ -7,8 +7,8 @@ import (
 	"log"
 )
 
-// Интерфейс состояния.
-type state interface {
+// State Интерфейс состояния.
+type State interface {
 	insertQuarter()
 	ejectQuarter()
 	turnCrank() bool
@@ -51,7 +51,7 @@ func (b *baseState) setWriter(writer io.Writer) {
 	b.writer = writer
 }
 
-// Вывести на экран.
+// Записать в writer.
 func (b *baseState) write(msg string) {
 	if _, err := fmt.Fprintln(b.writer, msg); err != nil {
 		log.Fatalln(err)

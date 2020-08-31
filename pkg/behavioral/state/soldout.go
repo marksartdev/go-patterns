@@ -12,7 +12,7 @@ func (s *soldOutState) String() string {
 }
 
 // Создать состояние.
-func newSoldOutState(machine gumballMachine) state {
+func newSoldOutState(machine gumballMachine) State {
 	s := &soldOutState{}
 	s.machine = machine
 	s.writer = os.Stdout
