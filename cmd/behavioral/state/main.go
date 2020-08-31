@@ -2,42 +2,18 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/marksartdev/go-patterns/pkg/behavioral/state"
 )
 
 func main() {
 	// nolint:gomnd // Example
-	gumballMachine := state.NewGumballMachine(5)
+	gumballMachine := state.NewGumballMachine(5, time.Now().Unix())
 
-	fmt.Println(gumballMachine)
-
-	gumballMachine.InsertQuarter()
-	gumballMachine.TurnCrank()
-
-	fmt.Println(gumballMachine)
-
-	gumballMachine.InsertQuarter()
-	gumballMachine.EjectQuarter()
-	gumballMachine.TurnCrank()
-
-	fmt.Println(gumballMachine)
-
-	gumballMachine.InsertQuarter()
-	gumballMachine.TurnCrank()
-	gumballMachine.InsertQuarter()
-	gumballMachine.TurnCrank()
-	gumballMachine.EjectQuarter()
-
-	fmt.Println(gumballMachine)
-
-	gumballMachine.InsertQuarter()
-	gumballMachine.InsertQuarter()
-	gumballMachine.TurnCrank()
-	gumballMachine.InsertQuarter()
-	gumballMachine.TurnCrank()
-	gumballMachine.InsertQuarter()
-	gumballMachine.TurnCrank()
-
-	fmt.Println(gumballMachine)
+	for i := 0; i < 5; i++ {
+		fmt.Println(gumballMachine)
+		gumballMachine.InsertQuarter()
+		gumballMachine.TurnCrank()
+	}
 }

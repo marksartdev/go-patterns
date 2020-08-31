@@ -18,6 +18,7 @@ type GumballMachine interface {
 	getHasQuarterState() state
 	getSoldState() state
 	getSoldOutState() state
+	getWinnerState() state
 }
 
 // Автомат с жвачкой.
@@ -26,6 +27,7 @@ type gumballMachine struct {
 	hasQuarterState state
 	soldState       state
 	soldOutState    state
+	winnerState     state
 	state           state
 	count           int
 }
@@ -93,6 +95,11 @@ func (g *gumballMachine) getSoldOutState() state {
 	return g.soldOutState
 }
 
+// Вернуть состояние "Победа".
+func (g *gumballMachine) getWinnerState() state {
+	return g.winnerState
+}
+
 func (g *gumballMachine) String() string {
 	msg := "\nMighty Gumball, Inc\n"
 	msg += "Go-enabled Standing Gumball Model #2020\n"
@@ -103,12 +110,13 @@ func (g *gumballMachine) String() string {
 }
 
 // NewGumballMachine Создать автомат с жвачкой.
-func NewGumballMachine(numberGumballs int) GumballMachine {
+func NewGumballMachine(numberGumballs int, seed int64) GumballMachine {
 	machine := &gumballMachine{}
 	machine.noQuarterState = newNoQuarterState(machine)
-	machine.hasQuarterState = newHasQuarterState(machine)
+	machine.hasQuarterState = newHasQuarterState(machine, seed)
 	machine.soldState = newSoldState(machine)
 	machine.soldOutState = newSoldOutState(machine)
+	machine.winnerState = newWinnerState(machine)
 	machine.count = numberGumballs
 
 	if numberGumballs > 0 {
