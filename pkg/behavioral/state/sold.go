@@ -7,21 +7,6 @@ type soldState struct {
 	baseState
 }
 
-// Бросить монетку.
-func (s *soldState) insertQuarter() {
-	s.write("Please wait, we're already giving you a gumball")
-}
-
-// Вернуть монетку.
-func (s *soldState) ejectQuarter() {
-	s.write("Sorry, you already turned th crank")
-}
-
-// Дернуть за рычаг.
-func (s *soldState) turnCrank() {
-	s.write("Turning twice doesn't get you another gumball!")
-}
-
 // Выдать шарик.
 func (s *soldState) dispense() {
 	s.machine.releaseBall()
@@ -34,12 +19,8 @@ func (s *soldState) dispense() {
 	}
 }
 
-func (s *soldState) String() string {
-	return "Machine is processing"
-}
-
 // Создать состояние.
-func newSoldState(machine GumballMachine) state {
+func newSoldState(machine gumballMachine) state {
 	s := &soldState{}
 	s.machine = machine
 	s.writer = os.Stdout

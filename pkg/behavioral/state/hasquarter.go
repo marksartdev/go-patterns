@@ -5,15 +5,12 @@ import (
 	"os"
 )
 
+const coefficient = 5
+
 // Состояние "Есть монетка".
 type hasQuarterState struct {
 	baseState
 	rand *rand.Rand
-}
-
-// Бросить монетку.
-func (h *hasQuarterState) insertQuarter() {
-	h.write("You can't insert another quarter")
 }
 
 // Вернуть монетку.
@@ -23,33 +20,27 @@ func (h *hasQuarterState) ejectQuarter() {
 }
 
 // Дернуть за рычаг.
-func (h *hasQuarterState) turnCrank() {
+func (h *hasQuarterState) turnCrank() bool {
 	h.write("You terned...")
 
-	winner := h.rand.Intn(5)
+	winner := h.rand.Intn(coefficient)
 	if winner == 0 && h.machine.getCount() > 1 {
 		h.machine.setState(h.machine.getWinnerState())
 	} else {
 		h.machine.setState(h.machine.getSoldState())
 	}
-}
 
-// Выдать шарик.
-func (h *hasQuarterState) dispense() {
-	h.write("No gumball dispensed")
-}
-
-func (h *hasQuarterState) String() string {
-	return "Machine is processing"
+	return true
 }
 
 // Создать состояние.
-func newHasQuarterState(machine GumballMachine, seed int64) state {
+func newHasQuarterState(machine gumballMachine, seed int64) state {
 	s := &hasQuarterState{}
 	s.machine = machine
 	s.writer = os.Stdout
 
 	source := rand.NewSource(seed)
+	// nolint:gosec // It's not important algorithm for security.
 	s.rand = rand.New(source)
 
 	return s
