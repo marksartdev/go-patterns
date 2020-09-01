@@ -62,11 +62,12 @@ func (m *machine) SetWriter(writer io.Writer) {
 	m.hasQuarterState.setWriter(writer)
 	m.soldState.setWriter(writer)
 	m.soldOutState.setWriter(writer)
+	m.winnerState.setWriter(writer)
 }
 
 // Выдать шарик.
 func (m *machine) releaseBall() {
-	m.state.write("A gumball comes rolling out the slot")
+	m.state.write("A gumball comes rolling out the slot...")
 
 	if m.count != 0 {
 		m.count--

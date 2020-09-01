@@ -21,7 +21,7 @@ func (h *hasQuarterState) ejectQuarter() {
 
 // Дернуть за рычаг.
 func (h *hasQuarterState) turnCrank() bool {
-	h.write("You terned...")
+	h.write("You turned...")
 
 	winner := h.rand.Intn(coefficient)
 	if winner == 0 && h.machine.GetCount() > 1 {
