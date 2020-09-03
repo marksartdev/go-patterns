@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package proxy;
+
+message Location {
+	string data = 1;
+}
+
+message Count {
+	int32 data = 1;
+}
+
+message State {
+	string data = 1;
+}
+
+message Nothing {
+	bool dummy = 1;
+}
+
+service GumballMachineRemote {
+	rpc GetLocation(Nothing) returns (Location) {}
+	rpc GetCount(Nothing) returns (Count) {}
+	rpc GetState(Nothing) returns (State) {}
+}
