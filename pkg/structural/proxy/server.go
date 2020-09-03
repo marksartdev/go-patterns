@@ -3,6 +3,7 @@ package proxy
 import (
 	"context"
 	"fmt"
+	"log"
 	"net"
 	"sync"
 
@@ -39,8 +40,8 @@ func (g gumballMachineServer) GetState(context.Context, *Nothing) (*State, error
 }
 
 // StartService Запустить службу.
-func StartService(wg *sync.WaitGroup, machine GumballMachine, address string) error {
-	lis, err := net.Listen("tcp", address)
+func StartService(ctx context.Context, wg *sync.WaitGroup, machine GumballMachine, addr string) error {
+	lis, err := net.Listen("tcp", addr)
 	if err != nil {
 		return err
 	}
@@ -48,8 +49,29 @@ func StartService(wg *sync.WaitGroup, machine GumballMachine, address string) er
 	grpcServer := grpc.NewServer()
 	RegisterGumballMachineRemoteServer(grpcServer, gumballMachineServer{machine})
 
-	fmt.Printf("Starting server at %s\n", address)
-	wg.Done()
+	log.Printf("Starting server at %s\n", addr)
 
-	return grpcServer.Serve(lis)
+	go startServer(wg, grpcServer, lis)
+	go stopServer(ctx, grpcServer)
+
+	return nil
+}
+
+// Запустить сервер.
+func startServer(wg *sync.WaitGroup, grpcServer *grpc.Server, lis net.Listener) {
+	defer wg.Done()
+
+	// nolint:gocritic // If catch err => exit(1)
+	if err := grpcServer.Serve(lis); err != nil {
+		log.Fatal(err)
+	}
+}
+
+// Остановить сервер.
+func stopServer(ctx context.Context, grpcServer *grpc.Server) {
+	<-ctx.Done()
+
+	log.Println("Stopping server...")
+
+	grpcServer.Stop()
 }

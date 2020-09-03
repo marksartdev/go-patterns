@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"context"
 	"fmt"
 	"log"
 	"os"
@@ -13,22 +14,20 @@ import (
 
 func startServer(port, location string, count int) {
 	reader := bufio.NewReader(os.Stdin)
+	ctx, cancel := context.WithCancel(context.Background())
 	wg := &sync.WaitGroup{}
 
-	address := fmt.Sprintf(":%s", port)
+	addr := fmt.Sprintf(":%s", port)
 	machine := proxy.NewGumballMachine(location, count, time.Now().Unix())
 
 	wg.Add(1)
 
-	go func() {
-		err := proxy.StartService(wg, machine, address)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}()
+	err := proxy.StartService(ctx, wg, machine, addr)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	wg.Wait()
-
+LOOP:
 	for {
 		fmt.Print("-> ")
 
@@ -40,6 +39,12 @@ func startServer(port, location string, count int) {
 			machine.EjectQuarter()
 		case "turn\n":
 			machine.TurnCrank()
+		case "exit\n":
+			cancel()
+
+			break LOOP
 		}
 	}
+
+	wg.Wait()
 }
