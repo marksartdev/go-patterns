@@ -14,6 +14,7 @@ import (
 // Exchanger Интерфейс табло курса валют.
 type Exchanger interface {
 	Show()
+	GetRates() map[string]float64
 }
 
 // Табло курс валют.
@@ -30,6 +31,11 @@ func (e *exchanger) Show() {
 	}
 
 	fmt.Println()
+}
+
+// GetRates Получить курс валют.
+func (e *exchanger) GetRates() map[string]float64 {
+	return e.rates
 }
 
 // Загрузить курс валют.
