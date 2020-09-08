@@ -43,3 +43,10 @@ type IllegalStateError struct{}
 func (IllegalStateError) Error() string {
 	return "You can't remove an item until you've done at least one next()"
 }
+
+// IllegalAccessError Ошибка при недоступной операции.
+type IllegalAccessError struct{}
+
+func (IllegalAccessError) Error() string {
+	return "You don't have access to this operation"
+}
