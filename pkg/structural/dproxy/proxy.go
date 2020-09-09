@@ -8,7 +8,7 @@ import (
 )
 
 type proxyPersonBean struct {
-	handler InvocationHandler
+	handler invocationHandler
 }
 
 // GetName Получить имя.
@@ -87,8 +87,17 @@ func (p proxyPersonBean) getFuncName() string {
 	return fullFuncName[len(fullFuncName)-1]
 }
 
-// NewProxyPersonBean Создать заместителя.
-func NewProxyPersonBean(handler InvocationHandler) PersonBean {
+// NewOwnerProxy Создать заместителя для владельца анкеты.
+func NewOwnerProxy(person PersonBean) PersonBean {
+	handler := newOwnerInvocationHandler(person)
+
+	return proxyPersonBean{handler}
+}
+
+// NewNonOwnerProxy Создать заместителя для гостя анкеты.
+func NewNonOwnerProxy(person PersonBean) PersonBean {
+	handler := newNonOwnerInvocationHandler(person)
+
 	return proxyPersonBean{handler}
 }
 

@@ -7,16 +7,16 @@ import (
 	"github.com/marksartdev/go-patterns/pkg/common"
 )
 
-// InvocationHandler Интерфейс обработчика вызовов.
-type InvocationHandler interface {
+// Интерфейс обработчика вызовов.
+type invocationHandler interface {
 	invoke(method string, args ...interface{}) (reflect.Value, error)
 }
 
-type invocationHandler struct {
+type baseInvocationHandler struct {
 	person PersonBean
 }
 
-func (i invocationHandler) invokeReflect(method string, args ...interface{}) reflect.Value {
+func (i baseInvocationHandler) invokeReflect(method string, args ...interface{}) reflect.Value {
 	in := make([]reflect.Value, len(args))
 	for i := range args {
 		in[i] = reflect.ValueOf(args[i])
@@ -35,7 +35,7 @@ func (i invocationHandler) invokeReflect(method string, args ...interface{}) ref
 }
 
 type ownerInvocationHandler struct {
-	invocationHandler
+	baseInvocationHandler
 }
 
 func (o ownerInvocationHandler) invoke(method string, args ...interface{}) (reflect.Value, error) {
@@ -51,8 +51,8 @@ func (o ownerInvocationHandler) invoke(method string, args ...interface{}) (refl
 	}
 }
 
-// NewOwnerInvocationHandler Создать обработчик для владельца анкеты.
-func NewOwnerInvocationHandler(person PersonBean) InvocationHandler {
+// Создать обработчик для владельца анкеты.
+func newOwnerInvocationHandler(person PersonBean) invocationHandler {
 	h := ownerInvocationHandler{}
 	h.person = person
 
@@ -60,7 +60,7 @@ func NewOwnerInvocationHandler(person PersonBean) InvocationHandler {
 }
 
 type nonOwnerInvocationHandler struct {
-	invocationHandler
+	baseInvocationHandler
 }
 
 func (n nonOwnerInvocationHandler) invoke(method string, args ...interface{}) (reflect.Value, error) {
@@ -76,8 +76,8 @@ func (n nonOwnerInvocationHandler) invoke(method string, args ...interface{}) (r
 	}
 }
 
-// NewNonOwnerInvocationHandler Создать обработчик для не владельца анкеты.
-func NewNonOwnerInvocationHandler(person PersonBean) InvocationHandler {
+// Создать обработчик для не владельца анкеты.
+func newNonOwnerInvocationHandler(person PersonBean) invocationHandler {
 	h := nonOwnerInvocationHandler{}
 	h.person = person
 
