@@ -5,7 +5,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
+	"os"
 	"time"
 
 	log "github.com/sirupsen/logrus"
@@ -15,27 +17,43 @@ import (
 type Exchanger interface {
 	Show()
 	GetRates() map[string]float64
+	SetWriter(writer io.Writer)
+	write(msg string)
 }
 
 // Табло курс валют.
 type exchanger struct {
-	rates map[string]float64
+	rates  map[string]float64
+	url    string
+	writer io.Writer
 }
 
 // Show Отобразить текущий курс валют.
 func (e *exchanger) Show() {
-	fmt.Println()
+	e.write("")
 
 	for currency, rate := range e.rates {
-		fmt.Printf("%s -> RUB\t%f\n", currency, rate)
+		e.write(fmt.Sprintf("%s -> RUB\t%f", currency, rate))
 	}
 
-	fmt.Println()
+	e.write("")
 }
 
 // GetRates Получить курс валют.
 func (e *exchanger) GetRates() map[string]float64 {
 	return e.rates
+}
+
+// SetWriter Установить writer.
+func (e *exchanger) SetWriter(writer io.Writer) {
+	e.writer = writer
+}
+
+func (e *exchanger) write(msg string) {
+	_, err := fmt.Fprintln(e.writer, msg)
+	if err != nil {
+		log.Error(err)
+	}
 }
 
 // Загрузить курс валют.
@@ -46,7 +64,7 @@ func (e *exchanger) loadRates() {
 
 // Загрузить курс рубля к заданной валюте.
 func (e *exchanger) leadRate(currency string) {
-	url := fmt.Sprintf("https://api.exchangeratesapi.io/latest?base=%s&symbols=RUB", currency)
+	url := fmt.Sprintf(e.url, currency)
 	client := http.Client{}
 
 	request, err := http.NewRequestWithContext(context.Background(), http.MethodGet, url, nil)
@@ -84,8 +102,12 @@ func (e *exchanger) leadRate(currency string) {
 }
 
 // Создать табло курса валют.
-func newExchanger() Exchanger {
-	ex := &exchanger{make(map[string]float64)}
+func newExchanger(date string) Exchanger {
+	ex := &exchanger{
+		make(map[string]float64),
+		fmt.Sprintf("https://api.exchangeratesapi.io/%s?base=%%s&symbols=RUB", date),
+		os.Stdout,
+	}
 	ex.loadRates()
 
 	return ex

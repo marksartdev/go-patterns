@@ -1,7 +1,5 @@
 package vproxy
 
-import "fmt"
-
 type state interface {
 	show()
 	getRates() map[string]float64
@@ -12,7 +10,7 @@ type initStage struct {
 }
 
 func (i initStage) show() {
-	fmt.Println("Loading...")
+	i.proxy.write("Loading...")
 
 	go i.proxy.initExchanger()
 }

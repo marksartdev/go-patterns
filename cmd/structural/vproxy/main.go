@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	ex := vproxy.NewExchanger()
+	ex := vproxy.NewExchanger("latest")
 	ex.Show()
 
 	fmt.Println(ex.GetRates())
