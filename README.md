@@ -14,6 +14,7 @@
 2. [Адаптер](pkg/structural/adapter)
 3. [Фасад](pkg/structural/facade)
 4. [Компоновщик](pkg/structural/composite)
+5. [Заместитель](pkg/structural/proxy)
 ## Порождающие
 1. [Простая фабрика (не паттерн)](pkg/creational/simplefactory)
 2. [Фабричный метод / Абстрактная фабрика](pkg/creational/factory)
