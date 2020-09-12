@@ -21,7 +21,7 @@ func main() {
 	simulate(rubberDuck)
 	simulate(gooseDuck)
 
-	fmt.Printf("\nThe ducks quacked %d times\n", mallardDuck.GetQuacks())
+	fmt.Printf("\nThe ducks quacked %d times\n", composite.GetQuacks())
 }
 
 func simulate(duck composite.Quackable) {

@@ -41,26 +41,28 @@ func getCounter() *counter {
 	return instance
 }
 
-// QuackCounter Декоратор для подсчета кряков.
-type QuackCounter struct {
+// GetQuacks Получить количество кряков.
+func GetQuacks() int {
+	counter := getCounter()
+
+	return counter.getCount()
+}
+
+// Декоратор для подсчета кряков.
+type quackCounter struct {
 	duck    Quackable
 	counter *counter
 }
 
 // Quack Крякнуть.
-func (q *QuackCounter) Quack() {
+func (q *quackCounter) Quack() {
 	q.duck.Quack()
 	q.counter.increase()
 }
 
-// GetQuacks Получить количество кряков.
-func (q *QuackCounter) GetQuacks() int {
-	return q.counter.getCount()
-}
-
 // NewQuackCounter Создать декоратор.
-func NewQuackCounter(duck Quackable) *QuackCounter {
+func NewQuackCounter(duck Quackable) Quackable {
 	counter := getCounter()
 
-	return &QuackCounter{duck, counter}
+	return &quackCounter{duck, counter}
 }
