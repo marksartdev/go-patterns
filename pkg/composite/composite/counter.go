@@ -60,8 +60,8 @@ func (q *quackCounter) Quack() {
 	q.counter.increase()
 }
 
-// NewQuackCounter Создать декоратор.
-func NewQuackCounter(duck Quackable) Quackable {
+// Создать декоратор.
+func newQuackCounter(duck Quackable) Quackable {
 	counter := getCounter()
 
 	return &quackCounter{duck, counter}

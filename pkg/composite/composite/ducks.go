@@ -1,8 +1,6 @@
 // Package composite Составной паттерн.
 package composite
 
-import "os"
-
 // Quackable interface.
 type Quackable interface {
 	Quack()
@@ -46,36 +44,4 @@ type rubberDuck struct {
 // Quack Крякнуть.
 func (r rubberDuck) Quack() {
 	r.write("Squeak")
-}
-
-// NewMallardDuck Создать крякву.
-func NewMallardDuck() Quackable {
-	d := mallardDuck{}
-	d.SetWriter(os.Stdout)
-
-	return d
-}
-
-// NewRedHeadDuck Создать красноголовку.
-func NewRedHeadDuck() Quackable {
-	d := redheadDuck{}
-	d.SetWriter(os.Stdout)
-
-	return d
-}
-
-// NewDuckCall Создать манок.
-func NewDuckCall() Quackable {
-	d := duckCall{}
-	d.SetWriter(os.Stdout)
-
-	return d
-}
-
-// NewRubberDuck Создать резиновую уточку.
-func NewRubberDuck() Quackable {
-	d := rubberDuck{}
-	d.SetWriter(os.Stdout)
-
-	return d
 }
