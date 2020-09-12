@@ -2,7 +2,7 @@ package composite
 
 import "os"
 
-// AbstractDuckFactory Абстрактная фабрика по созданию уток.
+// AbstractDuckFactory Абстрактная уток.
 type AbstractDuckFactory interface {
 	CreateMallardDuck() Quackable
 	CreateRedHeatDuck() Quackable
@@ -10,7 +10,7 @@ type AbstractDuckFactory interface {
 	CreateRubberDuck() Quackable
 }
 
-// DuckFactory Фабрика по созданию уток.
+// DuckFactory Фабрика уток.
 type DuckFactory struct{}
 
 // CreateMallardDuck Создать крякву.
@@ -45,7 +45,7 @@ func (f DuckFactory) CreateRubberDuck() Quackable {
 	return d
 }
 
-// CountingDuckFactory Фабрика по созданию уток с подсчетом кряков.
+// CountingDuckFactory Фабрика уток с подсчетом кряков.
 type CountingDuckFactory struct{}
 
 // CreateMallardDuck Создать крякву.
