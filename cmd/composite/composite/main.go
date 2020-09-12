@@ -40,7 +40,7 @@ func startSimulator(duckFactory composite.AbstractDuckFactory, gooseFactory comp
 
 	flockOfDucks.Add(flockOfMallards)
 
-	fmt.Println("\nDuck Simulator: Whole Flock Simulation")
+	fmt.Println("Duck Simulator: Whole Flock Simulation")
 	simulate(flockOfDucks)
 
 	fmt.Println("\nDuck Simulator: Mallard Flock Simulation")

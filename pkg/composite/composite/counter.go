@@ -11,21 +11,21 @@ var (
 // Счетчик.
 type counter struct {
 	count int
-	mu    sync.RWMutex
+	rw    sync.RWMutex
 }
 
 // Увеличить счетчик.
 func (c *counter) increase() {
-	c.mu.Lock()
-	defer c.mu.Unlock()
+	c.rw.Lock()
+	defer c.rw.Unlock()
 
 	c.count++
 }
 
 // Получить текущее количество.
 func (c *counter) getCount() int {
-	c.mu.RLock()
-	defer c.mu.RUnlock()
+	c.rw.RLock()
+	defer c.rw.RUnlock()
 
 	count := c.count
 
