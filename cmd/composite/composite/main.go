@@ -11,6 +11,7 @@ func main() {
 	redheadDuck := composite.NewRedHeadDuck()
 	duckCall := composite.NewDuckCall()
 	rubberDuck := composite.NewRubberDuck()
+	gooseDuck := composite.NewGooseAdapter(composite.NewGoose())
 
 	fmt.Println("\nDuck Simulator")
 
@@ -18,6 +19,7 @@ func main() {
 	simulate(redheadDuck)
 	simulate(duckCall)
 	simulate(rubberDuck)
+	simulate(gooseDuck)
 }
 
 func simulate(duck composite.Quackable) {
