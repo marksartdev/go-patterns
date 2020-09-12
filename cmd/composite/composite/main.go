@@ -7,10 +7,10 @@ import (
 )
 
 func main() {
-	mallardDuck := composite.NewMallardDuck()
-	redheadDuck := composite.NewRedHeadDuck()
-	duckCall := composite.NewDuckCall()
-	rubberDuck := composite.NewRubberDuck()
+	mallardDuck := composite.NewQuackCounter(composite.NewMallardDuck())
+	redheadDuck := composite.NewQuackCounter(composite.NewRedHeadDuck())
+	duckCall := composite.NewQuackCounter(composite.NewDuckCall())
+	rubberDuck := composite.NewQuackCounter(composite.NewRubberDuck())
 	gooseDuck := composite.NewGooseAdapter(composite.NewGoose())
 
 	fmt.Println("\nDuck Simulator")
@@ -20,6 +20,8 @@ func main() {
 	simulate(duckCall)
 	simulate(rubberDuck)
 	simulate(gooseDuck)
+
+	fmt.Printf("\nThe ducks quacked %d times\n", mallardDuck.GetQuacks())
 }
 
 func simulate(duck composite.Quackable) {
