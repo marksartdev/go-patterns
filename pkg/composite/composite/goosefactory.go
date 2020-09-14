@@ -13,6 +13,7 @@ type GooseFactory struct{}
 // CreateGoose Создать гуся.
 func (f GooseFactory) CreateGoose() Quackable {
 	g := goose{}
+	g.observable = newObservable(g)
 	g.SetWriter(os.Stdout)
 
 	return gooseAdapter{g}
@@ -24,6 +25,7 @@ type CountingGooseFactory struct{}
 // CreateGoose Создать гуся.
 func (f CountingGooseFactory) CreateGoose() Quackable {
 	g := goose{}
+	g.observable = newObservable(g)
 	g.SetWriter(os.Stdout)
 
 	ga := gooseAdapter{g}

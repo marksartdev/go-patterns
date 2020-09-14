@@ -1,6 +1,9 @@
 package composite
 
-import "sync"
+import (
+	"fmt"
+	"sync"
+)
 
 // nolint:gochecknoglobals // Singleton
 var (
@@ -58,6 +61,20 @@ type quackCounter struct {
 func (q *quackCounter) Quack() {
 	q.duck.Quack()
 	q.counter.increase()
+}
+
+// RegisterObserver Зарегистрировать наблюдателя.
+func (q *quackCounter) RegisterObserver(observer observer) {
+	q.duck.RegisterObserver(observer)
+}
+
+// Оповестить наблюдателей.
+func (q *quackCounter) notifyObserver() {
+	q.duck.notifyObserver()
+}
+
+func (q *quackCounter) String() string {
+	return fmt.Sprint(q.duck)
 }
 
 // Создать декоратор.

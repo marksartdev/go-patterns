@@ -28,6 +28,30 @@ func (f flock) Quack() {
 	}
 }
 
+// RegisterObserver Зарегистрировать наблюдателя.
+func (f flock) RegisterObserver(observer observer) {
+	iterator := f.quackers.Iterator()
+	for iterator.HasNext() {
+		if quacker, ok := iterator.Next().(Quackable); ok {
+			quacker.RegisterObserver(observer)
+		}
+	}
+}
+
+// Оповестить наблюдателей.
+func (f flock) notifyObserver() {
+	iterator := f.quackers.Iterator()
+	for iterator.HasNext() {
+		if quacker, ok := iterator.Next().(Quackable); ok {
+			quacker.notifyObserver()
+		}
+	}
+}
+
+func (f flock) String() string {
+	return "Flock"
+}
+
 // NewFlock Создать стаю.
 func NewFlock() Flock {
 	f := flock{}

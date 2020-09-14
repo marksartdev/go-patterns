@@ -16,6 +16,7 @@ type DuckFactory struct{}
 // CreateMallardDuck Создать крякву.
 func (f DuckFactory) CreateMallardDuck() Quackable {
 	d := mallardDuck{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return d
@@ -24,6 +25,7 @@ func (f DuckFactory) CreateMallardDuck() Quackable {
 // CreateRedHeatDuck Создать красноголовку.
 func (f DuckFactory) CreateRedHeatDuck() Quackable {
 	d := redheadDuck{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return d
@@ -32,6 +34,7 @@ func (f DuckFactory) CreateRedHeatDuck() Quackable {
 // CreateDuckCall Создать манок.
 func (f DuckFactory) CreateDuckCall() Quackable {
 	d := duckCall{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return d
@@ -40,6 +43,7 @@ func (f DuckFactory) CreateDuckCall() Quackable {
 // CreateRubberDuck Создать резиновую уточку.
 func (f DuckFactory) CreateRubberDuck() Quackable {
 	d := rubberDuck{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return d
@@ -51,6 +55,7 @@ type CountingDuckFactory struct{}
 // CreateMallardDuck Создать крякву.
 func (f CountingDuckFactory) CreateMallardDuck() Quackable {
 	d := mallardDuck{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return newQuackCounter(d)
@@ -59,6 +64,7 @@ func (f CountingDuckFactory) CreateMallardDuck() Quackable {
 // CreateRedHeatDuck Создать красноголовку.
 func (f CountingDuckFactory) CreateRedHeatDuck() Quackable {
 	d := redheadDuck{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return newQuackCounter(d)
@@ -67,6 +73,7 @@ func (f CountingDuckFactory) CreateRedHeatDuck() Quackable {
 // CreateDuckCall Создать манок.
 func (f CountingDuckFactory) CreateDuckCall() Quackable {
 	d := duckCall{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return newQuackCounter(d)
@@ -75,6 +82,7 @@ func (f CountingDuckFactory) CreateDuckCall() Quackable {
 // CreateRubberDuck Создать резиновую уточку.
 func (f CountingDuckFactory) CreateRubberDuck() Quackable {
 	d := rubberDuck{}
+	d.observable = newObservable(d)
 	d.SetWriter(os.Stdout)
 
 	return newQuackCounter(d)
