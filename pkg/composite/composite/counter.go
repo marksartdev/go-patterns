@@ -1,7 +1,6 @@
 package composite
 
 import (
-	"fmt"
 	"io"
 	"sync"
 )
@@ -52,6 +51,13 @@ func GetQuacks() int {
 	return counter.getCount()
 }
 
+// ResetCounter Сброс счетчика.
+func ResetCounter() {
+	counter := getCounter()
+
+	counter.count = 0
+}
+
 // Декоратор для подсчета кряков.
 type quackCounter struct {
 	duck    Quackable
@@ -69,18 +75,12 @@ func (q *quackCounter) RegisterObserver(observer observer) {
 	q.duck.RegisterObserver(observer)
 }
 
-// Оповестить наблюдателей.
-func (q *quackCounter) notifyObserver() {
-	q.duck.notifyObserver()
-}
+// Оповестить наблюдателей (заглушка, т.к. это делает утка при кряканье).
+func (q *quackCounter) notifyObserver() {}
 
 // SetWriter Установить writer.
 func (q *quackCounter) SetWriter(writer io.Writer) {
 	q.duck.SetWriter(writer)
-}
-
-func (q *quackCounter) String() string {
-	return fmt.Sprint(q.duck)
 }
 
 // Создать декоратор.

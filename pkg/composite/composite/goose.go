@@ -1,7 +1,6 @@
 package composite
 
 import (
-	"fmt"
 	"io"
 
 	"github.com/marksartdev/go-patterns/pkg/common"
@@ -48,16 +47,10 @@ func (g gooseAdapter) RegisterObserver(observer observer) {
 	g.goose.RegisterObserver(observer)
 }
 
-// Оповестить наблюдателей.
-func (g gooseAdapter) notifyObserver() {
-	g.goose.notifyObserver()
-}
+// Оповестить наблюдателей (заглушка, т.к. это делает goose при крике).
+func (g gooseAdapter) notifyObserver() {}
 
 // SetWriter Установить writer.
 func (g gooseAdapter) SetWriter(writer io.Writer) {
 	g.goose.SetWriter(writer)
-}
-
-func (g gooseAdapter) String() string {
-	return fmt.Sprintf("%s like Duck", g.goose)
 }

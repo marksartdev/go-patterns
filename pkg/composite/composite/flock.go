@@ -42,15 +42,8 @@ func (f flock) RegisterObserver(observer observer) {
 	}
 }
 
-// Оповестить наблюдателей.
-func (f flock) notifyObserver() {
-	iterator := f.quackers.Iterator()
-	for iterator.HasNext() {
-		if quacker, ok := iterator.Next().(Quackable); ok {
-			quacker.notifyObserver()
-		}
-	}
-}
+// Оповестить наблюдателей (заглушка, т.к. это делают сами утки при кряканье).
+func (f flock) notifyObserver() {}
 
 // SetWriter Установить writer.
 func (f flock) SetWriter(writer io.Writer) {
@@ -60,10 +53,6 @@ func (f flock) SetWriter(writer io.Writer) {
 			quacker.SetWriter(writer)
 		}
 	}
-}
-
-func (f flock) String() string {
-	return "Flock"
 }
 
 // NewFlock Создать стаю.
