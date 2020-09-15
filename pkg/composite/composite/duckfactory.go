@@ -1,6 +1,6 @@
 package composite
 
-import "os"
+import "github.com/marksartdev/go-patterns/pkg/common"
 
 // AbstractDuckFactory Абстрактная уток.
 type AbstractDuckFactory interface {
@@ -17,7 +17,7 @@ type DuckFactory struct{}
 func (f DuckFactory) CreateMallardDuck() Quackable {
 	d := mallardDuck{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return d
 }
@@ -26,7 +26,7 @@ func (f DuckFactory) CreateMallardDuck() Quackable {
 func (f DuckFactory) CreateRedHeatDuck() Quackable {
 	d := redheadDuck{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return d
 }
@@ -35,7 +35,7 @@ func (f DuckFactory) CreateRedHeatDuck() Quackable {
 func (f DuckFactory) CreateDuckCall() Quackable {
 	d := duckCall{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return d
 }
@@ -44,7 +44,7 @@ func (f DuckFactory) CreateDuckCall() Quackable {
 func (f DuckFactory) CreateRubberDuck() Quackable {
 	d := rubberDuck{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return d
 }
@@ -56,7 +56,7 @@ type CountingDuckFactory struct{}
 func (f CountingDuckFactory) CreateMallardDuck() Quackable {
 	d := mallardDuck{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return newQuackCounter(d)
 }
@@ -65,7 +65,7 @@ func (f CountingDuckFactory) CreateMallardDuck() Quackable {
 func (f CountingDuckFactory) CreateRedHeatDuck() Quackable {
 	d := redheadDuck{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return newQuackCounter(d)
 }
@@ -74,7 +74,7 @@ func (f CountingDuckFactory) CreateRedHeatDuck() Quackable {
 func (f CountingDuckFactory) CreateDuckCall() Quackable {
 	d := duckCall{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return newQuackCounter(d)
 }
@@ -83,7 +83,7 @@ func (f CountingDuckFactory) CreateDuckCall() Quackable {
 func (f CountingDuckFactory) CreateRubberDuck() Quackable {
 	d := rubberDuck{}
 	d.observable = newObservable(d)
-	d.SetWriter(os.Stdout)
+	d.CustomWriter = common.NewCustomWriter()
 
 	return newQuackCounter(d)
 }

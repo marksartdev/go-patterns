@@ -2,6 +2,7 @@ package composite
 
 import (
 	"fmt"
+	"io"
 	"sync"
 )
 
@@ -71,6 +72,11 @@ func (q *quackCounter) RegisterObserver(observer observer) {
 // Оповестить наблюдателей.
 func (q *quackCounter) notifyObserver() {
 	q.duck.notifyObserver()
+}
+
+// SetWriter Установить writer.
+func (q *quackCounter) SetWriter(writer io.Writer) {
+	q.duck.SetWriter(writer)
 }
 
 func (q *quackCounter) String() string {

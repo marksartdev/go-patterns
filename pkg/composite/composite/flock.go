@@ -1,6 +1,10 @@
 package composite
 
-import "github.com/marksartdev/go-patterns/pkg/common"
+import (
+	"io"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
+)
 
 // Flock Интерфейс стаи.
 type Flock interface {
@@ -44,6 +48,16 @@ func (f flock) notifyObserver() {
 	for iterator.HasNext() {
 		if quacker, ok := iterator.Next().(Quackable); ok {
 			quacker.notifyObserver()
+		}
+	}
+}
+
+// SetWriter Установить writer.
+func (f flock) SetWriter(writer io.Writer) {
+	iterator := f.quackers.Iterator()
+	for iterator.HasNext() {
+		if quacker, ok := iterator.Next().(Quackable); ok {
+			quacker.SetWriter(writer)
 		}
 	}
 }

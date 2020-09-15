@@ -1,16 +1,21 @@
 package composite
 
-import "fmt"
+import (
+	"fmt"
+	"io"
+
+	"github.com/marksartdev/go-patterns/pkg/common"
+)
 
 // Гусь.
 type goose struct {
 	observable quackObservable
-	customWriter
+	common.CustomWriter
 }
 
 // Honk Крикнуть.
 func (g goose) Honk() {
-	g.write("Honk")
+	g.Write("Honk")
 	g.notifyObserver()
 }
 
@@ -46,6 +51,11 @@ func (g gooseAdapter) RegisterObserver(observer observer) {
 // Оповестить наблюдателей.
 func (g gooseAdapter) notifyObserver() {
 	g.goose.notifyObserver()
+}
+
+// SetWriter Установить writer.
+func (g gooseAdapter) SetWriter(writer io.Writer) {
+	g.goose.SetWriter(writer)
 }
 
 func (g gooseAdapter) String() string {

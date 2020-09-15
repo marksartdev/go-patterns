@@ -1,6 +1,6 @@
 package composite
 
-import "os"
+import "github.com/marksartdev/go-patterns/pkg/common"
 
 // AbstractGooseFactory Абстрактная фабрика гусей.
 type AbstractGooseFactory interface {
@@ -14,7 +14,7 @@ type GooseFactory struct{}
 func (f GooseFactory) CreateGoose() Quackable {
 	g := goose{}
 	g.observable = newObservable(g)
-	g.SetWriter(os.Stdout)
+	g.CustomWriter = common.NewCustomWriter()
 
 	return gooseAdapter{g}
 }
@@ -26,7 +26,7 @@ type CountingGooseFactory struct{}
 func (f CountingGooseFactory) CreateGoose() Quackable {
 	g := goose{}
 	g.observable = newObservable(g)
-	g.SetWriter(os.Stdout)
+	g.CustomWriter = common.NewCustomWriter()
 
 	ga := gooseAdapter{g}
 

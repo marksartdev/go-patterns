@@ -47,12 +47,23 @@ func newObservable(duck quackObservable) quackObservable {
 	return o
 }
 
-// Quackologist Наблюдатель.
-type Quackologist struct {
-	customWriter
+// Quackologist интерфейс утковеда.
+type Quackologist interface {
+	observer
+	common.CustomWriterSetter
+}
+
+// Наблюдатель.
+type quackologist struct {
+	common.CustomWriter
 }
 
 // Обновить.
-func (q *Quackologist) update(duck quackObservable) {
-	q.write(fmt.Sprintf("Quackologist: %s just quacked", duck))
+func (q *quackologist) update(duck quackObservable) {
+	q.Write(fmt.Sprintf("quackologist: %s just quacked", duck))
+}
+
+// NewQuackologist Создать утковеда.
+func NewQuackologist() Quackologist {
+	return &quackologist{common.NewCustomWriter()}
 }

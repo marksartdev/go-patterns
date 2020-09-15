@@ -1,21 +1,24 @@
 // Package composite Составной паттерн.
 package composite
 
+import "github.com/marksartdev/go-patterns/pkg/common"
+
 // Quackable interface.
 type Quackable interface {
-	quackObservable
 	Quack()
+	quackObservable
+	common.CustomWriterSetter
 }
 
 // Кряква.
 type mallardDuck struct {
 	observable quackObservable
-	customWriter
+	common.CustomWriter
 }
 
 // Quack Крякнуть.
 func (m mallardDuck) Quack() {
-	m.write("Quack")
+	m.Write("Quack")
 	m.notifyObserver()
 }
 
@@ -36,12 +39,12 @@ func (m mallardDuck) String() string {
 // Красноголовка.
 type redheadDuck struct {
 	observable quackObservable
-	customWriter
+	common.CustomWriter
 }
 
 // Quack Крякнуть.
 func (r redheadDuck) Quack() {
-	r.write("Quack")
+	r.Write("Quack")
 	r.notifyObserver()
 }
 
@@ -62,12 +65,12 @@ func (r redheadDuck) String() string {
 // Манок.
 type duckCall struct {
 	observable quackObservable
-	customWriter
+	common.CustomWriter
 }
 
 // Quack Крякнуть.
 func (d duckCall) Quack() {
-	d.write("Kwak")
+	d.Write("Kwak")
 	d.notifyObserver()
 }
 
@@ -88,12 +91,12 @@ func (d duckCall) String() string {
 // Резиновая уточка.
 type rubberDuck struct {
 	observable quackObservable
-	customWriter
+	common.CustomWriter
 }
 
 // Quack Крякнуть.
 func (r rubberDuck) Quack() {
-	r.write("Squeak")
+	r.Write("Squeak")
 	r.notifyObserver()
 }
 

@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/marksartdev/go-patterns/pkg/composite/composite"
 )
@@ -43,8 +42,7 @@ func startSimulator(duckFactory composite.AbstractDuckFactory, gooseFactory comp
 
 	fmt.Println("Duck Simulator: With Observer")
 
-	quackologist := &composite.Quackologist{}
-	quackologist.SetWriter(os.Stdout)
+	quackologist := composite.NewQuackologist()
 	flockOfDucks.RegisterObserver(quackologist)
 
 	fmt.Println("Duck Simulator: Whole Flock Simulation")
