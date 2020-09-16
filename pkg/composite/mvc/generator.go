@@ -57,3 +57,11 @@ func (b *beatGenerator) do(ctx context.Context) {
 		}
 	}
 }
+
+// Создать генератор.
+func newGenerator(beatEvent func()) generator {
+	g := &beatGenerator{}
+	g.beatEvent = beatEvent
+
+	return g
+}
