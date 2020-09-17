@@ -2,19 +2,31 @@ package mvc
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
+	"time"
+
 	"fyne.io/fyne"
 	"fyne.io/fyne/app"
 	"fyne.io/fyne/widget"
-	"strings"
-	"time"
+
+	log "github.com/sirupsen/logrus"
 )
 
-const progressLen = 10
+const (
+	progressLen   = 10
+	progressSleep = 50
+)
 
 // DJView Интерфейс представления.
 type DJView interface {
 	Run()
 }
+
+const (
+	width  = 200
+	height = 0
+)
 
 // Представление.
 type djView struct {
@@ -22,56 +34,115 @@ type djView struct {
 	controller controllerInterface
 	viewW      fyne.Window
 	controlW   fyne.Window
-	viewElms   viewElms
+	progress   *widget.Label
+	bpm        *widget.Label
+	input      *widget.Entry
 }
 
-// Создание UI.
-func (d *djView) createView() {
-	d.viewElms = newViewElms()
-
+// Создать UI.
+func (d *djView) init() {
 	a := app.New()
 
+	d.createView(a)
+	d.createControls(a)
+}
+
+// Создать UI визуального представления.
+func (d *djView) createView(a fyne.App) {
+	d.progress = widget.NewLabel("")
+	d.bpm = widget.NewLabel("offline")
+
 	d.viewW = a.NewWindow("View")
-	d.viewW.SetContent(widget.NewVBox(d.viewElms.progress, d.viewElms.label))
-	d.viewW.Resize(fyne.Size{Width: 200, Height: 75})
+	d.viewW.SetContent(widget.NewVBox(d.progress, d.bpm))
+
+	d.viewW.Resize(fyne.Size{Width: width, Height: height})
+}
+
+// Создать UI элементов управления.
+func (d *djView) createControls(a fyne.App) {
+	startItem := fyne.NewMenuItem("Start", d.controller.start)
+	stopItem := fyne.NewMenuItem("Stop", d.controller.stop)
+	quitItem := fyne.NewMenuItem("Quit", d.quit)
+	menu := fyne.NewMenu("DJ Control", startItem, stopItem, quitItem)
+	mainMenu := fyne.NewMainMenu(menu)
+
+	label := widget.NewLabel("Enter BPM:")
+	d.input = widget.NewEntry()
+	input := widget.NewHBox(label, d.input)
+
+	setButton := widget.NewButton("Set", d.setBPM)
+
+	decButton := widget.NewButton("<<", d.controller.decreaseBPM)
+	incButton := widget.NewButton(">>", d.controller.increaseBPM)
+
+	stepButtons := widget.NewHBox(decButton, incButton)
+
+	d.controlW = a.NewWindow("Control")
+	d.controlW.SetMainMenu(mainMenu)
+	d.controlW.SetContent(widget.NewVBox(input, setButton, stepButtons))
+
+	d.controlW.Resize(fyne.Size{Width: width, Height: height})
+}
+
+// Закрыть приложение.
+func (d *djView) quit() {
+	d.viewW.Close()
+	d.controlW.Close()
+}
+
+// Установить BPM.
+func (d *djView) setBPM() {
+	text := d.input.Text
+
+	bpm, err := strconv.Atoi(text)
+	if err != nil {
+		log.Error(err)
+
+		return
+	}
+
+	d.controller.setBPM(bpm)
+
+	d.input.Text = ""
+	d.input.Refresh()
 }
 
 // Обновить BPM.
 func (d *djView) updateBPM() {
 	bpm := d.model.getBPM()
 	if bpm == 0 {
-		d.viewElms.label.SetText("offline")
+		d.bpm.SetText("offline")
 	} else {
-		d.viewElms.label.SetText(fmt.Sprintf("Current BPM: %d", bpm))
+		d.bpm.SetText(fmt.Sprintf("Current BPM: %d", bpm))
 	}
 }
 
 // Отобразить удар.
 func (d *djView) updateBeat() {
 	for i := 1; i <= progressLen; i++ {
-		d.viewElms.progress.SetText(strings.Repeat("=", i))
-		time.Sleep(50 * time.Millisecond)
+		d.progress.SetText(strings.Repeat("=", i))
+		time.Sleep(progressSleep * time.Millisecond)
 	}
 
 	for i := 10; i >= 0; i-- {
-		d.viewElms.progress.SetText(strings.Repeat("=", i))
-		time.Sleep(50 * time.Millisecond)
+		d.progress.SetText(strings.Repeat("=", i))
+		time.Sleep(progressSleep * time.Millisecond)
 	}
 }
 
 // Run Запустить.
 func (d *djView) Run() {
-	d.createView()
+	d.init()
 
-	d.viewW.ShowAndRun()
-	//d.controlW.ShowAndRun()
+	d.viewW.Show()
+	d.controlW.ShowAndRun()
 }
 
 // NewDJView Создать представление.
 func NewDJView() DJView {
 	view := &djView{}
 	view.model = newBeatModel()
-	// todo set controller
+	view.controller = newBeatController()
 
 	view.model.registerBeatObserver(view)
 	view.model.registerBPMObserver(view)
