@@ -15,7 +15,7 @@ import (
 
 const (
 	progressLen   = 21
-	progressSleep = 15
+	progressSleep = 5
 	width         = 200
 	height        = 0
 )

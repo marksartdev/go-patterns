@@ -14,10 +14,11 @@ type generator interface {
 
 // Генератор ритма.
 type beatGenerator struct {
-	duration  time.Duration
-	beatEvent func()
-	cancel    context.CancelFunc
-	started   bool
+	duration    time.Duration
+	beatEvent   func()
+	cancel      context.CancelFunc
+	started     bool
+	resetTicker bool
 }
 
 // Запустить генератор.
@@ -45,20 +46,25 @@ func (b *beatGenerator) setTempoInBPM(bpm int) {
 		b.duration = 0
 	} else {
 		b.duration = time.Minute / time.Duration(bpm)
+		b.resetTicker = true
 	}
 }
 
 // Рабочий процесс.
 func (b *beatGenerator) do(ctx context.Context) {
-	// todo переедать в таймер!
+	ticker := time.NewTicker(b.duration)
+
 	for {
 		select {
 		case <-ctx.Done():
 			return
-		default:
+		case <-ticker.C:
 			b.beatEvent()
 
-			time.Sleep(b.duration)
+			if b.resetTicker {
+				ticker.Reset(b.duration)
+				b.resetTicker = false
+			}
 		}
 	}
 }
