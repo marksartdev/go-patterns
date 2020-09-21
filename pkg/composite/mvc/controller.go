@@ -1,46 +1,66 @@
 package mvc
 
-import "log"
-
-// Интерфейс контроллера.
-type controllerInterface interface {
+// ControllerInterface Интерфейс контроллера.
+type ControllerInterface interface {
 	start()
 	stop()
 	increaseBPM()
 	decreaseBPM()
 	setBPM(bpm int)
+	Run()
 }
 
 // Контроллер.
 type beatController struct {
+	model BeatModelInterface
+	view  djViewInterface
 }
 
 // Запустить.
 func (b *beatController) start() {
-	log.Println("Start!")
+	b.model.on()
+	b.view.disableStartButton()
+	b.view.enableStopButton()
 }
 
 // Остановить.
 func (b *beatController) stop() {
-	log.Println("Stop")
+	b.model.off()
+	b.view.disableStopButton()
+	b.view.enableStartButton()
 }
 
 // Увеличить BPM на 1.
 func (b *beatController) increaseBPM() {
-	log.Println("Increase")
+	bpm := b.model.getBPM()
+	b.model.setBPM(bpm + 1)
 }
 
 // Уменьшить BPM на 1.
 func (b *beatController) decreaseBPM() {
-	log.Println("Decrease")
+	bpm := b.model.getBPM()
+	b.model.setBPM(bpm - 1)
 }
 
 // Установить BPM.
 func (b *beatController) setBPM(bpm int) {
-	log.Printf("Set BPM on %d\n", bpm)
+	b.model.setBPM(bpm)
 }
 
-// Создать новый контроллер.
-func newBeatController() controllerInterface {
-	return &beatController{}
+// Run Запустить приложение.
+func (b *beatController) Run() {
+	b.view.Run()
+}
+
+// NewBeatController Создать новый контроллер.
+func NewBeatController(model BeatModelInterface) ControllerInterface {
+	c := &beatController{}
+	c.model = model
+	c.view = newDJView(c, c.model)
+	c.view.init()
+	c.view.disableStopButton()
+	c.view.enableStartButton()
+	c.model.init()
+
+	return c
 }

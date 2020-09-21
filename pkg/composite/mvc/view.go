@@ -14,24 +14,26 @@ import (
 )
 
 const (
-	progressLen   = 10
-	progressSleep = 50
+	progressLen   = 21
+	progressSleep = 15
+	width         = 200
+	height        = 0
 )
 
-// DJView Интерфейс представления.
-type DJView interface {
+// Интерфейс представления.
+type djViewInterface interface {
+	init()
+	enableStopButton()
+	disableStopButton()
+	enableStartButton()
+	disableStartButton()
 	Run()
 }
 
-const (
-	width  = 200
-	height = 0
-)
-
 // Представление.
 type djView struct {
-	model      beatModelInterface
-	controller controllerInterface
+	model      BeatModelInterface
+	controller ControllerInterface
 	viewW      fyne.Window
 	controlW   fyne.Window
 	progress   *widget.Label
@@ -153,14 +155,12 @@ func (d *djView) setBPM() {
 
 // Run Запустить.
 func (d *djView) Run() {
-	d.init()
-
 	d.viewW.Show()
 	d.controlW.ShowAndRun()
 }
 
-// NewDJView Создать представление.
-func NewDJView(controller controllerInterface, model beatModelInterface) DJView {
+// Создать представление.
+func newDJView(controller ControllerInterface, model BeatModelInterface) djViewInterface {
 	view := &djView{}
 	view.controller = controller
 	view.model = model

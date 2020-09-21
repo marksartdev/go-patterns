@@ -41,11 +41,16 @@ func (b *beatGenerator) stop() {
 
 // Установить bpm.
 func (b *beatGenerator) setTempoInBPM(bpm int) {
-	b.duration = time.Minute / time.Duration(bpm)
+	if bpm == 0 {
+		b.duration = 0
+	} else {
+		b.duration = time.Minute / time.Duration(bpm)
+	}
 }
 
 // Рабочий процесс.
 func (b *beatGenerator) do(ctx context.Context) {
+	// todo переедать в таймер!
 	for {
 		select {
 		case <-ctx.Done():

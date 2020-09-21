@@ -3,8 +3,9 @@ package mvc
 
 const startBPM = 90
 
-// Интерфейс модели.
-type beatModelInterface interface {
+// BeatModelInterface Интерфейс модели.
+type BeatModelInterface interface {
+	init()
 	on()
 	off()
 	setBPM(bpm int)
@@ -25,7 +26,6 @@ type beatModel struct {
 
 // Включить.
 func (b *beatModel) on() {
-	b.init()
 	b.setBPM(startBPM)
 	b.generator.start()
 }
@@ -106,7 +106,7 @@ func (b *beatModel) beatEvent() {
 	b.notifyBeatObservers()
 }
 
-// Создать модель.
-func newBeatModel() beatModelInterface {
+// NewBeatModel Создать модель.
+func NewBeatModel() BeatModelInterface {
 	return &beatModel{}
 }
