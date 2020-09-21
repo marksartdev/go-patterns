@@ -5,8 +5,14 @@ import (
 	"time"
 )
 
-// Интерфейс модели данных сердцебиения.
-type heartModelInterface interface {
+const (
+	minHeartRate     = 50
+	maxHeartRate     = 120
+	maxTimeForUpdate = 5
+)
+
+// HeartModelInterface Интерфейс модели данных сердцебиения.
+type HeartModelInterface interface {
 	init()
 	getHeartRate() int
 	registerBeatObserver(o beatObserver)
@@ -27,6 +33,8 @@ type heartModel struct {
 func (h *heartModel) init() {
 	if h.generator == nil {
 		h.generator = newGenerator(h.beatEvent)
+		h.generator.setTempoInBPM(minHeartRate)
+		h.generator.start()
 
 		go h.generateRate()
 	}
@@ -91,17 +99,21 @@ func (h *heartModel) beatEvent() {
 // Генерация псевдослучайного сердечного ритма.
 func (h *heartModel) generateRate() {
 	source := rand.NewSource(time.Now().Unix())
+	// nolint:gosec // It's not necessary.
 	r := rand.New(source)
 
 	timer := time.NewTimer(1 * time.Second)
 
-	for {
-		select {
-		case <-timer.C:
-			h.rate = r.Intn(70) + 50
-			h.generator.setTempoInBPM(h.rate)
+	for range timer.C {
+		h.rate = r.Intn(maxHeartRate-minHeartRate) + minHeartRate
+		h.generator.setTempoInBPM(h.rate)
+		h.notifyBPMObservers()
 
-			timer.Reset(time.Duration(r.Intn(5)) * time.Second)
-		}
+		timer.Reset(time.Duration(r.Intn(maxTimeForUpdate)) * time.Second)
 	}
+}
+
+// NewHeartModel Создать модель.
+func NewHeartModel() HeartModelInterface {
+	return &heartModel{}
 }

@@ -3,8 +3,14 @@ package main
 import "github.com/marksartdev/go-patterns/pkg/composite/mvc"
 
 func main() {
-	model := mvc.NewBeatModel()
-	controller := mvc.NewBeatController(model)
+	// nolint:gocritic // First example.
+	// model := mvc.NewBeatModel()
+	// controller := mvc.NewBeatController(model)
+	//
+	// controller.Run()
+	//
+	heartModel := mvc.NewHeartModel()
+	heartController := mvc.NewHeartController(heartModel)
 
-	controller.Run()
+	heartController.Run()
 }
