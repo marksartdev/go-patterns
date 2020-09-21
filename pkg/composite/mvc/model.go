@@ -24,6 +24,13 @@ type beatModel struct {
 	bpm           int
 }
 
+// Инициализировать генератор.
+func (b *beatModel) init() {
+	if b.generator == nil {
+		b.generator = newGenerator(b.beatEvent)
+	}
+}
+
 // Включить.
 func (b *beatModel) on() {
 	b.setBPM(startBPM)
@@ -91,13 +98,6 @@ func (b *beatModel) removeBPMObserver(o bpmObserver) {
 func (b *beatModel) notifyBPMObservers() {
 	for i := range b.bpmObservers {
 		b.bpmObservers[i].updateBPM()
-	}
-}
-
-// Инициализировать генератор.
-func (b *beatModel) init() {
-	if b.generator == nil {
-		b.generator = newGenerator(b.beatEvent)
 	}
 }
 
