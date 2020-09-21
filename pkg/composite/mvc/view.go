@@ -37,6 +37,9 @@ type djView struct {
 	progress   *widget.Label
 	bpm        *widget.Label
 	input      *widget.Entry
+	startBtm   *widget.Button
+	stopBtm    *widget.Button
+	quiteBtm   *widget.Button
 }
 
 // Создать UI.
@@ -60,11 +63,10 @@ func (d *djView) createView(a fyne.App) {
 
 // Создать UI элементов управления.
 func (d *djView) createControls(a fyne.App) {
-	startItem := fyne.NewMenuItem("Start", d.controller.start)
-	stopItem := fyne.NewMenuItem("Stop", d.controller.stop)
-	quitItem := fyne.NewMenuItem("Quit", d.quit)
-	menu := fyne.NewMenu("DJ Control", startItem, stopItem, quitItem)
-	mainMenu := fyne.NewMainMenu(menu)
+	d.startBtm = widget.NewButton("Start", d.controller.start)
+	d.stopBtm = widget.NewButton("Stop", d.controller.stop)
+	d.quiteBtm = widget.NewButton("Quit", d.quit)
+	menu := widget.NewHBox(d.startBtm, d.stopBtm, d.quiteBtm)
 
 	label := widget.NewLabel("Enter BPM:")
 	d.input = widget.NewEntry()
@@ -78,33 +80,9 @@ func (d *djView) createControls(a fyne.App) {
 	stepButtons := widget.NewHBox(decButton, incButton)
 
 	d.controlW = a.NewWindow("Control")
-	d.controlW.SetMainMenu(mainMenu)
-	d.controlW.SetContent(widget.NewVBox(input, setButton, stepButtons))
+	d.controlW.SetContent(widget.NewVBox(menu, input, setButton, stepButtons))
 
 	d.controlW.Resize(fyne.Size{Width: width, Height: height})
-}
-
-// Закрыть приложение.
-func (d *djView) quit() {
-	d.viewW.Close()
-	d.controlW.Close()
-}
-
-// Установить BPM.
-func (d *djView) setBPM() {
-	text := d.input.Text
-
-	bpm, err := strconv.Atoi(text)
-	if err != nil {
-		log.Error(err)
-
-		return
-	}
-
-	d.controller.setBPM(bpm)
-
-	d.input.Text = ""
-	d.input.Refresh()
 }
 
 // Обновить BPM.
@@ -130,6 +108,49 @@ func (d *djView) updateBeat() {
 	}
 }
 
+// Разблокировать кнопку остановки.
+func (d *djView) enableStopButton() {
+	d.stopBtm.Enable()
+}
+
+// Заблокировать кнопку остановки.
+func (d *djView) disableStopButton() {
+	d.stopBtm.Disable()
+}
+
+// Разблокировать кнопку старта.
+func (d *djView) enableStartButton() {
+	d.startBtm.Enable()
+}
+
+// Заблокировать кнопку старта.
+func (d *djView) disableStartButton() {
+	d.startBtm.Disable()
+}
+
+// Закрыть приложение.
+func (d *djView) quit() {
+	d.controller.stop()
+
+	d.viewW.Close()
+	d.controlW.Close()
+}
+
+// Установить BPM.
+func (d *djView) setBPM() {
+	bpm, err := strconv.Atoi(d.input.Text)
+	if err != nil {
+		log.Error(err)
+
+		return
+	}
+
+	d.controller.setBPM(bpm)
+
+	d.input.Text = ""
+	d.input.Refresh()
+}
+
 // Run Запустить.
 func (d *djView) Run() {
 	d.init()
@@ -139,10 +160,10 @@ func (d *djView) Run() {
 }
 
 // NewDJView Создать представление.
-func NewDJView() DJView {
+func NewDJView(controller controllerInterface, model beatModelInterface) DJView {
 	view := &djView{}
-	view.model = newBeatModel()
-	view.controller = newBeatController()
+	view.controller = controller
+	view.model = model
 
 	view.model.registerBeatObserver(view)
 	view.model.registerBPMObserver(view)
