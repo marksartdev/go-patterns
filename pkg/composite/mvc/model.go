@@ -5,15 +5,15 @@ const startBPM = 90
 
 // BeatModelInterface Интерфейс модели.
 type BeatModelInterface interface {
-	init()
-	on()
-	off()
-	setBPM(bpm int)
-	getBPM() int
-	registerBeatObserver(o beatObserver)
-	removeBeatObserver(o beatObserver)
-	registerBPMObserver(o bpmObserver)
-	removeBPMObserver(o bpmObserver)
+	Init()
+	On()
+	Off()
+	SetBPM(bpm int)
+	GetBPM() int
+	RegisterBeatObserver(o beatObserver)
+	RemoveBeatObserver(o beatObserver)
+	RegisterBPMObserver(o bpmObserver)
+	RemoveBPMObserver(o bpmObserver)
 }
 
 // Модель.
@@ -24,44 +24,44 @@ type beatModel struct {
 	bpm           int
 }
 
-// Инициализировать генератор.
-func (b *beatModel) init() {
+// Init Инициализировать генератор.
+func (b *beatModel) Init() {
 	if b.generator == nil {
 		b.generator = newGenerator(b.beatEvent)
 	}
 }
 
-// Включить.
-func (b *beatModel) on() {
-	b.setBPM(startBPM)
+// On Включить.
+func (b *beatModel) On() {
+	b.SetBPM(startBPM)
 	b.generator.start()
 }
 
-// Выключить.
-func (b *beatModel) off() {
+// Off Выключить.
+func (b *beatModel) Off() {
 	b.generator.stop()
-	b.setBPM(0)
+	b.SetBPM(0)
 }
 
-// Установить BPM.
-func (b *beatModel) setBPM(bpm int) {
+// SetBPM Установить BPM.
+func (b *beatModel) SetBPM(bpm int) {
 	b.bpm = bpm
-	b.generator.setTempoInBPM(b.getBPM())
+	b.generator.setTempoInBPM(b.GetBPM())
 	b.notifyBPMObservers()
 }
 
-// Получить текущий BPM.
-func (b *beatModel) getBPM() int {
+// GetBPM Получить текущий BPM.
+func (b *beatModel) GetBPM() int {
 	return b.bpm
 }
 
-// Зарегистрировать наблюдателя за ударами.
-func (b *beatModel) registerBeatObserver(o beatObserver) {
+// RegisterBeatObserver Зарегистрировать наблюдателя за ударами.
+func (b *beatModel) RegisterBeatObserver(o beatObserver) {
 	b.beatObservers = append(b.beatObservers, o)
 }
 
-// Удалить наблюдателя за ударами.
-func (b *beatModel) removeBeatObserver(o beatObserver) {
+// RemoveBeatObserver Удалить наблюдателя за ударами.
+func (b *beatModel) RemoveBeatObserver(o beatObserver) {
 	for i := range b.beatObservers {
 		if b.beatObservers[i] == o {
 			b.beatObservers = append(b.beatObservers[:i], b.beatObservers[i+1:]...)
@@ -78,13 +78,13 @@ func (b *beatModel) notifyBeatObservers() {
 	}
 }
 
-// Установить наблюдателя за изменением BPM.
-func (b *beatModel) registerBPMObserver(o bpmObserver) {
+// RegisterBPMObserver Установить наблюдателя за изменением BPM.
+func (b *beatModel) RegisterBPMObserver(o bpmObserver) {
 	b.bpmObservers = append(b.bpmObservers, o)
 }
 
-// Удалить наблюдателя за изменением BPM.
-func (b *beatModel) removeBPMObserver(o bpmObserver) {
+// RemoveBPMObserver Удалить наблюдателя за изменением BPM.
+func (b *beatModel) RemoveBPMObserver(o bpmObserver) {
 	for i := range b.bpmObservers {
 		if b.bpmObservers[i] == o {
 			b.bpmObservers = append(b.bpmObservers[:i], b.bpmObservers[i+1:]...)

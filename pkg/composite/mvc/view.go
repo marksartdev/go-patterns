@@ -89,7 +89,7 @@ func (d *djView) createControls(a fyne.App) {
 
 // Обновить BPM.
 func (d *djView) updateBPM() {
-	bpm := d.model.getBPM()
+	bpm := d.model.GetBPM()
 	if bpm == 0 {
 		d.bpm.SetText("offline")
 	} else {
@@ -165,8 +165,8 @@ func newDJView(controller ControllerInterface, model BeatModelInterface) djViewI
 	view.controller = controller
 	view.model = model
 
-	view.model.registerBeatObserver(view)
-	view.model.registerBPMObserver(view)
+	view.model.RegisterBeatObserver(view)
+	view.model.RegisterBPMObserver(view)
 
 	return view
 }

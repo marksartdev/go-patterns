@@ -18,33 +18,33 @@ type beatController struct {
 
 // Запустить.
 func (b *beatController) start() {
-	b.model.on()
+	b.model.On()
 	b.view.disableStartButton()
 	b.view.enableStopButton()
 }
 
 // Остановить.
 func (b *beatController) stop() {
-	b.model.off()
+	b.model.Off()
 	b.view.disableStopButton()
 	b.view.enableStartButton()
 }
 
 // Увеличить BPM на 1.
 func (b *beatController) increaseBPM() {
-	bpm := b.model.getBPM()
-	b.model.setBPM(bpm + 1)
+	bpm := b.model.GetBPM()
+	b.model.SetBPM(bpm + 1)
 }
 
 // Уменьшить BPM на 1.
 func (b *beatController) decreaseBPM() {
-	bpm := b.model.getBPM()
-	b.model.setBPM(bpm - 1)
+	bpm := b.model.GetBPM()
+	b.model.SetBPM(bpm - 1)
 }
 
 // Установить BPM.
 func (b *beatController) setBPM(bpm int) {
-	b.model.setBPM(bpm)
+	b.model.SetBPM(bpm)
 }
 
 // Run Запустить приложение.
@@ -60,7 +60,7 @@ func NewBeatController(model BeatModelInterface) ControllerInterface {
 	c.view.init()
 	c.view.disableStopButton()
 	c.view.enableStartButton()
-	c.model.init()
+	c.model.Init()
 
 	return c
 }

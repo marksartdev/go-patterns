@@ -2,6 +2,7 @@ package model2
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -11,14 +12,16 @@ import (
 
 	"github.com/gin-gonic/gin"
 	log "github.com/sirupsen/logrus"
+
+	"github.com/marksartdev/go-patterns/pkg/composite/mvc"
 )
 
 // StartServer Запустить сервер.
-func StartServer(addr string) {
+func StartServer(model mvc.BeatModelInterface, addr string) {
 	router := gin.Default()
-	// todo Set main handler
+	router.GET("", getMainHandler(model))
 
-	api := router.Group("api")
+	// api := router.Group("api")
 	// todo Set API handlers
 
 	srv := &http.Server{
@@ -40,7 +43,7 @@ func startServer(srv *http.Server) {
 	log.Infof("Starting server on %s...", srv.Addr)
 
 	err := srv.ListenAndServe()
-	if err != nil {
+	if err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(err)
 	}
 }

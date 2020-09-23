@@ -5,42 +5,42 @@ type heartAdapter struct {
 	heart HeartModelInterface
 }
 
-// Инициализировать модель.
-func (h heartAdapter) init() {
+// Init Инициализировать модель.
+func (h heartAdapter) Init() {
 	h.heart.init()
 }
 
-// Включить.
-func (h heartAdapter) on() {}
+// On Включить.
+func (h heartAdapter) On() {}
 
-// Выключить.
-func (h heartAdapter) off() {}
+// Off Выключить.
+func (h heartAdapter) Off() {}
 
-// Установить BPM.
-func (h heartAdapter) setBPM(_ int) {}
+// SetBPM Установить BPM.
+func (h heartAdapter) SetBPM(_ int) {}
 
-// Получить текущий BPM.
-func (h heartAdapter) getBPM() int {
+// GetBPM Получить текущий BPM.
+func (h heartAdapter) GetBPM() int {
 	return h.heart.getHeartRate()
 }
 
-// Зарегистрировать наблюдателя за ударами.
-func (h heartAdapter) registerBeatObserver(o beatObserver) {
+// RegisterBeatObserver Зарегистрировать наблюдателя за ударами.
+func (h heartAdapter) RegisterBeatObserver(o beatObserver) {
 	h.heart.registerBeatObserver(o)
 }
 
-// Удалить наблюдателя за ударами.
-func (h heartAdapter) removeBeatObserver(o beatObserver) {
+// RemoveBeatObserver Удалить наблюдателя за ударами.
+func (h heartAdapter) RemoveBeatObserver(o beatObserver) {
 	h.heart.removeBeatObserver(o)
 }
 
-// Установить наблюдателя за изменением BPM.
-func (h heartAdapter) registerBPMObserver(o bpmObserver) {
+// RegisterBPMObserver Установить наблюдателя за изменением BPM.
+func (h heartAdapter) RegisterBPMObserver(o bpmObserver) {
 	h.heart.registerBPMObserver(o)
 }
 
-// Удалить наблюдателя за изменением BPM.
-func (h heartAdapter) removeBPMObserver(o bpmObserver) {
+// RemoveBPMObserver Удалить наблюдателя за изменением BPM.
+func (h heartAdapter) RemoveBPMObserver(o bpmObserver) {
 	h.heart.removeBPMObserver(o)
 }
 

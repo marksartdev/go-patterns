@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>DG View</title>
+</head>
+<body>
+<h1>DJ View</h1>
+<div>
+    <div class="beat" id="beat"></div>
+    <p>Beats per minutes = <span id="bpm">{{ . }}</span></p>
+</div>
+<hr>
+<div>
+    <form>
+        <div>
+            <label for="setBPM">BPM:</label>
+            <input type="text" id="setBPM">
+            <button>Set</button>
+        </div>
+        <div>
+            <button><<</button>
+            <button>>></button>
+        </div>
+        <div>
+            <button>on</button>
+            <button>off</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
