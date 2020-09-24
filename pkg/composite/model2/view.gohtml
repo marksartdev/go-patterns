@@ -23,8 +23,8 @@
             <button id="increase">>></button>
         </div>
         <div>
-            <button id="turnOn">on</button>
-            <button id="turnOff">off</button>
+            <button id="start">start</button>
+            <button id="stop" disabled>stop</button>
         </div>
     </form>
 </div>
@@ -66,6 +66,7 @@
         e.preventDefault();
         let bpm = document.getElementById("bpm");
         fetch("http://127.0.0.1:8080/api/set?bpm=" + bpm.value);
+        bpm.value = "";
     }
 
     // Уменьшить BPM.
@@ -81,23 +82,41 @@
     }
 
     // Включить.
-    function turnOn(e) {
+    function start(e) {
         e.preventDefault();
-        fetch("http://127.0.0.1:8080/api/on");
+        fetch("http://127.0.0.1:8080/api/start").then((response) => {
+            responseHandel(response)
+        });
     }
 
     // Выключить.
-    function turnOff(e) {
+    function stop(e) {
         e.preventDefault();
-        fetch("http://127.0.0.1:8080/api/off");
+        fetch("http://127.0.0.1:8080/api/stop").then((response) => {
+            responseHandel(response)
+        });
+    }
+
+    // Обработать ответ.
+    function responseHandel(response) {
+        response.json().then((data) => {
+            data.forEach(function (command) {
+                let elem = document.getElementById(command.elem);
+                if (command.enable) {
+                    elem.removeAttribute("disabled");
+                } else {
+                    elem.setAttribute("disabled", "disabled");
+                }
+            });
+        });
     }
 
     // Обработчики событий.
     document.getElementById("setBPM").addEventListener("click", setBPM);
     document.getElementById("decrease").addEventListener("click", decrease);
     document.getElementById("increase").addEventListener("click", increase);
-    document.getElementById("turnOn").addEventListener("click", turnOn);
-    document.getElementById("turnOff").addEventListener("click", turnOff);
+    document.getElementById("start").addEventListener("click", start);
+    document.getElementById("stop").addEventListener("click", stop);
 </script>
 
 <style>

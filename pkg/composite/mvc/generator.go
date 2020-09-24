@@ -44,6 +44,7 @@ func (b *beatGenerator) stop() {
 func (b *beatGenerator) setTempoInBPM(bpm int) {
 	if bpm == 0 {
 		b.duration = 0
+		b.stop()
 	} else {
 		b.duration = time.Minute / time.Duration(bpm)
 		b.resetTicker = true

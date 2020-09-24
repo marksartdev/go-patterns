@@ -28,6 +28,13 @@ func StartServer(model mvc.BeatModelInterface, addr string) {
 	ws.GET("beat", getBeatObserverHandler(model, upgrader))
 	ws.GET("bpm", getBPMObserverHandler(model, upgrader))
 
+	api := router.Group("api")
+	api.GET("set", getSetBPMHandler(model))
+	api.GET("decrease", getDecreaseHandler(model))
+	api.GET("increase", getIncreaseHandler(model))
+	api.GET("start", getStartHandler(model))
+	api.GET("stop", getStopHandler(model))
+
 	srv := &http.Server{
 		Addr:    addr,
 		Handler: router,
