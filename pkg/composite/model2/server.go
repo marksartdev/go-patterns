@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/marksartdev/go-patterns/pkg/composite/mvc"
@@ -18,11 +19,14 @@ import (
 
 // StartServer Запустить сервер.
 func StartServer(model mvc.BeatModelInterface, addr string) {
+	upgrader := &websocket.Upgrader{}
+
 	router := gin.Default()
 	router.GET("", getMainHandler(model))
 
-	// api := router.Group("api")
-	// todo Set API handlers
+	ws := router.Group("ws")
+	ws.GET("beat", getBeatObserverHandler(model, upgrader))
+	ws.GET("bpm", getBPMObserverHandler(model, upgrader))
 
 	srv := &http.Server{
 		Addr:    addr,

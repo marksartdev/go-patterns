@@ -3,8 +3,10 @@ package model2
 
 import (
 	"html/template"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 
 	"github.com/marksartdev/go-patterns/pkg/composite/mvc"
 )
@@ -26,5 +28,37 @@ func getMainHandler(model mvc.BeatModelInterface) gin.HandlerFunc {
 		if err != nil {
 			_ = ctx.Error(err)
 		}
+	}
+}
+
+// Получить обработчик наблюдателя за ударами.
+func getBeatObserverHandler(model mvc.BeatModelInterface, upgrader *websocket.Upgrader) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ws, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+		if err != nil {
+			_ = ctx.Error(err)
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+
+			return
+		}
+
+		observer := getBeatObserver(ws, model)
+		model.RegisterBeatObserver(observer)
+	}
+}
+
+// Получить обработчик наблюдателя за изменением BPM.
+func getBPMObserverHandler(model mvc.BeatModelInterface, upgrader *websocket.Upgrader) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ws, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
+		if err != nil {
+			_ = ctx.Error(err)
+			ctx.AbortWithStatus(http.StatusInternalServerError)
+
+			return
+		}
+
+		observer := getBPMObserver(ws, model)
+		model.RegisterBPMObserver(observer)
 	}
 }

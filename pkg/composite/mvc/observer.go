@@ -1,11 +1,11 @@
 package mvc
 
-// Интерфейс наблюдателя beat.
-type beatObserver interface {
-	updateBeat()
+// BeatObserver Интерфейс наблюдателя beat.
+type BeatObserver interface {
+	UpdateBeat()
 }
 
-// Интерфейс наблюдателя BPM.
-type bpmObserver interface {
-	updateBPM()
+// BPMObserver Интерфейс наблюдателя BPM.
+type BPMObserver interface {
+	UpdateBPM()
 }

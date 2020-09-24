@@ -25,22 +25,22 @@ func (h heartAdapter) GetBPM() int {
 }
 
 // RegisterBeatObserver Зарегистрировать наблюдателя за ударами.
-func (h heartAdapter) RegisterBeatObserver(o beatObserver) {
+func (h heartAdapter) RegisterBeatObserver(o BeatObserver) {
 	h.heart.registerBeatObserver(o)
 }
 
 // RemoveBeatObserver Удалить наблюдателя за ударами.
-func (h heartAdapter) RemoveBeatObserver(o beatObserver) {
+func (h heartAdapter) RemoveBeatObserver(o BeatObserver) {
 	h.heart.removeBeatObserver(o)
 }
 
 // RegisterBPMObserver Установить наблюдателя за изменением BPM.
-func (h heartAdapter) RegisterBPMObserver(o bpmObserver) {
+func (h heartAdapter) RegisterBPMObserver(o BPMObserver) {
 	h.heart.registerBPMObserver(o)
 }
 
 // RemoveBPMObserver Удалить наблюдателя за изменением BPM.
-func (h heartAdapter) RemoveBPMObserver(o bpmObserver) {
+func (h heartAdapter) RemoveBPMObserver(o BPMObserver) {
 	h.heart.removeBPMObserver(o)
 }
 

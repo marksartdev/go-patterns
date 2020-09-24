@@ -15,17 +15,17 @@ const (
 type HeartModelInterface interface {
 	init()
 	getHeartRate() int
-	registerBeatObserver(o beatObserver)
-	removeBeatObserver(o beatObserver)
-	registerBPMObserver(o bpmObserver)
-	removeBPMObserver(o bpmObserver)
+	registerBeatObserver(o BeatObserver)
+	removeBeatObserver(o BeatObserver)
+	registerBPMObserver(o BPMObserver)
+	removeBPMObserver(o BPMObserver)
 }
 
 // Модель данных сердцебиения.
 type heartModel struct {
 	generator     generator
-	beatObservers []beatObserver
-	bpmObservers  []bpmObserver
+	beatObservers []BeatObserver
+	bpmObservers  []BPMObserver
 	rate          int
 }
 
@@ -46,15 +46,15 @@ func (h *heartModel) getHeartRate() int {
 }
 
 // Зарегистрировать наблюдателя за ударами.
-func (h *heartModel) registerBeatObserver(o beatObserver) {
+func (h *heartModel) registerBeatObserver(o BeatObserver) {
 	h.beatObservers = append(h.beatObservers, o)
 }
 
 // Удалить наблюдателя за ударами.
-func (h *heartModel) removeBeatObserver(o beatObserver) {
+func (h *heartModel) removeBeatObserver(o BeatObserver) {
 	for i := range h.beatObservers {
 		if h.beatObservers[i] == o {
-			h.beatObservers = append(h.beatObservers[:i], h.beatObservers[i+1:]...)
+			h.beatObservers[i] = nil
 
 			break
 		}
@@ -63,21 +63,36 @@ func (h *heartModel) removeBeatObserver(o beatObserver) {
 
 // Оповестить наблюдателей за ударами.
 func (h *heartModel) notifyBeatObservers() {
+	h.collectBeatObserversGarbage()
+
 	for i := range h.beatObservers {
-		h.beatObservers[i].updateBeat()
+		h.beatObservers[i].UpdateBeat()
 	}
 }
 
+// Собрать мусор из коллекции beatObservers.
+func (h *heartModel) collectBeatObserversGarbage() {
+	collection := make([]BeatObserver, 0, len(h.beatObservers))
+
+	for _, beatObserver := range h.beatObservers {
+		if beatObserver != nil {
+			collection = append(collection, beatObserver)
+		}
+	}
+
+	h.beatObservers = collection
+}
+
 // Установить наблюдателя за изменением BPM.
-func (h *heartModel) registerBPMObserver(o bpmObserver) {
+func (h *heartModel) registerBPMObserver(o BPMObserver) {
 	h.bpmObservers = append(h.bpmObservers, o)
 }
 
 // Удалить наблюдателя за изменением BPM.
-func (h *heartModel) removeBPMObserver(o bpmObserver) {
+func (h *heartModel) removeBPMObserver(o BPMObserver) {
 	for i := range h.bpmObservers {
 		if h.bpmObservers[i] == o {
-			h.bpmObservers = append(h.bpmObservers[:i], h.bpmObservers[i+1:]...)
+			h.bpmObservers[i] = nil
 
 			break
 		}
@@ -86,9 +101,24 @@ func (h *heartModel) removeBPMObserver(o bpmObserver) {
 
 // Оповестить наблюдателей за изменением BPM.
 func (h *heartModel) notifyBPMObservers() {
+	h.collectBPMObserversGarbage()
+
 	for i := range h.bpmObservers {
-		h.bpmObservers[i].updateBPM()
+		h.bpmObservers[i].UpdateBPM()
 	}
+}
+
+// Собрать мусор из коллекции bpmObservers.
+func (h *heartModel) collectBPMObserversGarbage() {
+	collection := make([]BPMObserver, 0, len(h.bpmObservers))
+
+	for _, bpmObserver := range h.bpmObservers {
+		if bpmObserver != nil {
+			collection = append(collection, bpmObserver)
+		}
+	}
+
+	h.bpmObservers = collection
 }
 
 // Callback для генератора.

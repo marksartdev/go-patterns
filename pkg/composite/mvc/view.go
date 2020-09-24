@@ -87,8 +87,8 @@ func (d *djView) createControls(a fyne.App) {
 	d.controlW.Resize(fyne.Size{Width: width, Height: height})
 }
 
-// Обновить BPM.
-func (d *djView) updateBPM() {
+// UpdateBPM Обновить BPM.
+func (d *djView) UpdateBPM() {
 	bpm := d.model.GetBPM()
 	if bpm == 0 {
 		d.bpm.SetText("offline")
@@ -97,8 +97,8 @@ func (d *djView) updateBPM() {
 	}
 }
 
-// Отобразить удар.
-func (d *djView) updateBeat() {
+// UpdateBeat Отобразить удар.
+func (d *djView) UpdateBeat() {
 	for i := 1; i <= progressLen; i++ {
 		d.progress.SetText(strings.Repeat("=", i))
 		time.Sleep(progressSleep * time.Millisecond)
