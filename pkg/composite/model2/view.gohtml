@@ -7,26 +7,108 @@
 <body>
 <h1>DJ View</h1>
 <div>
-    <div class="beat" id="beat"></div>
-    <p>Beats per minutes = <span id="bpm">{{ . }}</span></p>
+    <div class="beat" id="beat"><span>BEAT!</span></div>
+    <p>Beats per minutes = <span id="currentBPM">{{ . }}</span></p>
 </div>
 <hr>
 <div>
     <form>
         <div>
-            <label for="setBPM">BPM:</label>
-            <input type="text" id="setBPM">
-            <button>Set</button>
+            <label for="bpm">BPM:</label>
+            <input type="text" id="bpm">
+            <button id="setBPM">Set</button>
         </div>
         <div>
-            <button><<</button>
-            <button>>></button>
+            <button id="decrease"><<</button>
+            <button id="increase">>></button>
         </div>
         <div>
-            <button>on</button>
-            <button>off</button>
+            <button id="turnOn">on</button>
+            <button id="turnOff">off</button>
         </div>
     </form>
 </div>
 </body>
 </html>
+
+<script>
+    // Наблюдатели.
+    let beat = document.getElementById("beat");
+    let currentBPM = document.getElementById("currentBPM");
+
+    // Наблюдатель за ударами.
+    let beatSocket = new WebSocket("ws://127.0.0.1:8080/ws/beat");
+    beatSocket.onopen = (() => {
+        console.log("[beat] Соединение установлено");
+    });
+
+    beatSocket.onmessage = (() => {
+        beat.classList.add("active");
+        setTimeout(() => {
+            beat.classList.remove("active")
+        }, 100);
+    });
+
+    // Наблюдатель за изменением BPM.
+    let bpmSocket = new WebSocket("ws://127.0.0.1:8080/ws/bpm");
+    bpmSocket.onopen = (() => {
+        console.log("[bpm] Соединение установлено");
+    });
+
+    bpmSocket.onmessage = ((event) => {
+        currentBPM.innerText = event.data;
+    });
+
+    // Ajax.
+
+    // Установить BPM.
+    function setBPM(e) {
+        e.preventDefault();
+        let bpm = document.getElementById("bpm");
+        fetch("http://127.0.0.1:8080/api/set?bpm=" + bpm.value);
+    }
+
+    // Уменьшить BPM.
+    function decrease(e) {
+        e.preventDefault();
+        fetch("http://127.0.0.1:8080/api/decrease");
+    }
+
+    // Увеличить BPM.
+    function increase(e) {
+        e.preventDefault();
+        fetch("http://127.0.0.1:8080/api/increase");
+    }
+
+    // Включить.
+    function turnOn(e) {
+        e.preventDefault();
+        fetch("http://127.0.0.1:8080/api/on");
+    }
+
+    // Выключить.
+    function turnOff(e) {
+        e.preventDefault();
+        fetch("http://127.0.0.1:8080/api/off");
+    }
+
+    // Обработчики событий.
+    document.getElementById("setBPM").addEventListener("click", setBPM);
+    document.getElementById("decrease").addEventListener("click", decrease);
+    document.getElementById("increase").addEventListener("click", increase);
+    document.getElementById("turnOn").addEventListener("click", turnOn);
+    document.getElementById("turnOff").addEventListener("click", turnOff);
+</script>
+
+<style>
+    .beat {
+        display: inline-block;
+        padding: 5px 40px;
+        border: green solid 2px;
+        color: white;
+    }
+
+    .active {
+        background-color: green;
+    }
+</style>
