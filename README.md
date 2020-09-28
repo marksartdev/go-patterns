@@ -19,3 +19,6 @@
 1. [Простая фабрика (не паттерн)](pkg/creational/simplefactory)
 2. [Фабричный метод / Абстрактная фабрика](pkg/creational/factory)
 3. [Одиночка](pkg/creational/singleton)
+## Составные
+1. [MVC](pkg/composite/mvc)
+2. [Модель 2](pkg/composite/model2)
